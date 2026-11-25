@@ -375,3 +375,141 @@ matchMedia("(prefers-color-scheme: light)").addEventListener("change", (e) => {
 });
 
 syncThemeLabel();
+
+/* ---------- Walkthrough (driver.js) ---------- */
+
+const tourButton = $("tour-start");
+const TOUR_KEY = "clamp-tour-done";
+
+const TOUR_STEPS = [
+  {
+    popover: {
+      title: "Welcome to the Clamp Playground",
+      description: "A quick tour of what each part does. It takes about 30 seconds.",
+    },
+  },
+  {
+    element: ".app__intro",
+    popover: {
+      title: "What clamp() does",
+      description: "Text scales with the screen, but never below a <strong>min</strong> size or above a <strong>max</strong> size.",
+    },
+  },
+  {
+    element: ".control:has(#min)",
+    popover: {
+      title: "Min",
+      description: "The smallest the text can get, on small screens. Drag the slider or type an exact value in the box.",
+    },
+  },
+  {
+    element: ".control:has(#pref)",
+    popover: {
+      title: "Preferred",
+      description: "How much the text grows with the screen, as a % of its width. <strong>5vw</strong> on a 900px screen = 45px.",
+    },
+  },
+  {
+    element: ".control:has(#max)",
+    popover: {
+      title: "Max",
+      description: "The biggest the text can get, on large screens.",
+    },
+  },
+  {
+    element: ".control:has(#vw)",
+    popover: {
+      title: "Viewport",
+      description: "A pretend screen width. Change it to see your text at phone, tablet or desktop size.",
+    },
+  },
+  {
+    element: ".control:has(#font)",
+    popover: {
+      title: "Font family",
+      description: "Pick a font, or choose <strong>Custom…</strong> and type the name of a font on your computer or paste a Google Fonts link.",
+    },
+  },
+  {
+    element: ".control:has(#weight)",
+    popover: {
+      title: "Weight",
+      description: "How bold the text is, from 300 (light) to 900 (black).",
+    },
+  },
+  {
+    element: "#sample",
+    popover: {
+      title: "Your text",
+      description: "Type your own text here, for example a real headline from your design.",
+    },
+  },
+  {
+    element: ".preview",
+    popover: {
+      title: "Preview",
+      description: "Your text at the size clamp() gives for this screen. The badge shows the size: green when it's at min, red when it's at max.",
+    },
+  },
+  {
+    element: ".card:has(.graph)",
+    popover: {
+      title: "Size across screens",
+      description: "Text size from 320px to 1920px screens. Shaded areas are where it's stuck at min (green) or max (red). The dot is your current viewport.",
+    },
+  },
+  {
+    element: ".card:has(#css-code)",
+    popover: {
+      title: "CSS for developers",
+      description: "The code that gives this result. Copy it into a ticket or your design spec.",
+    },
+  },
+  {
+    element: ".card:has(#values)",
+    popover: {
+      title: "The numbers",
+      description: "Exact sizes for the current viewport, and the screen widths where the text is still growing.",
+    },
+  },
+  {
+    element: ".app__actions",
+    popover: {
+      title: "Replay or switch theme",
+      description: "Use <strong>?</strong> to see this tour again, and the other button to switch between light and dark.",
+    },
+  },
+];
+
+function markTourDone() {
+  try { localStorage.setItem(TOUR_KEY, "1"); } catch {}
+}
+
+function startTour() {
+  const tour = window.driver.js.driver({
+    steps: TOUR_STEPS,
+    showProgress: true,
+    progressText: "{{current}} of {{total}}",
+    nextBtnText: "Next",
+    prevBtnText: "Back",
+    doneBtnText: "Done",
+    popoverClass: "tour",
+    overlayOpacity: 0.6,
+    stagePadding: 6,
+    stageRadius: 12,
+    popoverOffset: 12,
+    smoothScroll: true,
+    onDestroyed: markTourDone,
+  });
+  tour.drive();
+}
+
+if (window.driver?.js) {
+  tourButton.addEventListener("click", startTour);
+  let seen = null;
+  try { seen = localStorage.getItem(TOUR_KEY); } catch {}
+  if (!seen) setTimeout(startTour, 400);
+} else {
+  // CDN didn't load (offline): no tour, so no button.
+  tourButton.hidden = true;
+}

@@ -21,6 +21,7 @@ No build step and no dependencies: plain HTML, CSS and JavaScript.
 - **Values:** viewport, preferred size, result, state (clamped to min, fluid, clamped to max) and the viewport range where the size is fluid.
 - **Warning** when min is larger than max (`clamp()` then always returns the min).
 - **Light and dark themes:** follows your system setting until you pick one with the toggle; your choice is remembered.
+- **Walkthrough:** a short guided tour starts on the first visit and explains each part. Replay it any time with the **?** button. Built with [driver.js](https://driverjs.com/) (loaded from a CDN; if it can't load, the button is hidden).
 
 ## Run it
 
@@ -36,4 +37,19 @@ npx serve .
 | --- | --- |
 | `index.html` | Markup, plus a small script that sets the theme before the page draws |
 | `style.css` | Styles and the light/dark color tokens |
-| `script.js` | Slider and number syncing, font loading, graph, CSS output, theme toggle |
+| `script.js` | Slider and number syncing, font loading, graph, CSS output, theme toggle, walkthrough steps |
+
+## Docs
+
+Feature specs live in [`docs/specs`](docs/specs/README.md): what each part does, how it should behave, and where it lives in the code.
+
+| Spec | Covers |
+| --- | --- |
+| [001 Size controls](docs/specs/001-size-controls.md) | Sliders and exact-value inputs, the clamp math |
+| [002 Fonts](docs/specs/002-fonts.md) | Presets, installed fonts, Google Fonts links, weight |
+| [003 Preview and output](docs/specs/003-preview-and-output.md) | Preview, graph, CSS output, values |
+| [004 Themes](docs/specs/004-themes.md) | Light/dark, toggle, color tokens |
+| [005 Walkthrough](docs/specs/005-walkthrough.md) | First-visit tour and its steps |
+| [006 Layout and look](docs/specs/006-layout-and-look.md) | Page structure, intro copy, visual and CSS rules |
+
+When you change a feature, update its spec in the same commit.
