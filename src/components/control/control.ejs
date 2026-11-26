@@ -1,0 +1,35 @@
+<%#
+  Slider + number box. The script keeps the two in sync (ids: <id> and <id>-number).
+
+  id, label, min, max, step, value   required
+  unit         text after the number (px, ms, …); leave out for none
+  unitId       id on the unit, for scripts that change it
+  inputmode    "numeric" (default) or "decimal"
+  sliderLabel  the slider's name for screen readers; defaults to label
+  numberMin    min on the number box; defaults to min, null = none (typing past the slider is allowed)
+  numberMax    max on the number box; defaults to max, null = none
+  rangeClass   extra class on the slider
+  hint         short line under the slider
+-%>
+<%
+  const _numberMin = typeof numberMin !== "undefined" ? numberMin : min;
+  const _numberMax = typeof numberMax !== "undefined" ? numberMax : max;
+  const _inputmode = typeof inputmode !== "undefined" ? inputmode : "numeric";
+  const _sliderLabel = typeof sliderLabel !== "undefined" ? sliderLabel : label;
+  const _rangeClass = typeof rangeClass !== "undefined" ? ` ${rangeClass}` : "";
+-%>
+<div class="control">
+  <div class="control__head">
+    <label class="control__label" for="<%= id %>-number"><%= label %></label>
+    <span class="control__input">
+      <input class="control__number" type="number" id="<%= id %>-number"<% if (_numberMin !== null) { %> min="<%= _numberMin %>"<% } %><% if (_numberMax !== null) { %> max="<%= _numberMax %>"<% } %> step="<%= step %>" value="<%= value %>" inputmode="<%= _inputmode %>">
+<% if (typeof unit !== "undefined") { -%>
+      <span class="control__unit"<% if (typeof unitId !== "undefined") { %> id="<%= unitId %>"<% } %>><%= unit %></span>
+<% } -%>
+    </span>
+  </div>
+  <input class="control__range<%= _rangeClass %>" type="range" id="<%= id %>" min="<%= min %>" max="<%= max %>" step="<%= step %>" value="<%= value %>" aria-label="<%= _sliderLabel %> (slider)">
+<% if (typeof hint !== "undefined") { -%>
+  <p class="control__hint"><%- hint %></p>
+<% } -%>
+</div>

@@ -22,6 +22,13 @@
     linear-gradient(120deg, var(--accent), var(--accent2)) border-box;
   box-shadow: 0 10px 40px -12px color-mix(in srgb, var(--_badge-color) 45%, transparent);
   transition: box-shadow 0.3s;
+  /* Resizable: its width is the Viewport. The script sets --preview-width from the slider;
+     dragging the corner sets an inline width, kept inside the panel by max-width. */
+  width: min(var(--preview-width, 100%), 100%);
+  min-width: min(320px, 100%);
+  max-width: 100%;
+  overflow: hidden;
+  resize: horizontal;
 }
 
 .preview[data-state="min"] {
@@ -59,6 +66,16 @@
   --_input-color: var(--text);
 }
 
+.preview__note {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .preview__badge {
   flex: 0 0 auto;
   padding: 2px 8px;
@@ -75,9 +92,91 @@
   font-family: var(--preview-font, var(--font-ui));
   font-size: var(--preview-size, 2rem);
   font-weight: var(--preview-weight, 800);
-  line-height: 1.1;
+  line-height: var(--preview-line-height, 1.1);
+  letter-spacing: var(--preview-tracking, normal);
+  text-transform: var(--preview-transform, none);
   overflow-wrap: anywhere;
   transition: font-size 0.2s;
+}
+
+/* ---------- "From WestJet" tag under Font family / Weight ---------- */
+
+.control__tag {
+  justify-self: start;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  color: var(--accent);
+  font-size: 0.65rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- Style bar: start from a design system's text style ---------- */
+
+.style-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--card);
+}
+
+.style-bar__label {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.style-bar__select {
+  width: auto;
+  min-width: 12rem;
+}
+
+/* "Smaller on phones": how much a loaded style shrinks for its mobile size */
+.style-bar__shrink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.control__shrink-label {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.control__tag[hidden],
+.style-bar__label[hidden],
+.style-bar__select[hidden],
+.style-bar__shrink[hidden],
+.control__link[hidden] {
+  display: none;
+}
+
+.control__link {
+  --_link-color: var(--accent);
+
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--_link-color);
+  font: inherit;
+  font-size: 0.8rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.control__link:hover {
+  --_link-color: var(--text);
+}
+
+.card__buttons {
+  display: flex;
+  gap: 6px;
 }
 
 /* ---------- Bottom row: graph | CSS | values ---------- */

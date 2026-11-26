@@ -1,0 +1,47 @@
+{
+  "name": "WestJet Vacations",
+  "tag": "WestJet",
+  "prefix": "wvi",
+  "source": "Sunwing component-library: packages/design-tokens/tokens/wvi/typography.json (sizes, line heights, font) and packages/wvi-components/src/mixins/typography.scss (which weight each style uses). Copied 2026-11-26.",
+  "note": "The tokens have one fixed size per style. The playground uses it as the desktop size (max), works out a mobile size (min) with the shrink rule unless a style sets its own \"mobile\" size, and sets preferred = size ÷ desktop width, so the text reaches its desktop size at that width.",
+  "font": {
+    "family": "Noto Sans",
+    "stack": "\"Noto Sans\", sans-serif"
+  },
+  "desktop": 1200,
+  "shrink": {
+    "percent": 40,
+    "above": 16,
+    "about": "On the smallest screen, a style loses this % of the size it has above `above` px (body size). Styles at or below `above` keep one size."
+  },
+  "styles": [
+    { "name": "headline-lg", "label": "Headline LG", "size": 80, "lineHeight": 90, "weight": 600 },
+    { "name": "headline-sm", "label": "Headline SM", "size": 56, "lineHeight": 56, "weight": 600 },
+    { "name": "xl", "label": "XL", "size": 40, "lineHeight": 52, "weight": 600 },
+    { "name": "lg", "label": "LG", "size": 28, "lineHeight": 36.4, "weight": 600 },
+    { "name": "quote", "label": "Quote", "size": 28, "lineHeight": 42, "weight": 600 },
+    { "name": "md", "label": "MD", "size": 22, "lineHeight": 33, "weight": 600 },
+    { "name": "sm", "label": "SM", "size": 16, "lineHeight": 24, "weight": 600 },
+    { "name": "xs", "label": "XS", "size": 14, "lineHeight": 21, "weight": 600 },
+    {
+      "name": "tight",
+      "label": "Body (tight)",
+      "token": "xs",
+      "lineHeightToken": "base",
+      "size": 14,
+      "lineHeight": 24.5,
+      "weight": 400
+    },
+    {
+      "name": "eyebrow",
+      "label": "Eyebrow",
+      "size": 12,
+      "lineHeight": 16,
+      "weight": 600,
+      "letterSpacing": "3.12px",
+      "uppercase": true
+    },
+    { "name": "micro", "label": "Micro", "size": 12, "lineHeight": 18, "weight": 400 },
+    { "name": "nano", "label": "Nano", "size": 10, "lineHeight": 15, "weight": 400 }
+  ]
+}

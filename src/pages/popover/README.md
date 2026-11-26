@@ -1,6 +1,6 @@
 # Popover Playground
 
-Part of [CSS Playgrounds](../README.md).
+Part of [CSS Playgrounds](../../../README.md).
 
 Native popovers (`popover` + `popovertarget`) placed next to their button with CSS anchor positioning. No JavaScript is needed for the popovers themselves: the browser opens and closes them, puts them in the top layer (above everything, no z-index or portal), and flips them when there isn't room.
 
@@ -12,7 +12,7 @@ Based on the component library's `Popover` primitive (`Popover.module.scss`) and
 - **HTML and CSS output** with Copy: just the rules for the chosen placement, its `@position-try` fallbacks and the animation.
 - **All twelve placements** side by side (`manual`, open several to compare).
 - **Escapes `overflow: hidden`:** a popover inside a clipped box isn't cut off.
-- **Info icons:** a small "i" next to each control and section; hover for a short explanation, click or tap to pin it (`../shared/info.js`, same wording as the walkthrough).
+- **Info icons:** a small "i" next to each control and section; hover for a short explanation, click or tap to pin it (`../../shared/info.js`, same wording as the walkthrough).
 - **Walkthrough** (13 steps) and **Browser support** for popover, anchor positioning, `popover="hint"` and `@starting-style`.
 
 ## How placement works
@@ -36,7 +36,7 @@ Once a popover has flipped to a fallback, browsers keep it there while it still 
 
 | File           | What it does                                                  |
 | -------------- | ------------------------------------------------------------- |
-| `index.html`   | Controls, builder, code, matrix, clipped box, browser support |
+| `index.ejs`    | Controls, builder, code, matrix, clipped box, browser support |
 | `placement.js` | The placement engine (injected CSS + code output)             |
 | `style.css`    | Popover primitive, animation, picker, demos                   |
 | `script.js`    | Controls, drag, live readout, code output, tour               |

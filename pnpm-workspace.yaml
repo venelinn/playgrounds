@@ -1,0 +1,9 @@
+# Only install package versions that are at least a day old (supply-chain safety).
+# Same as newer pnpm defaults, so every pnpm version resolves the lockfile the same way.
+minimumReleaseAge: 1440
+
+# esbuild (used by Vite) needs its install script to set up its binary.
+allowBuilds: # pnpm 11
+  esbuild: true
+onlyBuiltDependencies: # pnpm 10
+  - esbuild

@@ -1,55 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Container Units Playground</title>
-    <meta name="description" content="Card titles sized with cqi: they follow the card's width, not the screen's.">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.3.1/dist/driver.css">
-    <link rel="stylesheet" href="../shared/base.css">
-    <link rel="stylesheet" href="../shared/controls.css">
-    <link rel="stylesheet" href="../shared/compat.css">
-    <link rel="stylesheet" href="../shared/tour.css">
-    <link rel="stylesheet" href="../shared/info.css">
-    <link rel="stylesheet" href="../shared/grid.css">
-    <link rel="stylesheet" href="./style.css">
-    <script>
-      // Set the theme before first paint (saved choice, else system).
-      try {
-        const saved = localStorage.getItem("playground-theme");
-        document.documentElement.dataset.theme = saved || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
-      } catch {
-        document.documentElement.dataset.theme = "dark";
-      }
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/driver.js@1.3.1/dist/driver.js.iife.js" defer></script>
-    <script src="../shared/theme.js" defer></script>
-    <script src="../shared/compat.js" defer></script>
-    <script src="../shared/tour.js" defer></script>
-    <script src="../shared/info.js" defer></script>
-    <script src="../shared/frame.js" defer></script>
-    <script src="./script.js" defer></script>
-  </head>
-
-  <body>
-    <main class="app cq-playground">
-      <nav class="app__nav">
-        <a class="app__action" href="../index.html" title="All playgrounds">
-          <svg class="app__icon app__icon--back" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
-          <span class="sr-only">All playgrounds</span>
-        </a>
-      </nav>
-      <div class="app__actions">
-        <button class="app__action" type="button" id="tour-start" aria-label="Show the walkthrough" title="Show the walkthrough">
-          <svg class="app__icon app__icon--help" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M9.5 9.2a2.6 2.6 0 0 1 5 .9c0 1.7-2.5 2.3-2.5 3.9"/><path d="M12 17.2h.01"/></svg>
-        </button>
-        <button class="app__action" type="button" id="theme-toggle" aria-label="Switch theme">
-          <svg class="app__icon app__icon--sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-          <svg class="app__icon app__icon--moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-        </button>
-      </div>
-
-      <h1 class="app__title">Container Units Playground</h1>
+<%- include("/partials/head", {
+  title: "Container Units Playground",
+  description: "Card titles sized with cqi: they follow the card's width, not the screen's.",
+  appClass: "cq-playground",
+  tour: true,
+  styles: [
+    "/shared/controls.css",
+    "/shared/compat.css",
+    "/shared/tour.css",
+    "/shared/info.css",
+    "/shared/grid.css",
+    "/pages/cq-units/style.css",
+  ],
+  scripts: [
+    "/shared/compat.js",
+    "/shared/tour.js",
+    "/shared/info.js",
+    "/shared/frame.js",
+    "/pages/cq-units/script.js",
+  ],
+}) %>
       <p class="app__intro">
         <code>vw</code> sizes text by the <strong>screen</strong>. <code>cqi</code> sizes it by the <strong>card it's in</strong>:
         <code>1cqi</code> is 1% of the card's width. So the same card gets a big title when it's wide and a smaller one
@@ -60,26 +29,25 @@
         <fieldset class="cq-group cq-group--layout">
           <legend class="cq-group__title">Layout <span class="cq-group__hint">how much room the titles get</span></legend>
           <div class="controls">
-            <div class="control">
-              <div class="control__head">
-                <label class="control__label" for="cols-number">Columns</label>
-                <span class="control__input">
-                  <input class="control__number" type="number" id="cols-number" min="1" max="4" step="1" value="3" inputmode="numeric">
-                </span>
-              </div>
-              <input class="control__range" type="range" id="cols" min="1" max="4" step="1" value="3" aria-label="Columns (slider)">
-            </div>
+            <%- include("/components/control/control", {
+              id: "cols",
+              label: "Columns",
+              min: 1,
+              max: 4,
+              step: 1,
+              value: 3
+            }) %>
 
-            <div class="control">
-              <div class="control__head">
-                <label class="control__label" for="width-number">Section width</label>
-                <span class="control__input">
-                  <input class="control__number" type="number" id="width-number" min="240" step="1" value="1100" inputmode="numeric">
-                  <span class="control__unit">px</span>
-                </span>
-              </div>
-              <input class="control__range" type="range" id="width" min="240" max="1100" step="1" value="1100" aria-label="Section width (slider)">
-            </div>
+            <%- include("/components/control/control", {
+              id: "width",
+              label: "Section width",
+              min: 240,
+              max: 1100,
+              step: 1,
+              value: 1100,
+              unit: "px",
+              numberMax: null
+            }) %>
 
             <div class="cq-group__switch">
               <label class="switch">
@@ -114,76 +82,74 @@
         <fieldset class="cq-group cq-group--heading">
           <legend class="cq-group__title" id="heading-title">Section title <code class="cq-group__formula" id="heading-formula"></code></legend>
           <div class="controls">
-            <div class="control">
-              <div class="control__head">
-                <label class="control__label" for="hmin-number">Min</label>
-                <span class="control__input">
-                  <input class="control__number" type="number" id="hmin-number" min="16" max="48" step="1" value="28" inputmode="numeric">
-                  <span class="control__unit">px</span>
-                </span>
-              </div>
-              <input class="control__range" type="range" id="hmin" min="16" max="48" step="1" value="28" aria-label="Min (slider)">
-            </div>
+            <%- include("/components/control/control", {
+              id: "hmin",
+              label: "Min",
+              min: 16,
+              max: 48,
+              step: 1,
+              value: 28,
+              unit: "px"
+            }) %>
 
-            <div class="control">
-              <div class="control__head">
-                <label class="control__label" for="hsize-number">Preferred</label>
-                <span class="control__input">
-                  <input class="control__number" type="number" id="hsize-number" min="1" max="15" step="0.5" value="6" inputmode="decimal">
-                  <span class="control__unit" id="hsize-unit">cqi</span>
-                </span>
-              </div>
-              <input class="control__range" type="range" id="hsize" min="1" max="15" step="0.5" value="6" aria-label="Preferred (slider)">
-            </div>
+            <%- include("/components/control/control", {
+              id: "hsize",
+              label: "Preferred",
+              min: 1,
+              max: 15,
+              step: 0.5,
+              value: 6,
+              unit: "cqi",
+              unitId: "hsize-unit",
+              inputmode: "decimal"
+            }) %>
 
-            <div class="control">
-              <div class="control__head">
-                <label class="control__label" for="hmax-number">Max</label>
-                <span class="control__input">
-                  <input class="control__number" type="number" id="hmax-number" min="40" max="120" step="1" value="72" inputmode="numeric">
-                  <span class="control__unit">px</span>
-                </span>
-              </div>
-              <input class="control__range" type="range" id="hmax" min="40" max="120" step="1" value="72" aria-label="Max (slider)">
-            </div>
+            <%- include("/components/control/control", {
+              id: "hmax",
+              label: "Max",
+              min: 40,
+              max: 120,
+              step: 1,
+              value: 72,
+              unit: "px"
+            }) %>
           </div>
         </fieldset>
 
         <fieldset class="cq-group cq-group--title">
           <legend class="cq-group__title" id="card-title">Card title <code class="cq-group__formula" id="formula"></code></legend>
           <div class="controls">
-            <div class="control">
-              <div class="control__head">
-                <label class="control__label" for="min-number">Min</label>
-                <span class="control__input">
-                  <input class="control__number" type="number" id="min-number" min="10" max="32" step="1" value="18" inputmode="numeric">
-                  <span class="control__unit">px</span>
-                </span>
-              </div>
-              <input class="control__range" type="range" id="min" min="10" max="32" step="1" value="18" aria-label="Min (slider)">
-            </div>
+            <%- include("/components/control/control", {
+              id: "min",
+              label: "Min",
+              min: 10,
+              max: 32,
+              step: 1,
+              value: 18,
+              unit: "px"
+            }) %>
 
-            <div class="control">
-              <div class="control__head">
-                <label class="control__label" for="size-number">Preferred</label>
-                <span class="control__input">
-                  <input class="control__number" type="number" id="size-number" min="1" max="15" step="0.5" value="7" inputmode="decimal">
-                  <span class="control__unit" id="size-unit">cqi</span>
-                </span>
-              </div>
-              <input class="control__range" type="range" id="size" min="1" max="15" step="0.5" value="7" aria-label="Preferred (slider)">
-            </div>
+            <%- include("/components/control/control", {
+              id: "size",
+              label: "Preferred",
+              min: 1,
+              max: 15,
+              step: 0.5,
+              value: 7,
+              unit: "cqi",
+              unitId: "size-unit",
+              inputmode: "decimal"
+            }) %>
 
-            <div class="control">
-              <div class="control__head">
-                <label class="control__label" for="max-number">Max</label>
-                <span class="control__input">
-                  <input class="control__number" type="number" id="max-number" min="24" max="96" step="1" value="48" inputmode="numeric">
-                  <span class="control__unit">px</span>
-                </span>
-              </div>
-              <input class="control__range" type="range" id="max" min="24" max="96" step="1" value="48" aria-label="Max (slider)">
-            </div>
+            <%- include("/components/control/control", {
+              id: "max",
+              label: "Max",
+              min: 24,
+              max: 96,
+              step: 1,
+              value: 48,
+              unit: "px"
+            }) %>
           </div>
         </fieldset>
       </div>
@@ -230,14 +196,20 @@
         </div>
       </div>
 
-      <section class="compat" aria-labelledby="compat-title">
-        <h2 class="compat__title" id="compat-title">Browser support</h2>
-        <div class="compat__list">
-          <div class="compat__feature" data-feature="container-queries" data-label="Container queries + units (cqi, cqw)" data-test="width: 1cqi" data-caniuse="container query units" data-mdn="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Containment/Container_size_and_style_queries"></div>
-          <div class="compat__feature" data-feature="min-max-clamp" data-test="width: clamp(1px, 1cqi, 2px)" data-caniuse="clamp" data-mdn="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/clamp"></div>
-        </div>
-        <p class="compat__source"></p>
-      </section>
-    </main>
-  </body>
-</html>
+<%- include("/partials/footer", {
+  features: [
+    {
+      feature: "container-queries",
+      label: "Container queries + units (cqi, cqw)",
+      test: "width: 1cqi",
+      caniuse: "container query units",
+      mdn: "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Containment/Container_size_and_style_queries"
+    },
+    {
+      feature: "min-max-clamp",
+      test: "width: clamp(1px, 1cqi, 2px)",
+      caniuse: "clamp",
+      mdn: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/clamp"
+    },
+  ],
+}) %>

@@ -1,14 +1,19 @@
+import wvi from "./presets/wvi.json";
+
 const $ = (id) => document.getElementById(id);
 
-const KEYS = ["min", "pref", "max", "vw"];
+const KEYS = ["min", "pref", "max", "vw", "lh"];
 const fields = Object.fromEntries(KEYS.map((key) => [key, { range: $(key), number: $(`${key}-number`) }]));
 
 const fontSelect = $("font");
 const customFont = $("custom-font");
 const weightSelect = $("weight");
+const fontTag = $("font-tag");
+const weightTag = $("weight-tag");
 
 const preview = document.querySelector(".preview");
 const sizeBadge = $("size-badge");
+const previewNote = $("preview-note");
 const warning = $("warning");
 const cssCode = $("css-code");
 const values = $("values");
@@ -34,8 +39,11 @@ const fmt = (n) => String(round(n));
 
 /* ---------- Slider ↔ number sync ---------- */
 
+// Exact values: a slider rounds to its step (54.4 → 54), so typed or loaded values are kept here.
+const exact = {};
+
 function read(key) {
-  return parseFloat(fields[key].range.value);
+  return exact[key] ?? parseFloat(fields[key].range.value);
 }
 
 // Typed values may go beyond the slider's range: grow the slider to fit.
@@ -47,7 +55,13 @@ function setFromNumber(key) {
   if (v < parseFloat(range.min)) range.min = String(v);
   if (v > parseFloat(range.max)) range.max = String(v);
   range.value = String(v);
+  exact[key] = v;
   return true;
+}
+
+function setValue(key, v) {
+  fields[key].number.value = String(v);
+  setFromNumber(key);
 }
 
 KEYS.forEach((key) => {
@@ -55,16 +69,20 @@ KEYS.forEach((key) => {
 
   range.addEventListener("input", () => {
     number.value = range.value;
+    exact[key] = parseFloat(range.value);
+    if (key === "vw") sizePreview();
     update();
   });
 
   number.addEventListener("input", () => {
-    if (setFromNumber(key)) update();
+    if (!setFromNumber(key)) return;
+    if (key === "vw") sizePreview();
+    update();
   });
 
   // Leaving the box with an empty/invalid value restores the last good one.
   number.addEventListener("change", () => {
-    if (!setFromNumber(key)) number.value = range.value;
+    if (!setFromNumber(key)) number.value = String(read(key));
   });
 });
 
@@ -218,7 +236,16 @@ function currentFontFamily() {
   return customFamily || "system-ui, sans-serif";
 }
 
-fontSelect.addEventListener("change", () => {
+function selectFont(stack) {
+  const option = [...fontSelect.options].find((o) => o.value === stack);
+  if (!option) return;
+  fontSelect.value = stack;
+  onFontChange();
+}
+
+fontSelect.addEventListener("change", onFontChange);
+
+function onFontChange() {
   const isCustom = fontSelect.value === "custom";
   customFont.hidden = !isCustom;
   fontStatus.hidden = !isCustom || !fontStatus.textContent;
@@ -229,7 +256,7 @@ fontSelect.addEventListener("change", () => {
     if (google) loadGoogleFamily(google);
   }
   update();
-});
+}
 
 let customTimer;
 customFont.addEventListener("input", () => {
@@ -268,6 +295,161 @@ copyButton.addEventListener("click", async () => {
   }, 1400);
 });
 
+/* ---------- Resizable preview: its width is the Viewport ---------- */
+
+// Slider → preview: show the preview at the Viewport width (CSS keeps it inside the panel).
+function sizePreview() {
+  preview.style.removeProperty("width"); // drop any width left by dragging the corner
+  preview.style.setProperty("--preview-width", `${read("vw")}px`);
+}
+
+// Corner drag (or a window too narrow for the preview) → Viewport follows the preview's width.
+// A Viewport wider than the panel (from the slider) stays as it is: the note says it's shown narrower.
+new ResizeObserver(() => {
+  const shown = Math.round(preview.getBoundingClientRect().width);
+  if (preview.style.width !== "") {
+    fields.vw.number.value = String(shown);
+    setFromNumber("vw");
+    update();
+  }
+  updatePreviewNote(shown);
+}).observe(preview);
+
+function updatePreviewNote(shown = Math.round(preview.getBoundingClientRect().width)) {
+  const vw = read("vw");
+  previewNote.textContent =
+    vw > shown ? `${fmt(vw)}px · too wide, shown at ${shown}px` : `${shown}px wide · drag the corner ↘`;
+}
+
+/* ---------- Style: load a design system's text style into the controls ---------- */
+
+const PRESETS = { wvi };
+
+const systemSelect = $("system");
+const styleLabel = $("style-label");
+const styleSelect = $("style");
+const shrinkField = $("shrink-field");
+const shrinkInput = $("shrink");
+const styleReset = $("style-reset");
+const scaleCopy = $("scale-copy");
+
+let scale = null; // the chosen design system
+let active = null; // the loaded style
+
+for (const [id, preset] of Object.entries(PRESETS)) systemSelect.append(new Option(preset.name, id));
+
+// The tokens have one size (desktop). Mobile = that size minus a share of what's above body size.
+function mobileSize(style) {
+  if (style.mobile) return style.mobile;
+  const { above } = scale.shrink;
+  if (style.size <= above) return style.size;
+  return round(style.size - ((style.size - above) * Number(shrinkInput.value)) / 100, 1);
+}
+
+// clamp(mobile, size ÷ desktop width, desktop): reaches the desktop size at the desktop width.
+function clampFor(style) {
+  const min = mobileSize(style);
+  const max = style.size;
+  return { min, max, pref: round((max / scale.desktop) * 100, 2), lh: round(style.lineHeight / style.size, 3) };
+}
+
+const clampText = ({ min, pref, max }, unit = "px") => {
+  const u = (px) => (unit === "rem" ? `${round(px / ROOT_PX, 4)}rem` : `${fmt(px)}px`);
+  return min === max ? u(max) : `clamp(${u(min)}, ${fmt(pref)}vw, ${u(max)})`;
+};
+
+function applyStyle(style, { sizesOnly = false } = {}) {
+  active = style;
+  const c = clampFor(style);
+  setValue("min", c.min);
+  setValue("max", c.max);
+  setValue("pref", c.pref);
+  setValue("lh", c.lh);
+  if (!sizesOnly) {
+    selectFont(scale.font.stack);
+    weightSelect.value = String(style.weight);
+  }
+  update();
+}
+
+// Design system → its styles in the second dropdown. Nothing changes until a style is picked.
+systemSelect.addEventListener("change", () => {
+  scale = PRESETS[systemSelect.value] ?? null;
+  active = null; // keep the current values; just stop tagging them as a style's
+  const on = Boolean(scale);
+  styleLabel.hidden = styleSelect.hidden = !on;
+  shrinkField.hidden = styleReset.hidden = true;
+  scaleCopy.hidden = !on;
+  if (on) {
+    shrinkInput.value = String(scale.shrink.percent);
+    styleSelect.replaceChildren(
+      new Option("Pick a style…", ""),
+      ...scale.styles.map((style) => new Option(style.label, style.name)),
+    );
+    scaleCopy.textContent = `Copy ${scale.tag} scale`;
+  }
+  update();
+});
+
+styleSelect.addEventListener("change", () => {
+  const style = scale?.styles.find((s) => s.name === styleSelect.value);
+  shrinkField.hidden = styleReset.hidden = !style;
+  if (style) applyStyle(style);
+  else {
+    active = null;
+    update();
+  }
+});
+
+shrinkInput.addEventListener("input", () => {
+  if (shrinkInput.value === "" || !Number.isFinite(Number(shrinkInput.value))) return;
+  if (active) applyStyle(active, { sizesOnly: true });
+});
+
+styleReset.addEventListener("click", () => active && applyStyle(active));
+
+// Every style as CSS custom properties, named like the design tokens.
+function scaleCss() {
+  const seen = new Set();
+  const lines = scale.styles.flatMap((style) => {
+    const c = clampFor(style);
+    const size = `--${scale.prefix}-font-size-${style.token ?? style.name}`;
+    const lh = `--${scale.prefix}-line-height-${style.lineHeightToken ?? style.name}`;
+    const out = [];
+    if (!seen.has(size)) out.push(`  ${size}: ${clampText(c, "rem")}; /* ${fmt(c.min)}px → ${fmt(c.max)}px */`);
+    if (!seen.has(lh)) out.push(`  ${lh}: ${c.lh};`);
+    seen.add(size);
+    seen.add(lh);
+    return out;
+  });
+  return `/* ${scale.name} type scale with clamp(): mobile size, size ÷ ${scale.desktop}px, desktop size.
+   Phones: ${shrinkInput.value}% smaller above ${scale.shrink.above}px. */
+:root {
+${lines.join("\n")}
+}`;
+}
+
+scaleCopy.addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(scaleCss());
+    scaleCopy.textContent = "Copied";
+  } catch {
+    scaleCopy.textContent = "Copy failed";
+  }
+  setTimeout(() => {
+    scaleCopy.textContent = `Copy ${scale.tag} scale`;
+  }, 1400);
+});
+
+// "WestJet" tag on Font family / Weight while they match the loaded style.
+function updateTags(fontFamily, weight) {
+  const fontMatch = Boolean(active) && fontFamily === scale.font.stack;
+  const weightMatch = Boolean(active) && Number(weight) === active.weight;
+  fontTag.hidden = !fontMatch;
+  weightTag.hidden = !weightMatch;
+  fontTag.textContent = weightTag.textContent = scale ? `from ${scale.tag}` : "";
+}
+
 /* ---------- Render ---------- */
 
 function update() {
@@ -283,21 +465,40 @@ function update() {
 
   const fontFamily = currentFontFamily();
   const weight = weightSelect.value;
+  const lh = read("lh");
+  // A loaded style's letter spacing / capitals (e.g. Eyebrow) come along with it.
+  const tracking = active?.letterSpacing;
+  const uppercase = active?.uppercase;
 
   preview.style.setProperty("--preview-size", `${size}px`);
   preview.style.setProperty("--preview-font", fontFamily);
   preview.style.setProperty("--preview-weight", weight);
+  preview.style.setProperty("--preview-line-height", String(lh));
+  if (tracking) preview.style.setProperty("--preview-tracking", tracking);
+  else preview.style.removeProperty("--preview-tracking");
+  if (uppercase) preview.style.setProperty("--preview-transform", "uppercase");
+  else preview.style.removeProperty("--preview-transform");
   sizeBadge.textContent = `${fmt(size)}px`;
+  updatePreviewNote();
   preview.dataset.state = state;
 
   warning.hidden = min <= max;
   warning.textContent =
     min > max ? `Min (${fmt(min)}px) is larger than max (${fmt(max)}px). clamp() will always return the min.` : "";
 
-  cssCode.textContent = `font-family: ${fontFamily};
-font-weight: ${weight};
-font-size: clamp(${fmt(min)}px, ${fmt(pref)}vw, ${fmt(max)}px);
-/* rem: clamp(${round(min / ROOT_PX, 4)}rem, ${fmt(pref)}vw, ${round(max / ROOT_PX, 4)}rem) */`;
+  cssCode.textContent = [
+    `font-family: ${fontFamily};`,
+    `font-weight: ${weight};`,
+    `font-size: clamp(${fmt(min)}px, ${fmt(pref)}vw, ${fmt(max)}px);`,
+    `line-height: ${round(lh, 3)};`,
+    tracking && `letter-spacing: ${tracking};`,
+    uppercase && "text-transform: uppercase;",
+    `/* rem: clamp(${round(min / ROOT_PX, 4)}rem, ${fmt(pref)}vw, ${round(max / ROOT_PX, 4)}rem) */`,
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  updateTags(fontFamily, weight);
 
   const fluidStart = pref > 0 ? (min * 100) / pref : Infinity;
   const fluidEnd = pref > 0 ? (max * 100) / pref : Infinity;
@@ -357,6 +558,7 @@ function drawGraph({ min, pref, max, vw, size, fluidStart, fluidEnd }) {
   axisEnd.textContent = `${fmt(vwMax)}px`;
 }
 
+sizePreview();
 update();
 
 /* ---------- Walkthrough (driver.js) ---------- */
@@ -428,6 +630,24 @@ const TOUR_STEPS = [
     },
   },
   {
+    element: ".control:has(#lh)",
+    info: { target: 'label[for="lh-number"]' },
+    popover: {
+      title: "Line height",
+      description:
+        "Space between lines, as a multiple of the font size: <strong>1.3</strong> = 130%. It grows and shrinks with the text.",
+    },
+  },
+  {
+    element: ".style-bar",
+    info: { target: 'label[for="system"]' },
+    popover: {
+      title: "Start from a style",
+      description:
+        "Pick a design system, like <strong>WestJet Vacations</strong>, then one of its styles, like <strong>Headline LG</strong>: its sizes, font, weight and line height fill the controls. Then drag the preview's corner to test it on any screen width.",
+    },
+  },
+  {
     element: "#sample",
     popover: {
       title: "Your text",
@@ -440,7 +660,7 @@ const TOUR_STEPS = [
     popover: {
       title: "Preview",
       description:
-        "Your text at the size clamp() gives for this screen. The badge shows the size: green when it's at min, red when it's at max.",
+        "Your text at the size clamp() gives for this screen. Drag its bottom-right corner to change the screen width, like resizing a browser. The badge shows the size: green when it's at min, red when it's at max.",
     },
   },
   {
@@ -490,4 +710,14 @@ const TOUR_STEPS = [
 window.setupTour({ key: "clamp-tour-done", steps: TOUR_STEPS });
 
 // Info icons: the steps that say where their icon goes (same wording as the tour).
-window.setupInfoTips(TOUR_STEPS.filter((step) => step.info));
+// Info-only: "Smaller on phones" shows only once a style is loaded, so it isn't a tour step.
+const SHRINK_INFO = {
+  info: { target: ".control__shrink-label" },
+  popover: {
+    title: "Smaller on phones",
+    description:
+      "The design tokens have one size per style, used as the desktop size. This sets the phone size: the style loses this % of what it has above 16px, so <strong>80px</strong> at 40% becomes <strong>54.4px</strong>. Body sizes stay the same.",
+  },
+};
+
+window.setupInfoTips([...TOUR_STEPS.filter((step) => step.info), SHRINK_INFO]);

@@ -1,16 +1,14 @@
 # Clamp Playground
 
-Part of [CSS Playgrounds](../README.md).
+Part of [CSS Playgrounds](../../../README.md).
 
 An interactive playground for fluid typography with CSS `clamp()`. Set a minimum size, a preferred `vw` value and a maximum size, then see how the font scales across viewport widths.
-
-No build step and no dependencies: plain HTML, CSS and JavaScript.
 
 ## Features
 
 - **Exact values:** every slider (Min, Preferred, Max, Viewport) has a number box next to it. Typed values can go beyond the slider's range, and the slider stretches to fit.
 - **Live preview:** type your own text and see it at the computed size. A badge shows the size and turns green or red when it's clamped to the min or max.
-- **Font family:** pick a preset (System UI, Inter, Space Grotesk, DM Sans, Playfair Display, Fraunces, JetBrains Mono, Georgia, UI Monospace) or choose **Custom…** and enter:
+- **Font family:** pick a preset (System UI, Inter, Noto Sans, Nunito Sans, Poppins, Space Grotesk, DM Sans, Playfair Display, Fraunces, JetBrains Mono, Georgia, UI Monospace) or choose **Custom…** and enter:
   - the name of a font installed on your computer, e.g. `Avenir Next`
   - a Google Fonts link, e.g. `https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap`
   - a pasted `<link>` tag or `@import url(...)` line
@@ -18,31 +16,36 @@ No build step and no dependencies: plain HTML, CSS and JavaScript.
 
   If a name isn't installed, the playground tries to load it from Google Fonts. A status line says whether it used the installed font, loaded it, or couldn't find it.
 - **Font weight:** 300 to 900.
+- **Line height:** unitless (1.3 = 130% of the size), shown in the preview and the CSS.
+- **Start from a style:** pick a design system text style (WestJet Vacations, saved in `presets/wvi.json`) and its sizes, font, weight and line height fill the controls, as a `clamp()` that reaches the desktop size at 1200px. **Smaller on phones** sets the mobile size. **Copy WestJet scale** gives every style as CSS variables. See [008](docs/specs/008-type-scale.md).
+- **Resizable preview:** drag its corner to change the Viewport, like resizing a browser.
 - **Graph:** the font size from 320px to 1920px wide, with the clamped zones shaded and a dot at the current viewport.
-- **CSS output:** `font-family`, `font-weight` and the `clamp()` value, plus a rem version, with a Copy button.
+- **CSS output:** `font-family`, `font-weight`, the `clamp()` value and `line-height`, plus a rem version, with a Copy button.
 - **Values:** viewport, preferred size, result, state (clamped to min, fluid, clamped to max) and the viewport range where the size is fluid.
 - **Warning** when min is larger than max (`clamp()` then always returns the min).
 - **Light and dark themes:** follows your system setting until you pick one with the toggle; your choice is remembered.
-- **Browser support:** live Baseline status and the first supported version per browser for `clamp()`, plus a check of your own browser, with links to Can I use and MDN (`../shared/compat.js`).
-- **Info icons:** a small "i" next to each control and card. Hover shows what it does, click or tap pins it, Esc or a click elsewhere closes it. Same wording as the walkthrough (`../shared/info.js`).
+- **Browser support:** live Baseline status and the first supported version per browser for `clamp()`, plus a check of your own browser, with links to Can I use and MDN (`../../shared/compat.js`).
+- **Info icons:** a small "i" next to each control and card. Hover shows what it does, click or tap pins it, Esc or a click elsewhere closes it. Same wording as the walkthrough (`../../shared/info.js`).
 - **Walkthrough:** a short guided tour starts on the first visit and explains each part. Replay it any time with the **?** button. Built with [driver.js](https://driverjs.com/) (loaded from a CDN; if it can't load, the button is hidden).
 
 ## Run it
 
-Open `index.html` in this folder in a browser, or serve the whole repo from its root (the page loads `../shared/`):
+From the repo root:
 
 ```sh
-npx serve .
+pnpm dev
 ```
+
+Then open <http://localhost:3010/clamp/>.
 
 ## Files
 
-| File         | What it does                                                                         |
-| ------------ | ------------------------------------------------------------------------------------ |
-| `index.html` | Markup, plus a small script that sets the theme before the page draws                |
-| `../shared/` | Tokens, panel, slider controls, code card and theme toggle shared by all playgrounds |
-| `style.css`  | Styles for this playground                                                           |
-| `script.js`  | Slider and number syncing, font loading, graph, CSS output, walkthrough steps        |
+| File            | What it does                                                                         |
+| --------------- | ------------------------------------------------------------------------------------ |
+| `index.ejs`     | Markup; the head, header and browser support panel come from `src/partials/`         |
+| `../../shared/` | Tokens, panel, slider controls, code card and theme toggle shared by all playgrounds |
+| `style.css`     | Styles for this playground                                                           |
+| `script.js`     | Slider and number syncing, font loading, graph, CSS output, walkthrough steps        |
 
 ## Docs
 

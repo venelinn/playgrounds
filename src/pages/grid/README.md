@@ -1,6 +1,6 @@
 # Grid Playground
 
-Part of [CSS Playgrounds](../README.md).
+Part of [CSS Playgrounds](../../../README.md).
 
 An interactive version of our component library's `Row` / `Cell` grid. It shows **up to** a number of columns and drops columns on its own when they'd get narrower than a minimum width. There are no breakpoints: it reacts to the space it's in. Each cell is also a container, so its content can adapt to the cell's width.
 
@@ -30,17 +30,17 @@ The even share stops the grid from going over `cols` columns; the min width make
 - **Overflow warning** when the min width is wider than the container (cells overflow; tip: `min(100%, …)`).
 - **CSS** and **React** output with Copy. A gap other than 16px is shown as `--_gap` on a class, since `Row` only takes `gap` as on/off.
 - **Subgrid note:** a short pointer to the [Subgrid playground](../subgrid/README.md), with the catch: subgrid cards need `<Cell cellNormal>`, because a container can't be a subgrid.
-- **Info icons:** a small "i" next to each control and section; hover for a short explanation, click or tap to pin it (`../shared/info.js`, same wording as the walkthrough).
-- **Walkthrough:** a 13-step guided tour on the first visit; replay it with **?** (`../shared/tour.js`).
-- **Browser support** for Grid, `max()`/`calc()` and container queries (`../shared/compat.js`).
+- **Info icons:** a small "i" next to each control and section; hover for a short explanation, click or tap to pin it (`../../shared/info.js`, same wording as the walkthrough).
+- **Walkthrough:** a 13-step guided tour on the first visit; replay it with **?** (`../../shared/tour.js`).
+- **Browser support** for Grid, `max()`/`calc()` and container queries (`../../shared/compat.js`).
 
 ## Files
 
-| File         | What it does                                                   |
-| ------------ | -------------------------------------------------------------- |
-| `index.html` | Markup: controls, the resizable demo, outputs, browser support |
-| `style.css`  | The grid (same CSS as the component), cell content, layout     |
-| `script.js`  | Controls, resizing, cells, readouts, CSS/React output          |
-| `../shared/` | Tokens, panel, controls, theme toggle and the support panel    |
+| File            | What it does                                                   |
+| --------------- | -------------------------------------------------------------- |
+| `index.ejs`     | Markup: controls, the resizable demo, outputs, browser support |
+| `style.css`     | The grid (same CSS as the component), cell content, layout     |
+| `script.js`     | Controls, resizing, cells, readouts, CSS/React output          |
+| `../../shared/` | Tokens, panel, controls, theme toggle and the support panel    |
 
 Specs: [docs/specs](docs/specs/README.md).

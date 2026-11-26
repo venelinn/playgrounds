@@ -1,6 +1,6 @@
 # Container Units Playground
 
-Part of [CSS Playgrounds](../README.md).
+Part of [CSS Playgrounds](../../../README.md).
 
 `vw` sizes text by the screen; `cqi` sizes it by the container it's in. Here, card titles use `clamp(min, Ncqi, max)`, so each title follows its own card's width, and a big section title on top follows the section's width.
 
@@ -25,10 +25,10 @@ Part of [CSS Playgrounds](../README.md).
 
 ## Files
 
-| File         | What it does                                                                          |
-| ------------ | ------------------------------------------------------------------------------------- |
-| `index.html` | Controls, the resizable section with its title and cards, code, tips, browser support |
-| `style.css`  | Section and cards (both containers), titles with `clamp(… cqi …)`                     |
-| `script.js`  | Controls, readouts, code output, tour + info icons                                    |
+| File        | What it does                                                                          |
+| ----------- | ------------------------------------------------------------------------------------- |
+| `index.ejs` | Controls, the resizable section with its title and cards, code, tips, browser support |
+| `style.css` | Section and cards (both containers), titles with `clamp(… cqi …)`                     |
+| `script.js` | Controls, readouts, code output, tour + info icons                                    |
 
 Specs: [docs/specs](docs/specs/README.md).

@@ -20,7 +20,7 @@
   --warning-text: #fde68a;
   --shadow: #000000b3;
 
-  --font-ui: system-ui, sans-serif;
+  --font-ui: "Inter", system-ui, sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
 
   color-scheme: dark;

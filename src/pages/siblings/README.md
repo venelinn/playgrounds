@@ -1,6 +1,6 @@
 # Siblings Playground
 
-Part of [CSS Playgrounds](../README.md).
+Part of [CSS Playgrounds](../../../README.md).
 
 An interactive version of the "Featured Products" demo for the CSS functions `sibling-index()` and `sibling-count()`.
 
@@ -20,9 +20,9 @@ Based on the CSSnippets video "New CSS Functions Explained: sibling-index() & si
 - **Replay:** runs the reveal animation again.
 - **CSS output** with Copy, updated live.
 - **Card inspector:** hover or focus a card to see its index, count, hue, delay and number, with the math.
-- **Browser support:** live Baseline status and first supported versions for `sibling-index()` / `sibling-count()` and `@property`, plus a check of your own browser (`../shared/compat.js`).
-- **Info icons:** a small "i" next to each control and section; hover for a short explanation, click or tap to pin it (`../shared/info.js`, same wording as the walkthrough).
-- **Walkthrough:** a 12-step guided tour on the first visit; replay it with the **?** button (`../shared/tour.js`, driver.js). If driver.js can't load, the button is hidden.
+- **Browser support:** live Baseline status and first supported versions for `sibling-index()` / `sibling-count()` and `@property`, plus a check of your own browser (`../../shared/compat.js`).
+- **Info icons:** a small "i" next to each control and section; hover for a short explanation, click or tap to pin it (`../../shared/info.js`, same wording as the walkthrough).
+- **Walkthrough:** a 12-step guided tour on the first visit; replay it with the **?** button (`../../shared/tour.js`, driver.js). If driver.js can't load, the button is hidden.
 - Light and dark themes, plus a back button to the index.
 
 ## Browser support
@@ -31,11 +31,11 @@ Modern Chrome, Edge, Safari and Firefox support both functions. In older browser
 
 ## Files
 
-| File         | What it does                                                       |
-| ------------ | ------------------------------------------------------------------ |
-| `index.html` | Markup: controls, the demo, CSS output and inspector               |
-| `style.css`  | The demo styles (`@property --i/--n`, card, animation)             |
-| `script.js`  | Card data, controls, fallback, CSS output, inspector               |
-| `../shared/` | Tokens, panel, controls and theme toggle shared by all playgrounds |
+| File            | What it does                                                       |
+| --------------- | ------------------------------------------------------------------ |
+| `index.ejs`     | Markup: controls, the demo, CSS output and inspector               |
+| `style.css`     | The demo styles (`@property --i/--n`, card, animation)             |
+| `script.js`     | Card data, controls, fallback, CSS output, inspector               |
+| `../../shared/` | Tokens, panel, controls and theme toggle shared by all playgrounds |
 
 Specs: [docs/specs](docs/specs/README.md).

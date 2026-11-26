@@ -44,6 +44,6 @@ fluid range = min × 100 / preferred  …  max × 100 / preferred   (viewport px
 
 ## Code
 
-- Markup: `.controls` in `index.html`
+- Markup: `.controls` in `index.ejs`
 - Sync: `setFromNumber()` and the `KEYS.forEach` listeners in `script.js`
 - Math: `update()` in `script.js`

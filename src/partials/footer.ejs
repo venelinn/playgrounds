@@ -1,0 +1,21 @@
+<%#
+  Page end: the "Browser support" panel (filled by shared/compat.js), then closes <main>, <body>, <html>.
+
+  features  [{ feature, label?, test, caniuse, mdn, note? }]  (webstatus.dev id + how to test it)
+            leave out for a page without the panel
+-%>
+<% if (typeof features !== "undefined" && features.length) { -%>
+
+      <section class="compat" aria-labelledby="compat-title">
+        <h2 class="compat__title" id="compat-title">Browser support</h2>
+        <div class="compat__list">
+<% features.forEach((f) => { -%>
+          <div class="compat__feature" data-feature="<%= f.feature %>"<% if (f.label) { %> data-label="<%= f.label %>"<% } %> data-test="<%= f.test %>" data-caniuse="<%= f.caniuse %>" data-mdn="<%= f.mdn %>"<% if (f.note) { %> data-note="<%= f.note %>"<% } %>></div>
+<% }) -%>
+        </div>
+        <p class="compat__source"></p>
+      </section>
+<% } -%>
+    </main>
+  </body>
+</html>

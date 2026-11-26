@@ -5,6 +5,7 @@
 - A **text box** at the top of the preview card sets the sample text (default "Fluid Typography"). Clearing it shows the default again.
 - The sample is drawn at the computed size, font and weight, with a short size transition.
 - A **size badge** (e.g. `45px`) sits on the right. Its color shows the state: accent while fluid, green at min, red at max.
+- **Resizable:** the card's width is the Viewport. Dragging its bottom-right corner sets the Viewport to the card's width, like resizing a browser window; moving the Viewport slider or typing a value resizes the card. A Viewport wider than the panel keeps its value: the card stays full width and a note says `1920px · too wide, shown at 1160px`. Otherwise the note shows the width (`900px wide · drag the corner ↘`). The card never gets narrower than 320px (or the panel, on a phone).
 - The card is the visual focus of the page: gradient border, faint dot grid, and a soft glow that takes the state color (see [006](006-layout-and-look.md)).
 
 ## Graph

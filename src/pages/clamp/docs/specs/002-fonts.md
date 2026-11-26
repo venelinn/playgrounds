@@ -8,12 +8,12 @@ Let designers preview their own typeface: a preset, a font installed on their co
 
 A dropdown with presets:
 
-| Preset                                                                    | Source                           |
-| ------------------------------------------------------------------------- | -------------------------------- |
-| System UI                                                                 | Built in                         |
-| Inter, Space Grotesk, DM Sans, Playfair Display, Fraunces, JetBrains Mono | Google Fonts, loaded when picked |
-| Georgia, UI Monospace                                                     | Built in                         |
-| Custom…                                                                   | Shows a text box (see below)     |
+| Preset                                                                                                     | Source                           |
+| ---------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| System UI                                                                                                  | Built in                         |
+| Inter, Noto Sans, Nunito Sans, Poppins, Space Grotesk, DM Sans, Playfair Display, Fraunces, JetBrains Mono | Google Fonts, loaded when picked |
+| Georgia, UI Monospace                                                                                      | Built in                         |
+| Custom…                                                                                                    | Shows a text box (see below)     |
 
 ## Custom font
 
