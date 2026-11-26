@@ -11,7 +11,6 @@ What the Clamp Playground does and how each part should behave. One file per fea
 | [005 Walkthrough](005-walkthrough.md)               | First-visit guided tour (driver.js)                                      |
 | [006 Layout and look](006-layout-and-look.md)       | Page structure, intro copy, visual rules                                 |
 | [007 Info icons](007-info-icons.md)                 | "i" icons with tooltips, from the tour's wording                         |
-| [008 Type scale](008-type-scale.md)                 | Start from a design system style (WestJet Vacations) as clamp()          |
 
 ## Status
 

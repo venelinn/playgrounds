@@ -6,6 +6,7 @@
     "/shared/compat.css",
     "/shared/tour.css",
     "/shared/info.css",
+    "/shared/preview.css",
     "/pages/clamp/style.css",
   ],
   scripts: [
@@ -21,23 +22,6 @@
         In between, it follows <strong>preferred</strong>, a share of the screen width: <code>5vw</code> means 5% of the width,
         so 45px on a 900px screen. Move the sliders to see where your text stops growing.
       </p>
-
-      <div class="style-bar">
-        <label class="style-bar__label" for="system">Start from</label>
-        <select class="control__field style-bar__select" id="system">
-          <option value="">None</option>
-        </select>
-        <label class="style-bar__label" for="style" id="style-label" hidden>Style</label>
-        <select class="control__field style-bar__select" id="style" hidden></select>
-        <label class="style-bar__shrink" id="shrink-field" hidden>
-          <span class="control__shrink-label">Smaller on phones</span>
-          <span class="control__input">
-            <input class="control__number" type="number" id="shrink" min="0" max="100" step="5" value="40" inputmode="numeric">
-            <span class="control__unit">%</span>
-          </span>
-        </label>
-        <button class="control__link" type="button" id="style-reset" hidden>Reset style</button>
-      </div>
 
       <div class="controls">
         <%- include("/components/control/control", {
@@ -110,7 +94,6 @@
             <option value="ui-monospace, monospace">UI Monospace</option>
             <option value="custom">Custom…</option>
           </select>
-          <span class="control__tag" id="font-tag" hidden></span>
           <input class="control__field" type="text" id="custom-font" placeholder="Font name or Google Fonts link" aria-label="Custom font: installed font name or Google Fonts link" autocomplete="off" spellcheck="false" hidden>
           <p class="control__hint" id="font-status" role="status" hidden></p>
         </div>
@@ -126,7 +109,6 @@
             <option value="800" selected>800</option>
             <option value="900">900</option>
           </select>
-          <span class="control__tag" id="weight-tag" hidden></span>
         </div>
 
         <%- include("/components/control/control", {
@@ -173,10 +155,7 @@
         <div class="card">
           <div class="card__head">
             <span class="card__title">CSS</span>
-            <span class="card__buttons">
-              <button class="card__button" type="button" id="scale-copy" hidden>Copy scale</button>
-              <button class="card__button" type="button" id="copy">Copy</button>
-            </span>
+            <button class="card__button" type="button" id="copy">Copy</button>
           </div>
           <pre class="card__code"><code id="css-code"></code></pre>
         </div>

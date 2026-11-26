@@ -15,6 +15,12 @@ Plain HTML, CSS and JavaScript. The pages are written as [EJS](https://ejs.co/) 
 | [Popover](src/pages/popover/index.ejs)          | Native popovers placed with anchor positioning: 12 placements, flipping, types, animation, no JavaScript needed                 | [README](src/pages/popover/README.md) · [specs](src/pages/popover/docs/specs/README.md)   |
 | [Container Units](src/pages/cq-units/index.ejs) | Titles sized with `cqi`: each follows its own card (or section), not the screen                                                 | [README](src/pages/cq-units/README.md) · [specs](src/pages/cq-units/docs/specs/README.md) |
 
+**Brands** (their own section on the index page): one page per design system, its type scale as `clamp()`.
+
+| Brand                                                   | What it shows                                                                          | Docs                                 |
+| ------------------------------------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------ |
+| [WestJet Vacations](src/pages/brands/westjet/index.ejs) | Every WestJet text style as `clamp()`, a resizable preview, the scale as CSS variables | [README](src/pages/brands/README.md) |
+
 The [index page](src/pages/index.ejs) links to all of them.
 
 ## Run it
@@ -67,6 +73,7 @@ src/
     tour.css
     tour.js         First-visit walkthrough (driver.js): window.setupTour({ key, steps })
     info.css
+    preview.css     Resizable text preview, card row and values list (Clamp, brands)
     info.js         Discreet "i" info icons with tooltips: window.setupInfoTips(steps), reusing the tour's wording
     grid.css        The component library's Row/Cell grid CSS + resizable demo stage (Grid, Subgrid)
     frame.js        Keeps a width slider, the frame's drag corner and the window in sync
@@ -78,6 +85,7 @@ src/
     subgrid/        Subgrid playground (same layout)
     popover/        Popover playground (same layout)
     cq-units/       Container Units playground (same layout)
+    brands/         Brand type scales: shared brand.ejs/.js/.css + one folder per brand (westjet/)
 ```
 
 Every `src/pages/**/index.ejs` becomes a page at the same path: `src/pages/clamp/index.ejs` → `dist/clamp/index.html`. In templates, paths start at `src/`: `/shared/base.css`, `/pages/clamp/style.css`, `include("/partials/head", …)`.

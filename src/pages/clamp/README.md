@@ -17,7 +17,6 @@ An interactive playground for fluid typography with CSS `clamp()`. Set a minimum
   If a name isn't installed, the playground tries to load it from Google Fonts. A status line says whether it used the installed font, loaded it, or couldn't find it.
 - **Font weight:** 300 to 900.
 - **Line height:** unitless (1.3 = 130% of the size), shown in the preview and the CSS.
-- **Start from a style:** pick a design system text style (WestJet Vacations, saved in `presets/wvi.json`) and its sizes, font, weight and line height fill the controls, as a `clamp()` that reaches the desktop size at 1200px. **Smaller on phones** sets the mobile size. **Copy WestJet scale** gives every style as CSS variables. See [008](docs/specs/008-type-scale.md).
 - **Resizable preview:** drag its corner to change the Viewport, like resizing a browser.
 - **Graph:** the font size from 320px to 1920px wide, with the clamped zones shaded and a dot at the current viewport.
 - **CSS output:** `font-family`, `font-weight`, the `clamp()` value and `line-height`, plus a rem version, with a Copy button.

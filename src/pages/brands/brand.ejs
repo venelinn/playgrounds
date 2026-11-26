@@ -1,0 +1,88 @@
+<%#
+  A brand page: one design system's type scale as clamp(). Every brand folder's index.ejs includes this.
+  The script (brand.js) fills the style list and everything else from the brand's typography.json.
+
+  title    page title, e.g. "WestJet Vacations"
+  intro    one line under the title
+  script   the brand's script, e.g. "/pages/brands/westjet/script.js"
+  sample   preview text (optional)
+-%>
+<%
+  const _sample = typeof sample !== "undefined" ? sample : "Your next getaway starts here";
+-%>
+<%- include("/partials/head", {
+  title,
+  back: "../../index.html",
+  styles: [
+    "/shared/controls.css",
+    "/shared/info.css",
+    "/shared/preview.css",
+    "/pages/brands/brand.css",
+  ],
+  scripts: [
+    "/shared/info.js",
+    script,
+  ],
+}) %>
+      <p class="app__intro"><%= intro %></p>
+
+      <div class="controls">
+        <div class="control">
+          <label class="control__label" for="style">Style</label>
+          <select class="control__field" id="style"></select>
+        </div>
+
+        <%- include("/components/control/control", {
+          id: "shrink",
+          label: "Smaller on phones",
+          min: 0,
+          max: 80,
+          step: 5,
+          value: 40,
+          unit: "%",
+        }) %>
+
+        <%- include("/components/control/control", {
+          id: "vw",
+          label: "Viewport",
+          min: 320,
+          max: 1920,
+          step: 1,
+          value: 1200,
+          unit: "px",
+          sliderLabel: "Viewport width",
+        }) %>
+      </div>
+
+      <section class="preview" aria-label="Preview">
+        <div class="preview__bar">
+          <input class="preview__input" type="text" id="sample" value="<%= _sample %>" placeholder="Type your text…" aria-label="Preview text" autocomplete="off">
+          <span class="preview__note" id="preview-note">drag the corner ↘ to resize</span>
+          <span class="preview__badge" id="size-badge">0px</span>
+        </div>
+        <p class="preview__text" id="text"><%= _sample %></p>
+      </section>
+
+      <div class="compare brand__cards">
+        <div class="card">
+          <div class="card__head">
+            <span class="card__title">CSS</span>
+            <button class="card__button" type="button" id="copy">Copy</button>
+          </div>
+          <pre class="card__code"><code id="css-code"></code></pre>
+        </div>
+
+        <div class="card">
+          <dl class="stats" id="values"></dl>
+        </div>
+
+        <div class="card brand__all">
+          <div class="card__head">
+            <span class="card__title">All styles as CSS variables</span>
+            <button class="card__button" type="button" id="scale-copy">Copy</button>
+          </div>
+          <pre class="card__code brand__scale"><code id="scale-code"></code></pre>
+        </div>
+      </div>
+
+<%- include("/partials/footer") %>

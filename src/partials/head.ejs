@@ -8,6 +8,7 @@
   scripts      module scripts after shared/theme.js, e.g. ["/shared/tour.js", "/pages/clamp/script.js"]
   tour         true = load driver.js and show the "?" walkthrough button
   home         true = the gallery page (no back link)
+  back         back link to the gallery, relative to the page; default "../index.html"
   appClass     extra class on <main class="app">
   appId        id on <main> (optional)
 -%>
@@ -16,6 +17,7 @@
   const _scripts = typeof scripts !== "undefined" ? scripts : [];
   const _tour = typeof tour !== "undefined" && tour;
   const _home = typeof home !== "undefined" && home;
+  const _back = typeof back !== "undefined" ? back : "../index.html";
   const _appClass = typeof appClass !== "undefined" && appClass ? ` ${appClass}` : "";
 -%>
 <!DOCTYPE html>
@@ -59,7 +61,7 @@
     <main class="app<%= _appClass %>"<% if (typeof appId !== "undefined") { %> id="<%= appId %>"<% } %>>
 <% if (!_home) { -%>
       <nav class="app__nav">
-        <a class="app__action" href="../index.html" title="All playgrounds">
+        <a class="app__action" href="<%= _back %>" title="All playgrounds">
           <svg class="app__icon app__icon--back" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
           <span class="sr-only">All playgrounds</span>
         </a>

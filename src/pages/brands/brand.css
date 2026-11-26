@@ -1,0 +1,16 @@
+/* Brand pages. Controls, preview and cards come from the shared styles. */
+
+/* Two cards a row (CSS | values), then "All styles" full width under them */
+.brand__cards {
+  --compare-card-min: 400px;
+}
+
+/* "All styles": the whole scale as CSS variables */
+.brand__all {
+  grid-column: 1 / -1;
+}
+
+.brand__scale {
+  max-height: 16rem;
+  overflow-y: auto;
+}

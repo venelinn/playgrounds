@@ -19,16 +19,19 @@ const pages = findPages(pagesDir).map((template) => {
   const filename = relative(pagesDir, template).replace(/\.ejs$/, ".html");
   const folder = dirname(filename);
   return {
-    name: folder === "." ? "index" : folder,
+    // The plugin wants names without "/": brands/westjet → brands-westjet
+    name: folder === "." ? "index" : folder.replaceAll("/", "-"),
     filename,
     template: relative(__dirname, template),
   };
 });
 
-// Dev server: /clamp and /clamp/ open /clamp/index.html, like a static host does.
+// Dev server: /clamp, /clamp/ and /clamp/index.html open that page, like a static host does.
+// (Listed in full so the plugin's own rule, which matches a page name anywhere in the URL,
+// doesn't send /brands/westjet/index.html to the home page.)
 const rewrites = pages
   .filter((page) => page.name !== "index")
-  .map((page) => ({ from: new RegExp(`^/${page.name}/?$`), to: `/${page.filename}` }));
+  .map((page) => ({ from: new RegExp(`^/${dirname(page.filename)}(/|/index\\.html)?$`), to: `/${page.filename}` }));
 
 export default defineConfig({
   root: "src",
