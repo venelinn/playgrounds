@@ -56,79 +56,141 @@
         when it's narrow, wherever it's placed. Change the columns and watch the titles.
       </p>
 
-      <div class="controls">
-        <div class="control">
-          <div class="control__head">
-            <label class="control__label" for="cols-number">Columns</label>
-            <span class="control__input">
-              <input class="control__number" type="number" id="cols-number" min="1" max="4" step="1" value="3" inputmode="numeric">
-            </span>
+      <div class="cq-controls">
+        <fieldset class="cq-group cq-group--layout">
+          <legend class="cq-group__title">Layout <span class="cq-group__hint">how much room the titles get</span></legend>
+          <div class="controls">
+            <div class="control">
+              <div class="control__head">
+                <label class="control__label" for="cols-number">Columns</label>
+                <span class="control__input">
+                  <input class="control__number" type="number" id="cols-number" min="1" max="4" step="1" value="3" inputmode="numeric">
+                </span>
+              </div>
+              <input class="control__range" type="range" id="cols" min="1" max="4" step="1" value="3" aria-label="Columns (slider)">
+            </div>
+
+            <div class="control">
+              <div class="control__head">
+                <label class="control__label" for="width-number">Section width</label>
+                <span class="control__input">
+                  <input class="control__number" type="number" id="width-number" min="240" step="1" value="1100" inputmode="numeric">
+                  <span class="control__unit">px</span>
+                </span>
+              </div>
+              <input class="control__range" type="range" id="width" min="240" max="1100" step="1" value="1100" aria-label="Section width (slider)">
+            </div>
+
+            <div class="cq-group__switch">
+              <label class="switch">
+                <input class="switch__input" type="checkbox" id="wide">
+                <span class="switch__label">First card spans 2 columns</span>
+              </label>
+            </div>
           </div>
-          <input class="control__range" type="range" id="cols" min="1" max="4" step="1" value="3" aria-label="Columns (slider)">
-        </div>
+        </fieldset>
 
-        <div class="control">
-          <div class="control__head">
-            <label class="control__label" for="min-number">Min</label>
-            <span class="control__input">
-              <input class="control__number" type="number" id="min-number" min="10" max="32" step="1" value="18" inputmode="numeric">
-              <span class="control__unit">px</span>
-            </span>
+        <fieldset class="cq-group cq-group--unit">
+          <legend class="cq-group__title" id="unit-title">Measured by <span class="cq-group__hint">the unit both titles use</span></legend>
+          <div class="cq-units">
+            <label class="cq-unit">
+              <input class="cq-unit__input" type="radio" name="unit" value="cqi" checked>
+              <span class="cq-unit__name">cqi</span>
+              <span class="cq-unit__text">container width, follows text direction</span>
+            </label>
+            <label class="cq-unit">
+              <input class="cq-unit__input" type="radio" name="unit" value="cqw">
+              <span class="cq-unit__name">cqw</span>
+              <span class="cq-unit__text">container width</span>
+            </label>
+            <label class="cq-unit">
+              <input class="cq-unit__input" type="radio" name="unit" value="vw">
+              <span class="cq-unit__name">vw</span>
+              <span class="cq-unit__text">screen width</span>
+            </label>
           </div>
-          <input class="control__range" type="range" id="min" min="10" max="32" step="1" value="18" aria-label="Min (slider)">
-        </div>
+        </fieldset>
 
-        <div class="control">
-          <div class="control__head">
-            <label class="control__label" for="size-number">Size</label>
-            <span class="control__input">
-              <input class="control__number" type="number" id="size-number" min="1" max="15" step="0.5" value="7" inputmode="decimal">
-              <span class="control__unit" id="size-unit">cqi</span>
-            </span>
+        <fieldset class="cq-group cq-group--heading">
+          <legend class="cq-group__title" id="heading-title">Section title <code class="cq-group__formula" id="heading-formula"></code></legend>
+          <div class="controls">
+            <div class="control">
+              <div class="control__head">
+                <label class="control__label" for="hmin-number">Min</label>
+                <span class="control__input">
+                  <input class="control__number" type="number" id="hmin-number" min="16" max="48" step="1" value="28" inputmode="numeric">
+                  <span class="control__unit">px</span>
+                </span>
+              </div>
+              <input class="control__range" type="range" id="hmin" min="16" max="48" step="1" value="28" aria-label="Min (slider)">
+            </div>
+
+            <div class="control">
+              <div class="control__head">
+                <label class="control__label" for="hsize-number">Preferred</label>
+                <span class="control__input">
+                  <input class="control__number" type="number" id="hsize-number" min="1" max="15" step="0.5" value="6" inputmode="decimal">
+                  <span class="control__unit" id="hsize-unit">cqi</span>
+                </span>
+              </div>
+              <input class="control__range" type="range" id="hsize" min="1" max="15" step="0.5" value="6" aria-label="Preferred (slider)">
+            </div>
+
+            <div class="control">
+              <div class="control__head">
+                <label class="control__label" for="hmax-number">Max</label>
+                <span class="control__input">
+                  <input class="control__number" type="number" id="hmax-number" min="40" max="120" step="1" value="72" inputmode="numeric">
+                  <span class="control__unit">px</span>
+                </span>
+              </div>
+              <input class="control__range" type="range" id="hmax" min="40" max="120" step="1" value="72" aria-label="Max (slider)">
+            </div>
           </div>
-          <input class="control__range" type="range" id="size" min="1" max="15" step="0.5" value="7" aria-label="Size (slider)">
-        </div>
+        </fieldset>
 
-        <div class="control">
-          <div class="control__head">
-            <label class="control__label" for="max-number">Max</label>
-            <span class="control__input">
-              <input class="control__number" type="number" id="max-number" min="24" max="96" step="1" value="48" inputmode="numeric">
-              <span class="control__unit">px</span>
-            </span>
+        <fieldset class="cq-group cq-group--title">
+          <legend class="cq-group__title" id="card-title">Card title <code class="cq-group__formula" id="formula"></code></legend>
+          <div class="controls">
+            <div class="control">
+              <div class="control__head">
+                <label class="control__label" for="min-number">Min</label>
+                <span class="control__input">
+                  <input class="control__number" type="number" id="min-number" min="10" max="32" step="1" value="18" inputmode="numeric">
+                  <span class="control__unit">px</span>
+                </span>
+              </div>
+              <input class="control__range" type="range" id="min" min="10" max="32" step="1" value="18" aria-label="Min (slider)">
+            </div>
+
+            <div class="control">
+              <div class="control__head">
+                <label class="control__label" for="size-number">Preferred</label>
+                <span class="control__input">
+                  <input class="control__number" type="number" id="size-number" min="1" max="15" step="0.5" value="7" inputmode="decimal">
+                  <span class="control__unit" id="size-unit">cqi</span>
+                </span>
+              </div>
+              <input class="control__range" type="range" id="size" min="1" max="15" step="0.5" value="7" aria-label="Preferred (slider)">
+            </div>
+
+            <div class="control">
+              <div class="control__head">
+                <label class="control__label" for="max-number">Max</label>
+                <span class="control__input">
+                  <input class="control__number" type="number" id="max-number" min="24" max="96" step="1" value="48" inputmode="numeric">
+                  <span class="control__unit">px</span>
+                </span>
+              </div>
+              <input class="control__range" type="range" id="max" min="24" max="96" step="1" value="48" aria-label="Max (slider)">
+            </div>
           </div>
-          <input class="control__range" type="range" id="max" min="24" max="96" step="1" value="48" aria-label="Max (slider)">
-        </div>
-
-        <div class="control">
-          <label class="control__label" for="unit">Unit</label>
-          <select class="control__field" id="unit">
-            <option value="cqi" selected>cqi · card</option>
-            <option value="cqw">cqw · card</option>
-            <option value="vw">vw · screen</option>
-          </select>
-        </div>
-
-        <div class="control">
-          <div class="control__head">
-            <label class="control__label" for="width-number">Container</label>
-            <span class="control__input">
-              <input class="control__number" type="number" id="width-number" min="240" step="1" value="1100" inputmode="numeric">
-              <span class="control__unit">px</span>
-            </span>
-          </div>
-          <input class="control__range" type="range" id="width" min="240" max="1100" step="1" value="1100" aria-label="Container width (slider)">
-        </div>
-
+        </fieldset>
       </div>
 
       <section class="stage" aria-labelledby="stage-title">
         <div class="stage__bar">
           <h2 class="stage__heading" id="stage-title">Section <span class="stage__hint">· drag the corner ↘ to resize</span></h2>
-          <label class="switch">
-            <input class="switch__input" type="checkbox" id="wide">
-            <span class="switch__label">First card spans 2 columns</span>
-          </label>
         </div>
         <div class="frame" id="frame">
           <div class="cq-section" id="section">
