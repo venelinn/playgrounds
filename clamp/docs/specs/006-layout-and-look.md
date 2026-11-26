@@ -2,7 +2,7 @@
 
 ## Structure (top to bottom)
 
-1. **Header:** gradient title "Clamp Playground", the intro text, and the **?** and theme buttons in the top-right corner.
+1. **Header:** a back button to all playgrounds (top-left), gradient title "Clamp Playground", the intro text, and the **?** and theme buttons (top-right).
 2. **Controls:** one row with Min, Preferred, Max, Viewport, Font family and Weight. Wraps on smaller screens (cards are at least 140px wide).
 3. **Warning** (only when Min > Max).
 4. **Preview** card.

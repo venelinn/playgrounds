@@ -1,0 +1,197 @@
+/* Subgrid playground. Grid, stage and controls come from ../shared/. */
+
+.subgrid-playground {
+  --app-width: 1240px;
+}
+
+/* ---------- Cards that share the grid's rows ---------- */
+
+.sub-grid[data-subgrid="true"] {
+  --_sub-span: span 4;
+  --_sub-rows: subgrid;
+  --_sub-display: grid;
+}
+
+.sub-grid > .demo-grid__cell {
+  display: var(--_sub-display, block);
+  grid-row: var(--_sub-span, auto);
+  grid-template-rows: var(--_sub-rows, none);
+  grid-template-columns: minmax(0, 1fr); /* keep the card inside its column, even when subgrid can't apply */
+  row-gap: 0;
+}
+
+.sub-grid[data-show-rows="true"] {
+  --_part-outline: 1px dashed var(--accent);
+}
+
+.offer {
+  display: grid;
+  min-width: 0;
+  grid-row: var(--_sub-span, auto);
+  grid-template-rows: var(--_sub-rows, auto auto 1fr auto);
+  row-gap: 10px;
+  height: 100%;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--field);
+}
+
+.offer > * {
+  outline: var(--_part-outline, 0 solid transparent);
+  outline-offset: 2px;
+}
+
+.offer__thumb {
+  aspect-ratio: 5 / 2;
+  border-radius: 8px;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent) 55%, transparent),
+    color-mix(in srgb, var(--accent2) 55%, transparent)
+  );
+}
+
+.offer__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.offer__text {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.offer__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-block-start: 8px;
+  border-block-start: 1px solid var(--line);
+}
+
+.offer__price {
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.offer__cta {
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.subgrid-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 10px;
+  align-items: start;
+}
+
+.subgrid-info__steps {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-inline-start: 20px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.subgrid-info__steps strong {
+  color: var(--accent);
+}
+
+.subgrid-info__steps code,
+.stage__explain code {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+/* ---------- Page-specific bits ---------- */
+
+.control--switches {
+  align-content: center;
+  gap: 8px;
+}
+
+/* Editable card text */
+.offer__title[contenteditable],
+.offer__text[contenteditable] {
+  --_edit-line: transparent;
+
+  border-radius: 4px;
+  box-shadow: 0 1px 0 var(--_edit-line);
+  cursor: text;
+}
+
+.offer__title[contenteditable]:hover,
+.offer__title[contenteditable]:focus,
+.offer__text[contenteditable]:hover,
+.offer__text[contenteditable]:focus {
+  --_edit-line: var(--accent);
+}
+
+/* ---------- Form: columns subgrid ---------- */
+
+.form-demo {
+  --_field-columns: max-content minmax(0, 1fr) max-content;
+
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr) max-content;
+  gap: 10px 12px;
+  max-width: 760px;
+  margin: 0;
+  padding: 16px;
+  border: 1px dashed var(--accent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--accent) 4%, transparent);
+}
+
+.form-demo[data-subgrid="true"] {
+  --_field-columns: subgrid;
+}
+
+.form-demo__field {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: var(--_field-columns);
+  align-items: center;
+  gap: 12px;
+}
+
+.form-demo__label {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.form-demo__input {
+  --_input-border: var(--line);
+
+  min-width: 0;
+  padding: 7px 10px;
+  border: 1px solid var(--_input-border);
+  border-radius: 8px;
+  background: var(--field);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.85rem;
+}
+
+.form-demo__input:focus-visible {
+  --_input-border: var(--accent);
+}
+
+.form-demo__hint {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.stage--form .card {
+  max-width: 760px;
+}

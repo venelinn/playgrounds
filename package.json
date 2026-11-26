@@ -1,0 +1,14 @@
+{
+  "name": "css-playgrounds",
+  "private": true,
+  "description": "Small interactive playgrounds for modern CSS.",
+  "scripts": {
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "serve": "npx serve ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.9"
+  }
+}

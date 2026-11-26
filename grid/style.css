@@ -1,0 +1,135 @@
+/* Grid playground. Tokens, panel and controls come from ../shared/. */
+
+.grid-playground {
+  --app-width: 1240px;
+}
+
+/* ---------- Cell content: reacts to the cell, not the page ---------- */
+
+.item {
+  --_item-columns: minmax(0, 1fr);
+  --_item-thumb-ratio: 5 / 2;
+  --_stacked-display: inline;
+  --_side-display: none;
+
+  display: grid;
+  grid-template-columns: var(--_item-columns);
+  gap: 12px;
+  align-items: center;
+  height: 100%;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--field);
+}
+
+@container grid-item (min-width: 300px) {
+  .item {
+    --_item-columns: 88px minmax(0, 1fr);
+    --_item-thumb-ratio: 1;
+    --_stacked-display: none;
+    --_side-display: inline;
+  }
+}
+
+.item__thumb {
+  aspect-ratio: var(--_item-thumb-ratio);
+  border-radius: 8px;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent) 55%, transparent),
+    color-mix(in srgb, var(--accent2) 55%, transparent)
+  );
+}
+
+.item__body {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.item__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.item__meta {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.item__layout {
+  color: var(--accent);
+  font-size: 0.7rem;
+}
+
+.item__layout--stacked {
+  display: var(--_stacked-display);
+}
+
+.item__layout--side {
+  display: var(--_side-display);
+}
+
+/* ---------- Bottom row ---------- */
+
+.compare {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 10px;
+}
+
+.stats {
+  display: grid;
+  margin: 0;
+}
+
+.stats__row {
+  display: grid;
+  gap: 2px;
+  padding-block: 6px;
+  border-block-end: 1px solid var(--line);
+}
+
+.stats__row:last-child {
+  border-block-end: 0;
+}
+
+.stats dt {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.stats dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.stats strong {
+  color: var(--accent);
+}
+
+/* Pointer to the Subgrid playground */
+.grid-note {
+  margin: 0;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.grid-note a {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.grid-note code {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}

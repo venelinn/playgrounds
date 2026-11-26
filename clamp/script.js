@@ -1,9 +1,7 @@
 const $ = (id) => document.getElementById(id);
 
 const KEYS = ["min", "pref", "max", "vw"];
-const fields = Object.fromEntries(
-  KEYS.map((key) => [key, { range: $(key), number: $(`${key}-number`) }])
-);
+const fields = Object.fromEntries(KEYS.map((key) => [key, { range: $(key), number: $(`${key}-number`) }]));
 
 const fontSelect = $("font");
 const customFont = $("custom-font");
@@ -85,7 +83,15 @@ function injectStylesheet(href) {
     link.rel = "stylesheet";
     link.href = href;
     link.addEventListener("load", () => resolve(true), { once: true });
-    link.addEventListener("error", () => { link.remove(); injected.delete(href); resolve(false); }, { once: true });
+    link.addEventListener(
+      "error",
+      () => {
+        link.remove();
+        injected.delete(href);
+        resolve(false);
+      },
+      { once: true },
+    );
     document.head.append(link);
   });
 }
@@ -94,8 +100,9 @@ function injectStylesheet(href) {
 async function loadGoogleFamily(name) {
   const family = encodeURIComponent(name).replace(/%20/g, "+");
   const base = `https://fonts.googleapis.com/css2?family=${family}`;
-  return (await injectStylesheet(`${base}:wght@100..900&display=swap`))
-    || (await injectStylesheet(`${base}&display=swap`));
+  return (
+    (await injectStylesheet(`${base}:wght@100..900&display=swap`)) || (await injectStylesheet(`${base}&display=swap`))
+  );
 }
 
 // A font is "available" if text in it measures differently from the bare fallbacks.
@@ -124,7 +131,8 @@ async function familiesFromCssUrl(url) {
   const u = new URL(url);
   if (u.hostname === "fonts.googleapis.com") {
     // css2: family=A:wght@..&family=B   |   css (v1): family=A:400|B
-    return u.searchParams.getAll("family")
+    return u.searchParams
+      .getAll("family")
       .flatMap((f) => f.split("|"))
       .map((f) => f.split(":")[0].trim())
       .filter(Boolean);
@@ -157,7 +165,7 @@ async function resolveCustomFont() {
   const url = extractUrl(raw);
 
   // 1) Google Fonts specimen page: fonts.google.com/specimen/Roboto+Slab
-  const specimen = url && url.match(/fonts\.google\.com\/specimen\/([^/?#]+)/);
+  const specimen = url?.match(/fonts\.google\.com\/specimen\/([^/?#]+)/);
   if (specimen) {
     const name = decodeURIComponent(specimen[1].replace(/\+/g, " "));
     setStatus(`Loading ${name}…`);
@@ -255,7 +263,9 @@ copyButton.addEventListener("click", async () => {
   } catch {
     copyButton.textContent = "Copy failed";
   }
-  setTimeout(() => { copyButton.textContent = "Copy"; }, 1400);
+  setTimeout(() => {
+    copyButton.textContent = "Copy";
+  }, 1400);
 });
 
 /* ---------- Render ---------- */
@@ -281,12 +291,10 @@ function update() {
   preview.dataset.state = state;
 
   warning.hidden = min <= max;
-  warning.textContent = min > max
-    ? `Min (${fmt(min)}px) is larger than max (${fmt(max)}px). clamp() will always return the min.`
-    : "";
+  warning.textContent =
+    min > max ? `Min (${fmt(min)}px) is larger than max (${fmt(max)}px). clamp() will always return the min.` : "";
 
-  cssCode.textContent =
-`font-family: ${fontFamily};
+  cssCode.textContent = `font-family: ${fontFamily};
 font-weight: ${weight};
 font-size: clamp(${fmt(min)}px, ${fmt(pref)}vw, ${fmt(max)}px);
 /* rem: clamp(${round(min / ROOT_PX, 4)}rem, ${fmt(pref)}vw, ${round(max / ROOT_PX, 4)}rem) */`;
@@ -332,7 +340,10 @@ function drawGraph({ min, pref, max, vw, size, fluidStart, fluidEnd }) {
   zoneMax.setAttribute("x", String(round(xEnd)));
   zoneMax.setAttribute("width", String(round(W - xEnd)));
 
-  [[lineMin, min], [lineMax, max]].forEach(([line, px]) => {
+  [
+    [lineMin, min],
+    [lineMax, max],
+  ].forEach(([line, px]) => {
     line.setAttribute("y1", String(round(toY(px))));
     line.setAttribute("y2", String(round(toY(px))));
   });
@@ -348,38 +359,7 @@ function drawGraph({ min, pref, max, vw, size, fluidStart, fluidEnd }) {
 
 update();
 
-/* ---------- Theme ---------- */
-
-const themeToggle = $("theme-toggle");
-const root = document.documentElement;
-
-function syncThemeLabel() {
-  const next = root.dataset.theme === "dark" ? "light" : "dark";
-  themeToggle.setAttribute("aria-label", `Switch to ${next} theme`);
-  themeToggle.title = `Switch to ${next} theme`;
-}
-
-themeToggle.addEventListener("click", () => {
-  root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark";
-  try { localStorage.setItem("clamp-theme", root.dataset.theme); } catch {}
-  syncThemeLabel();
-});
-
-// Follow system changes until the user picks a theme explicitly.
-matchMedia("(prefers-color-scheme: light)").addEventListener("change", (e) => {
-  let saved = null;
-  try { saved = localStorage.getItem("clamp-theme"); } catch {}
-  if (saved) return;
-  root.dataset.theme = e.matches ? "light" : "dark";
-  syncThemeLabel();
-});
-
-syncThemeLabel();
-
 /* ---------- Walkthrough (driver.js) ---------- */
-
-const tourButton = $("tour-start");
-const TOUR_KEY = "clamp-tour-done";
 
 const TOUR_STEPS = [
   {
@@ -392,21 +372,24 @@ const TOUR_STEPS = [
     element: ".app__intro",
     popover: {
       title: "What clamp() does",
-      description: "Text scales with the screen, but never below a <strong>min</strong> size or above a <strong>max</strong> size.",
+      description:
+        "Text scales with the screen, but never below a <strong>min</strong> size or above a <strong>max</strong> size.",
     },
   },
   {
     element: ".control:has(#min)",
     popover: {
       title: "Min",
-      description: "The smallest the text can get, on small screens. Drag the slider or type an exact value in the box.",
+      description:
+        "The smallest the text can get, on small screens. Drag the slider or type an exact value in the box.",
     },
   },
   {
     element: ".control:has(#pref)",
     popover: {
       title: "Preferred",
-      description: "How much the text grows with the screen, as a % of its width. <strong>5vw</strong> on a 900px screen = 45px.",
+      description:
+        "How much the text grows with the screen, as a % of its width. <strong>5vw</strong> on a 900px screen = 45px.",
     },
   },
   {
@@ -427,7 +410,8 @@ const TOUR_STEPS = [
     element: ".control:has(#font)",
     popover: {
       title: "Font family",
-      description: "Pick a font, or choose <strong>Custom…</strong> and type the name of a font on your computer or paste a Google Fonts link.",
+      description:
+        "Pick a font, or choose <strong>Custom…</strong> and type the name of a font on your computer or paste a Google Fonts link.",
     },
   },
   {
@@ -448,14 +432,16 @@ const TOUR_STEPS = [
     element: ".preview",
     popover: {
       title: "Preview",
-      description: "Your text at the size clamp() gives for this screen. The badge shows the size: green when it's at min, red when it's at max.",
+      description:
+        "Your text at the size clamp() gives for this screen. The badge shows the size: green when it's at min, red when it's at max.",
     },
   },
   {
     element: ".card:has(.graph)",
     popover: {
       title: "Size across screens",
-      description: "Text size from 320px to 1920px screens. Shaded areas are where it's stuck at min (green) or max (red). The dot is your current viewport.",
+      description:
+        "Text size from 320px to 1920px screens. Shaded areas are where it's stuck at min (green) or max (red). The dot is your current viewport.",
     },
   },
   {
@@ -473,43 +459,21 @@ const TOUR_STEPS = [
     },
   },
   {
+    element: ".compat",
+    popover: {
+      title: "Browser support",
+      description:
+        "Which browsers support clamp(), since which version, and whether yours does. Links go to Can I use and MDN.",
+    },
+  },
+  {
     element: ".app__actions",
     popover: {
       title: "Replay or switch theme",
-      description: "Use <strong>?</strong> to see this tour again, and the other button to switch between light and dark.",
+      description:
+        "Use <strong>?</strong> to see this tour again, and the other button to switch between light and dark.",
     },
   },
 ];
 
-function markTourDone() {
-  try { localStorage.setItem(TOUR_KEY, "1"); } catch {}
-}
-
-function startTour() {
-  const tour = window.driver.js.driver({
-    steps: TOUR_STEPS,
-    showProgress: true,
-    progressText: "{{current}} of {{total}}",
-    nextBtnText: "Next",
-    prevBtnText: "Back",
-    doneBtnText: "Done",
-    popoverClass: "tour",
-    overlayOpacity: 0.6,
-    stagePadding: 6,
-    stageRadius: 12,
-    popoverOffset: 12,
-    smoothScroll: true,
-    onDestroyed: markTourDone,
-  });
-  tour.drive();
-}
-
-if (window.driver?.js) {
-  tourButton.addEventListener("click", startTour);
-  let seen = null;
-  try { seen = localStorage.getItem(TOUR_KEY); } catch {}
-  if (!seen) setTimeout(startTour, 400);
-} else {
-  // CDN didn't load (offline): no tour, so no button.
-  tourButton.hidden = true;
-}
+window.setupTour({ key: "clamp-tour-done", steps: TOUR_STEPS });

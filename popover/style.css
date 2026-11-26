@@ -1,0 +1,276 @@
+/* Popover playground. The placement rules are injected by placement.js (same source as the CSS output). */
+
+.popover-playground {
+  --app-width: 1240px;
+}
+
+/* ---------- Placement picker: 12 spots around a "button" ---------- */
+
+.control--placement {
+  min-width: 0;
+  margin: 0;
+  border: 0;
+}
+
+/* A floated legend sits inside the card instead of on its border */
+.control--placement .control__label {
+  float: left;
+  width: 100%;
+  padding: 0;
+}
+
+.control--placement strong {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.picker {
+  display: grid;
+  grid-template-columns: repeat(5, 22px);
+  grid-template-rows: repeat(5, 22px);
+  gap: 3px;
+  justify-content: center;
+}
+
+.picker__anchor {
+  display: grid;
+  grid-area: 2 / 2 / 5 / 5;
+  place-items: center;
+  border: 1px dashed var(--line);
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-size: 0.65rem;
+}
+
+.picker__spot {
+  display: grid;
+  grid-area: var(--row) / var(--col);
+  place-items: center;
+  margin: 0;
+  cursor: pointer;
+}
+
+.picker__spot input {
+  --_dot: var(--line);
+
+  width: 12px;
+  height: 12px;
+  margin: 0;
+  border-radius: 50%;
+  background: var(--_dot);
+  appearance: none;
+  cursor: pointer;
+}
+
+.picker__spot input:hover {
+  --_dot: var(--text-muted);
+}
+
+.picker__spot input:checked {
+  --_dot: var(--accent);
+}
+
+.control__field + .control__hint {
+  margin-block-start: -2px;
+}
+
+/* ---------- Popover primitive (from the component) ---------- */
+
+.popover-root {
+  display: inline-flex;
+  position: relative;
+  /* Each instance needs its own anchor name (script.js sets --anchor). The content inherits it
+     through the DOM, which still applies while the popover paints in the top layer. */
+  anchor-name: var(--anchor);
+}
+
+.popover-content {
+  /* Without Popover API support an unstyled [popover] would render permanently expanded:
+     hide it, so the failure mode is "never opens" instead of "always open". */
+  --_display: none;
+  --_opacity: 0;
+  --_shift: var(--_from, 0 0);
+  --_duration: var(--animation, 0ms);
+  --popover-offset: var(--offset, 0.25rem);
+
+  display: var(--_display);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  overflow: visible;
+  opacity: var(--_opacity);
+  translate: var(--_shift);
+  transition:
+    opacity var(--_duration),
+    translate var(--_duration),
+    display var(--_duration) allow-discrete,
+    overlay var(--_duration) allow-discrete;
+}
+
+.popover-content:popover-open {
+  --_display: block;
+  --_opacity: 1;
+  --_shift: 0 0;
+}
+
+/* Where the open animation starts: slide in from the button's side */
+.popover-content[data-placement^="top"] {
+  --_from: 0 6px;
+}
+
+.popover-content[data-placement^="bottom"] {
+  --_from: 0 -6px;
+}
+
+.popover-content[data-placement^="left"] {
+  --_from: 6px 0;
+}
+
+.popover-content[data-placement^="right"] {
+  --_from: -6px 0;
+}
+
+@starting-style {
+  .popover-content:popover-open {
+    --_opacity: 0;
+    --_shift: var(--_from, 0 0);
+  }
+}
+
+.app[data-flip="false"] {
+  --_fallbacks: none;
+}
+
+/* ---------- Triggers and popover surface ---------- */
+
+.trigger {
+  --_trigger-bg: var(--field);
+  --_trigger-border: var(--line);
+
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1px solid var(--_trigger-border);
+  border-radius: 8px;
+  background: var(--_trigger-bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.trigger:hover {
+  --_trigger-border: var(--accent);
+}
+
+.trigger--main {
+  --_trigger-bg: var(--accent);
+  --_trigger-border: var(--accent);
+
+  color: var(--on-accent);
+  font-weight: 600;
+  cursor: grab;
+  touch-action: none;
+}
+
+.trigger--main:active {
+  cursor: grabbing;
+}
+
+.trigger__grip {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+.surface {
+  display: grid;
+  gap: 2px;
+  min-width: 10rem;
+  max-width: 16rem;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--field);
+  box-shadow: 0 10px 40px var(--shadow);
+  font-size: 0.85rem;
+}
+
+.surface strong {
+  font-family: var(--font-mono);
+  color: var(--accent);
+}
+
+.surface span {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+/* ---------- Builder playfield ---------- */
+
+.playfield {
+  position: relative;
+  height: 340px;
+  border: 1px dashed var(--accent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--accent) 4%, transparent);
+}
+
+/* Positioned with left/top only: Firefox anchors to the box *before* transforms,
+   so a translated anchor puts the popover off by the translate amount. */
+.popover-root--drag {
+  position: absolute;
+  left: var(--x, calc(50% - 70px));
+  top: var(--y, calc(50% - 18px));
+}
+
+/* ---------- Matrix and clipped box (from the pen) ---------- */
+
+.matrix {
+  --_matrix-cols: 3;
+  --_matrix-gap: 7rem 3rem;
+  --_matrix-padding: 6rem 1rem;
+
+  display: grid;
+  grid-template-columns: repeat(var(--_matrix-cols), auto);
+  justify-content: space-around;
+  place-items: center;
+  gap: var(--_matrix-gap);
+  padding: var(--_matrix-padding);
+}
+
+.clipped {
+  width: min(18rem, 100%);
+  height: 5rem;
+  padding: 1rem;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* ---------- Code ---------- */
+
+.compare {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  gap: 10px;
+}
+
+.stage__heading code,
+.control__hint code {
+  color: var(--accent);
+  font-family: var(--font-mono);
+}
+
+@media (max-width: 700px) {
+  .matrix {
+    --_matrix-cols: 2;
+    --_matrix-gap: 6rem 1rem;
+    --_matrix-padding: 5rem 0;
+  }
+}

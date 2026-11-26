@@ -6,12 +6,12 @@ Let people set the three `clamp()` values and a pretend screen width, either by 
 
 ## Controls
 
-| Control | Unit | Slider range | Step | Default |
-| --- | --- | --- | --- | --- |
-| Min | px | 8 to 80 | 1 | 20 |
-| Preferred | vw | 0.5 to 15 | 0.1 | 5 |
-| Max | px | 24 to 200 | 1 | 80 |
-| Viewport | px | 320 to 1920 | 1 | 900 |
+| Control   | Unit | Slider range | Step | Default |
+| --------- | ---- | ------------ | ---- | ------- |
+| Min       | px   | 8 to 80      | 1    | 20      |
+| Preferred | vw   | 0.5 to 15    | 0.1  | 5       |
+| Max       | px   | 24 to 200    | 1    | 80      |
+| Viewport  | px   | 320 to 1920  | 1    | 900     |
 
 Each control is a card with the label and a number box (with its unit) on top and the slider below.
 

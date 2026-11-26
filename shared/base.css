@@ -1,0 +1,227 @@
+/* Shared by every playground: color tokens (dark + light), base page, corner icon buttons. */
+
+:root {
+  --bg: #060b17;
+  --bg-glow-1: #1e1b4b;
+  --bg-glow-2: #3d55dc;
+  --panel: #0f172ad9;
+  --card: #020617;
+  --field: #0f172a;
+  --line: #1e293b;
+  --accent: #22d3ee;
+  --accent2: #8b5cf6;
+  --on-accent: #04212a;
+  --text: #e2e8f0;
+  --text-muted: #94a3b8;
+  --min: #22c55e;
+  --max: #ef4444;
+  --pref: #eab308;
+  --warning-bg: #3a2a05;
+  --warning-text: #fde68a;
+  --shadow: #000000b3;
+
+  --font-ui: system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --bg: #eef1f8;
+  --bg-glow-1: #c7d2fe;
+  --bg-glow-2: #bae6fd;
+  --panel: #ffffffd9;
+  --card: #f5f7fb;
+  --field: #ffffff;
+  --line: #d5dce8;
+  --accent: #0891b2;
+  --accent2: #7c3aed;
+  --on-accent: #ffffff;
+  --text: #0f172a;
+  --text-muted: #5b6a80;
+  --min: #16a34a;
+  --max: #dc2626;
+  --pref: #ca8a04;
+  --warning-bg: #fef3c7;
+  --warning-text: #78350f;
+  --shadow: #0f172a26;
+
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 3vw, 32px);
+  font-family: var(--font-ui);
+  color: var(--text);
+  background:
+    radial-gradient(circle at 20% 20%, var(--bg-glow-1) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, var(--bg-glow-2) 0%, transparent 40%), var(--bg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- App shell: panel, title, intro (shared by every page) ---------- */
+/* Pages tune it with --app-width, --app-gap, --app-padding. */
+
+.app {
+  position: relative;
+  width: min(var(--app-width, 1400px), 100%);
+  display: grid;
+  gap: var(--app-gap, 14px);
+  padding: var(--app-padding, clamp(16px, 3vw, 28px));
+  border-radius: 20px;
+  background: var(--panel);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 25px 80px var(--shadow);
+}
+
+/* Muted gradient border. A masked pseudo-element keeps the translucent panel see-through. */
+.app::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    120deg,
+    color-mix(in srgb, var(--accent) 35%, transparent),
+    color-mix(in srgb, var(--accent2) 35%, transparent)
+  );
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  pointer-events: none;
+}
+
+.app__title {
+  margin: 0;
+  /* room for the corner buttons; pages with one button per side use 44px */
+  padding-inline: var(--app-title-gutter, 84px);
+  text-align: center;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  background-clip: text;
+  color: transparent;
+}
+
+.app__intro {
+  max-width: 68ch;
+  margin: -6px auto 4px;
+  text-align: center;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  text-wrap: pretty;
+}
+
+.app__intro strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.app__intro code {
+  white-space: nowrap;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: var(--card);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+/* ---------- Corner buttons (theme toggle, help, back) ---------- */
+
+.app__actions {
+  position: absolute;
+  inset-block-start: clamp(12px, 2.5vw, 22px);
+  inset-inline-end: clamp(12px, 2.5vw, 22px);
+  display: flex;
+  gap: 6px;
+}
+
+.app__action {
+  --_action-bg: transparent;
+  --_action-display: grid;
+
+  display: var(--_action-display);
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--_action-bg);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.app__action[hidden] {
+  --_action-display: none;
+}
+
+.app__action:hover {
+  --_action-bg: var(--card);
+}
+
+.app__icon {
+  --_icon-display: none;
+
+  display: var(--_icon-display);
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.app__icon--help {
+  --_icon-display: block;
+}
+
+/* show the icon of the theme you would switch TO */
+:root[data-theme="dark"] .app__icon--sun,
+:root[data-theme="light"] .app__icon--moon {
+  --_icon-display: block;
+}
+
+/* Top-left "back to all playgrounds" button; same look as .app__action */
+.app__nav {
+  position: absolute;
+  inset-block-start: clamp(12px, 2.5vw, 22px);
+  inset-inline-start: clamp(12px, 2.5vw, 22px);
+}
+
+a.app__action {
+  text-decoration: none;
+}
+
+.app__icon--back {
+  --_icon-display: block;
+}
+
+/* Text for screen readers only (e.g. labels of icon-only links) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}

@@ -1,0 +1,212 @@
+/* ---------- Preview ---------- */
+
+.preview {
+  --_badge-color: var(--accent);
+
+  display: grid;
+  gap: 8px;
+  padding: 14px 18px 44px;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  /* layers: soft glow from the top, dot grid, card fill, gradient border */
+  background:
+    radial-gradient(
+      ellipse 60% 70% at 50% 0%,
+      color-mix(in srgb, var(--_badge-color) 14%, transparent),
+      transparent 70%
+    )
+    padding-box,
+    radial-gradient(circle, color-mix(in srgb, var(--text) 9%, transparent) 1px, transparent 1.5px) 0 0 / 18px 18px
+    padding-box,
+    linear-gradient(var(--card), var(--card)) padding-box,
+    linear-gradient(120deg, var(--accent), var(--accent2)) border-box;
+  box-shadow: 0 10px 40px -12px color-mix(in srgb, var(--_badge-color) 45%, transparent);
+  transition: box-shadow 0.3s;
+}
+
+.preview[data-state="min"] {
+  --_badge-color: var(--min);
+}
+
+.preview[data-state="max"] {
+  --_badge-color: var(--max);
+}
+
+.preview__bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.preview__input {
+  --_input-line: var(--line);
+  --_input-color: var(--text-muted);
+
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 4px 0;
+  border: 0;
+  border-bottom: 1px dashed var(--_input-line);
+  background: transparent;
+  color: var(--_input-color);
+  font: inherit;
+  font-size: 0.8rem;
+  outline: none;
+}
+
+.preview__input:focus-visible {
+  --_input-line: var(--accent);
+  --_input-color: var(--text);
+}
+
+.preview__badge {
+  flex: 0 0 auto;
+  padding: 2px 8px;
+  border: 1px solid var(--_badge-color);
+  border-radius: 999px;
+  color: var(--_badge-color);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+}
+
+.preview__text {
+  margin: 16px 0 0;
+  text-align: center;
+  font-family: var(--preview-font, var(--font-ui));
+  font-size: var(--preview-size, 2rem);
+  font-weight: var(--preview-weight, 800);
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+  transition: font-size 0.2s;
+}
+
+/* ---------- Bottom row: graph | CSS | values ---------- */
+
+.compare {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 10px;
+}
+
+/* ---------- Graph ---------- */
+
+.graph {
+  position: relative;
+}
+
+.graph__svg {
+  display: block;
+  width: 100%;
+  height: 120px;
+  overflow: visible;
+}
+
+.graph__zone {
+  --_zone-color: var(--min);
+
+  fill: color-mix(in srgb, var(--_zone-color) 14%, transparent);
+}
+
+.graph__zone--max {
+  --_zone-color: var(--max);
+}
+
+.graph__guide {
+  --_guide-color: var(--line);
+
+  stroke: var(--_guide-color);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+  vector-effect: non-scaling-stroke;
+}
+
+.graph__guide--min {
+  --_guide-color: var(--min);
+}
+
+.graph__guide--max {
+  --_guide-color: var(--max);
+}
+
+.graph__guide--vw {
+  --_guide-color: var(--pref);
+}
+
+.graph__curve {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.graph__dot {
+  position: absolute;
+  left: calc(100% * var(--dot-x, 0));
+  top: calc(100% * var(--dot-y, 0));
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--card);
+  border-radius: 50%;
+  background: var(--pref);
+  translate: -50% -50%;
+  pointer-events: none;
+}
+
+.graph__axis {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+/* ---------- Values ---------- */
+
+.stats {
+  display: grid;
+  margin: 0;
+}
+
+.stats__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-block: 4px;
+  border-block-end: 1px solid var(--line);
+}
+
+.stats__row:last-child {
+  border-block-end: 0;
+}
+
+.stats dt {
+  opacity: 0.8;
+}
+
+.stats dd {
+  margin: 0;
+  font-family: var(--font-mono);
+}
+
+.stats strong {
+  color: var(--accent);
+}
+
+.control__hint {
+  --_hint-color: var(--text-muted);
+
+  margin: 0;
+  font-size: 0.7rem;
+  line-height: 1.3;
+  color: var(--_hint-color);
+  overflow-wrap: anywhere;
+}
+
+.control__hint[data-tone="ok"] {
+  --_hint-color: var(--min);
+}
+
+.control__hint[data-tone="error"] {
+  --_hint-color: var(--max);
+}

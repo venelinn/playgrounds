@@ -1,0 +1,140 @@
+/* Grid component mirror + resizable demo stage. Shared by the Grid and Subgrid playgrounds. */
+
+.control--switch {
+  align-content: space-between;
+}
+
+.control__hint {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  line-height: 1.4;
+}
+
+.control__hint code {
+  color: var(--accent);
+  font-family: var(--font-mono);
+}
+
+/* ---------- Stage ---------- */
+
+.stage {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle, color-mix(in srgb, var(--text) 8%, transparent) 1px, transparent 1.5px) 0 0 / 18px 18px,
+    var(--card);
+}
+
+.stage__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.stage__summary {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.stage__summary strong {
+  color: var(--accent);
+}
+
+.stage__hint {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* The resizable "container" the grid lives in */
+.frame {
+  width: min(var(--frame-width, 100%), 100%);
+  min-width: 240px;
+  min-height: 120px;
+  padding: 12px;
+  border: 1px dashed var(--accent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--accent) 4%, transparent);
+  overflow: auto;
+  resize: horizontal;
+}
+
+/* ---------- The grid (same CSS as the component) ---------- */
+
+.demo-grid {
+  --_grid-gap: var(--_gap, 16px);
+  --_min-column-width: var(--_col-min-width, 260px);
+
+  display: grid;
+  grid-template-columns: var(
+      --_grid-template-columns,
+      repeat(
+        auto-fill,
+        minmax(
+          max(var(--_min-column-width), calc((100% - (var(--_grid-cols) - 1) * var(--_grid-gap)) / var(--_grid-cols))),
+          1fr
+        )
+      )
+    );
+  gap: var(--_grid-gap);
+}
+
+.demo-grid__cell {
+  max-width: 100%;
+  container-type: var(--_grid-container-type, inline-size);
+  container-name: grid-item;
+}
+
+.demo-grid[data-containers="false"] {
+  --_grid-container-type: normal;
+}
+
+/* ---------- Stage extras: heading, switches, explanation, live check ---------- */
+
+.stage__heading {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.stage__toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.stage__explain {
+  max-width: 80ch;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.stage__explain strong {
+  color: var(--text);
+}
+
+.stage__check {
+  --_check-color: var(--max);
+
+  margin: 0;
+  color: var(--_check-color);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.stage__check[data-ok="true"] {
+  --_check-color: var(--min);
+}
+
+.frame--static {
+  resize: none;
+}
+
+/* Cells and cards share the grid's rows when subgrid is on */

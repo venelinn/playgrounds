@@ -1,0 +1,264 @@
+/* Index page. Tokens, panel, title and intro come from shared/base.css. */
+
+.home {
+  --app-width: 1100px;
+  --app-title-gutter: 44px;
+  --app-gap: 24px;
+  --app-padding: clamp(24px, 5vw, 44px) clamp(16px, 4vw, 40px);
+}
+
+.home__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ---------- Tile (one per playground) ---------- */
+
+.tile {
+  --_tile-border: var(--line);
+  --_tile-lift: 0;
+  --_arrow-shift: 0;
+
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+  border: 1px solid var(--_tile-border);
+  border-radius: 16px;
+  background: var(--card);
+  color: var(--text);
+  text-decoration: none;
+  overflow: hidden;
+  translate: 0 var(--_tile-lift);
+  transition:
+    translate 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.tile:hover,
+.tile:focus-visible {
+  --_tile-border: var(--accent);
+  --_tile-lift: -3px;
+  --_arrow-shift: 4px;
+}
+
+.tile__preview {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 14px;
+  height: 140px;
+  padding: 20px;
+  border-block-end: 1px solid var(--line);
+  background:
+    radial-gradient(circle, color-mix(in srgb, var(--text) 9%, transparent) 1px, transparent 1.5px) 0 0 / 16px 16px,
+    radial-gradient(ellipse 70% 80% at 50% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%);
+}
+
+/* Clamp preview: the same word at min, preferred and max */
+.tile__preview--clamp {
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* Siblings preview: five mini cards, hue spread by position */
+.tile__preview--siblings {
+  align-items: center;
+  gap: 8px;
+}
+
+.tile__preview--siblings span {
+  --_i: 1;
+  --_n: 5;
+
+  width: 38px;
+  height: 52px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background:
+    radial-gradient(
+      circle at 100% 0,
+      hsl(calc(360deg / var(--_n) * (var(--_i) - 1)) 85% 60% / 0.55) 0 14px,
+      transparent 15px
+    ),
+    var(--field);
+}
+
+/* Grid preview: 4 columns, 6 cells (second row half full) */
+.tile__preview--grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-content: center;
+  gap: 8px;
+  padding-inline: 32px;
+}
+
+.tile__preview--grid span {
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent) 30%, var(--field)),
+    color-mix(in srgb, var(--accent2) 30%, var(--field))
+  );
+}
+
+/* Subgrid preview: three mini cards with different text lengths; their price bars sit on one line */
+.tile__preview--subgrid {
+  align-items: stretch;
+  gap: 10px;
+}
+
+.mini {
+  display: grid;
+  grid-template-rows: 30px 1fr 8px;
+  gap: 6px;
+  width: 56px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--field);
+}
+
+.mini__img {
+  border-radius: 4px;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent) 45%, var(--field)),
+    color-mix(in srgb, var(--accent2) 45%, var(--field))
+  );
+}
+
+.mini__lines {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+}
+
+.mini__lines span {
+  height: 5px;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--text) 18%, transparent);
+}
+
+.mini__price {
+  border-radius: 3px;
+  background: var(--accent);
+}
+
+/* Popover preview: a button with a popover under it */
+.tile__preview--popover {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.pop-btn {
+  padding: 5px 12px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.pop-box {
+  display: grid;
+  gap: 5px;
+  width: 110px;
+  padding: 9px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--field);
+  box-shadow: 0 8px 24px var(--shadow);
+}
+
+.pop-box span {
+  height: 5px;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--text) 18%, transparent);
+}
+
+.pop-box span:first-child {
+  width: 60%;
+  background: var(--accent);
+}
+
+.tile__preview--clamp span:nth-child(1) {
+  font-size: 1.25rem;
+  color: var(--text-muted);
+}
+
+.tile__preview--clamp span:nth-child(2) {
+  font-size: 2.25rem;
+}
+
+.tile__preview--clamp span:nth-child(3) {
+  font-size: 3.5rem;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  background-clip: text;
+  color: transparent;
+}
+
+.tile__preview--siblings span:nth-child(2) {
+  --_i: 2;
+}
+.tile__preview--siblings span:nth-child(3) {
+  --_i: 3;
+}
+.tile__preview--siblings span:nth-child(4) {
+  --_i: 4;
+}
+.tile__preview--siblings span:nth-child(5) {
+  --_i: 5;
+}
+
+.tile__body {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  padding: 16px 48px 18px 18px;
+}
+
+.tile__name {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.tile__text {
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.tile__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-block-start: 6px;
+}
+
+.tile__tags code {
+  padding: 2px 7px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+}
+
+.tile__arrow {
+  position: absolute;
+  inset-block-end: 18px;
+  inset-inline-end: 18px;
+  color: var(--accent);
+  font-size: 1.1rem;
+  translate: var(--_arrow-shift) 0;
+  transition: translate 0.2s ease;
+}

@@ -1,0 +1,162 @@
+/* "Browser support" panel (shared/compat.js). Load after base.css. */
+
+.compat {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border-radius: 10px;
+  background: var(--card);
+}
+
+.compat__title {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.compat__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+  gap: 10px;
+}
+
+.compat__feature {
+  container-type: inline-size;
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.compat__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.compat__name {
+  min-width: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.compat__badge {
+  --_badge-color: var(--max);
+
+  flex: 0 0 auto;
+  padding: 2px 8px;
+  border: 1px solid var(--_badge-color);
+  border-radius: 999px;
+  color: var(--_badge-color);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.compat__badge[data-tone="widely"] {
+  --_badge-color: var(--min);
+}
+
+.compat__badge[data-tone="newly"] {
+  --_badge-color: var(--accent);
+}
+
+.compat__note {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.compat__you {
+  --_you-color: var(--max);
+
+  margin-inline-start: 6px;
+  color: var(--_you-color);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.compat__you[data-ok="true"] {
+  --_you-color: var(--min);
+}
+
+.compat__browsers {
+  display: grid;
+  grid-template-columns: repeat(var(--_browser-cols, 3), minmax(0, 1fr));
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@container (min-width: 620px) {
+  .compat__browsers {
+    --_browser-cols: 6;
+  }
+}
+
+.compat__browser {
+  --_browser-color: var(--max);
+
+  display: grid;
+  gap: 2px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--_browser-color) 10%, transparent);
+}
+
+.compat__browser[data-ok="true"] {
+  --_browser-color: var(--min);
+}
+
+.compat__browser-name {
+  color: var(--text-muted);
+  font-size: 0.7rem;
+}
+
+.compat__version {
+  color: var(--_browser-color);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.compat__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0;
+  font-size: 0.75rem;
+}
+
+.compat__links a {
+  --_link-line: transparent;
+
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: var(--_link-line);
+  text-underline-offset: 3px;
+}
+
+.compat__links a:hover {
+  --_link-line: currentColor;
+}
+
+.compat__source {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+}
+
+.compat__extra {
+  margin: 0;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: var(--warning-bg);
+  color: var(--warning-text);
+  font-size: 0.72rem;
+  line-height: 1.4;
+}

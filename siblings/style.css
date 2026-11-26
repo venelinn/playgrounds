@@ -1,0 +1,340 @@
+/* Siblings playground. Tokens, panel and controls come from ../shared/. */
+
+/* Typed so each card computes its own numbers and children inherit the result. */
+@property --i {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 1;
+}
+
+@property --n {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 1;
+}
+
+:root {
+  --swatch-l: 60%;
+  --icon-l: 66%;
+}
+
+:root[data-theme="light"] {
+  --swatch-l: 55%;
+  --icon-l: 42%;
+}
+
+.siblings {
+  --app-width: 1240px;
+}
+
+.support {
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--warning-bg);
+  color: var(--warning-text);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+/* ---------- Extra controls ---------- */
+
+.control__range--hue {
+  accent-color: hsl(var(--hue-start, 0deg) var(--sat, 85%) var(--swatch-l));
+}
+
+.control--actions {
+  align-content: space-between;
+}
+
+.replay {
+  --_replay-bg: transparent;
+  --_replay-color: var(--accent);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  background: var(--_replay-bg);
+  color: var(--_replay-color);
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.replay:hover {
+  --_replay-bg: var(--accent);
+  --_replay-color: var(--on-accent);
+}
+
+.replay__icon {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---------- Stage (the demo from the video) ---------- */
+
+.stage {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  padding: clamp(24px, 4vw, 44px) clamp(14px, 3vw, 32px);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--card);
+}
+
+.stage__pill {
+  padding: 6px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--field);
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.stage__title {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.stage__text {
+  max-width: 58ch;
+  margin: 0 0 18px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  text-align: center;
+  text-wrap: pretty;
+}
+
+.products {
+  --_reveal: cardReveal;
+
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  gap: 20px;
+}
+
+/* ---------- Product card ---------- */
+
+.product {
+  /* Position and total: CSS functions where supported; script.js sets them inline otherwise. */
+  --i: sibling-index();
+  --n: sibling-count();
+  --hue: calc(360deg / var(--n) * (var(--i) - 1) + var(--hue-start, 0deg));
+  --_color: hsl(var(--hue) var(--sat, 85%) var(--swatch-l));
+  --_border: var(--line);
+  --_shadow: 0 0 0 transparent;
+  --_lift: 0;
+  --_arrow-shift: 0;
+  --_blob-opacity: 0.12;
+
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  min-height: 250px;
+  padding: 24px 24px 22px;
+  border: 1px solid var(--_border);
+  border-radius: 22px;
+  background: linear-gradient(150deg, var(--field), var(--card));
+  box-shadow: var(--_shadow);
+  overflow: hidden;
+  counter-reset: product var(--i) total var(--n);
+  translate: 0 var(--_lift);
+  transition:
+    border-color 0.25s,
+    box-shadow 0.25s,
+    translate 0.25s;
+  animation: var(--_reveal) 0.8s both;
+  animation-delay: calc((var(--i) - 1) * var(--stagger, 100ms));
+  outline-offset: 4px;
+}
+
+.product:hover,
+.product:focus-visible {
+  --_border: hsl(var(--hue) var(--sat, 85%) var(--swatch-l) / 0.55);
+  --_shadow: 0 20px 40px -15px hsl(var(--hue) var(--sat, 85%) var(--swatch-l) / 0.2);
+  --_lift: -4px;
+  --_arrow-shift: 4px;
+  --_blob-opacity: 0.2;
+}
+
+/* Colored circle in the top-right corner */
+.product::before {
+  content: "";
+  position: absolute;
+  inset-block-start: -60px;
+  inset-inline-end: -40px;
+  width: 160px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--_color);
+  opacity: var(--_blob-opacity);
+  transition: opacity 0.25s;
+  pointer-events: none;
+}
+
+/* Big faint number: 01, 02… straight from sibling-index() */
+.product::after {
+  content: counter(product, decimal-leading-zero);
+  position: absolute;
+  inset-block-end: 6px;
+  inset-inline-end: 22px;
+  color: color-mix(in srgb, var(--text) 8%, transparent);
+  font-size: 4.5rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  pointer-events: none;
+}
+
+.product__icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--text) 4%, transparent);
+  color: hsl(var(--hue) var(--sat, 85%) var(--icon-l));
+}
+
+.product__icon svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.product__title {
+  margin: 22px 0 6px;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.product__text {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.product__arrow {
+  margin-block-start: 18px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  translate: var(--_arrow-shift) 0;
+  transition: translate 0.25s;
+}
+
+/* "3 / 8" badge, written by CSS counters (no JS text) */
+.product__badge {
+  --_badge-display: none;
+
+  display: var(--_badge-display);
+  position: absolute;
+  inset-block-start: 16px;
+  inset-inline-end: 16px;
+  padding: 3px 9px;
+  border: 1px solid var(--_color);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--_color);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.product__badge::before {
+  content: counter(product) " / " counter(total);
+}
+
+.products[data-show-values="true"] .product__badge {
+  --_badge-display: block;
+}
+
+@keyframes cardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .products {
+    --_reveal: none;
+  }
+}
+
+/* ---------- Bottom row: CSS | this card ---------- */
+
+.compare {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 10px;
+}
+
+.card__hint {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.stats {
+  display: grid;
+  margin: 0;
+}
+
+.stats__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-block: 4px;
+  border-block-end: 1px solid var(--line);
+}
+
+.stats__row:last-child {
+  border-block-end: 0;
+}
+
+.stats dt {
+  opacity: 0.8;
+}
+
+.stats dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  text-align: end;
+}
+
+.stats__swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-inline-end: 6px;
+  border-radius: 50%;
+  background: var(--swatch);
+  vertical-align: baseline;
+}
