@@ -363,4 +363,14 @@ const TOUR_STEPS = [
 ];
 
 window.setupTour({ key: "cq-units-tour-done", steps: TOUR_STEPS });
-window.setupInfoTips(TOUR_STEPS.filter((step) => step.info));
+// Info-only (not a tour step): what cqi means, next to the unit's name.
+const CQI_INFO = {
+  info: { target: '.cq-unit:has([value="cqi"]) .cq-unit__name' },
+  popover: {
+    title: "cqi",
+    description:
+      "cqi stands for <strong>container query inline size</strong> and is a relative CSS length unit equal to 1% of a query container's inline dimension. In standard horizontal writing modes like English, <strong>1cqi</strong> equals 1% of the container's width.",
+  },
+};
+
+window.setupInfoTips([...TOUR_STEPS.filter((step) => step.info), CQI_INFO]);

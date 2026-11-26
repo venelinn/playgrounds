@@ -75,6 +75,7 @@
   font-family: var(--font-mono);
   font-size: 0.85rem;
   font-weight: 700;
+  white-space: nowrap; /* keeps the cqi "i" icon on the same line */
 }
 
 .cq-unit__text {
