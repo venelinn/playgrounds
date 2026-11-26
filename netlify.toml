@@ -1,0 +1,18 @@
+# Netlify: builds the EJS pages with Vite and publishes dist/.
+# Node comes from .nvmrc, pnpm from "packageManager" in package.json.
+
+[build]
+  command = "pnpm build"
+  publish = "dist"
+
+# Hashed files (dist/assets/*-<hash>.css|js) never change: cache them for a year.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

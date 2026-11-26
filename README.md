@@ -30,6 +30,10 @@ pnpm preview    # serve dist/ to check the build
 
 `dist/` is plain HTML, CSS and JS with relative links, so it can go on any static host (GitHub Pages, Netlify) or in a sub-folder. It needs to be served over http(s): browsers don't run its scripts when the file is opened straight from disk.
 
+## Deploy (Netlify)
+
+`netlify.toml` has the settings: build command `pnpm build`, publish folder `dist`, plus cache headers for the hashed files in `dist/assets/`. Netlify picks up Node from `.nvmrc` and pnpm from `packageManager` in `package.json`, so it builds with the same versions as your machine.
+
 ## Linting and formatting
 
 [Biome](https://biomejs.dev/) lints and formats the JavaScript, CSS, Markdown and JSON. It doesn't read `.ejs` templates.
