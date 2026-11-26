@@ -20,6 +20,7 @@
 
 .stage {
   display: grid;
+  grid-template-columns: minmax(0, 1fr); /* so the frame's 100% is the stage's width, not its own */
   gap: 14px;
   padding: 16px;
   border: 1px solid var(--line);
@@ -54,6 +55,7 @@
 /* The resizable "container" the grid lives in */
 .frame {
   width: min(var(--frame-width, 100%), 100%);
+  max-width: 100%; /* dragging the corner sets an inline width: never past the section */
   min-width: 240px;
   min-height: 120px;
   padding: 12px;

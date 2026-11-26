@@ -1,0 +1,108 @@
+/* Discreet "i" info icons + tooltips (shared/info.js). Load after base.css. */
+
+.info {
+  --_info-color: var(--text-muted);
+  --_info-border: color-mix(in srgb, var(--text-muted) 55%, transparent);
+  --_info-opacity: 0.7;
+
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  margin-inline-start: 5px;
+  border: 1px solid var(--_info-border);
+  border-radius: 50%;
+  color: var(--_info-color);
+  font-family: Georgia, serif;
+  font-size: 9px;
+  font-style: italic;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: 1px;
+  opacity: var(--_info-opacity);
+  cursor: help;
+  user-select: none;
+  anchor-name: var(--info-anchor);
+  transition:
+    opacity 0.15s,
+    color 0.15s,
+    border-color 0.15s;
+}
+
+.info:hover,
+.info[data-open="true"] {
+  --_info-color: var(--accent);
+  --_info-border: var(--accent);
+  --_info-opacity: 1;
+}
+
+/* Corner variant: top-right of a card that has no heading */
+.has-info-corner {
+  --_card-padding-end: 32px; /* cards (shared/controls.css) keep content clear of the icon */
+
+  position: relative;
+}
+
+.info--corner {
+  position: absolute;
+  inset-block-start: 10px;
+  inset-inline-end: 10px;
+  margin: 0;
+}
+
+/* ---------- Tooltip ---------- */
+
+.info-tip {
+  display: none;
+  max-width: min(260px, calc(100vw - 32px));
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--field);
+  color: var(--text);
+  box-shadow: 0 12px 32px var(--shadow);
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.info-tip:popover-open {
+  display: grid;
+  gap: 3px;
+}
+
+.info-tip__title {
+  font-size: 0.8rem;
+}
+
+.info-tip__text {
+  color: var(--text-muted);
+}
+
+.info-tip__text strong {
+  color: var(--text);
+}
+
+.info-tip__text code {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+/* Next to its icon, above it by default, flipping when there's no room.
+   Without anchor positioning it opens centered (the browser default for popovers). */
+@supports (anchor-name: --a) {
+  .info-tip {
+    position-anchor: var(--info-anchor);
+    position-area: top;
+    position-try-fallbacks:
+      flip-block,
+      flip-inline,
+      bottom span-right,
+      top span-right;
+    inset: auto;
+    margin: 6px;
+  }
+}

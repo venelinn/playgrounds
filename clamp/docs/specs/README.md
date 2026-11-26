@@ -10,6 +10,7 @@ What the Clamp Playground does and how each part should behave. One file per fea
 | [004 Themes](004-themes.md)                         | Light and dark themes and the toggle                                     |
 | [005 Walkthrough](005-walkthrough.md)               | First-visit guided tour (driver.js)                                      |
 | [006 Layout and look](006-layout-and-look.md)       | Page structure, intro copy, visual rules                                 |
+| [007 Info icons](007-info-icons.md)                 | "i" icons with tooltips, from the tour's wording                         |
 
 ## Status
 

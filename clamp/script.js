@@ -378,6 +378,7 @@ const TOUR_STEPS = [
   },
   {
     element: ".control:has(#min)",
+    info: { target: 'label[for="min-number"]' },
     popover: {
       title: "Min",
       description:
@@ -386,6 +387,7 @@ const TOUR_STEPS = [
   },
   {
     element: ".control:has(#pref)",
+    info: { target: 'label[for="pref-number"]' },
     popover: {
       title: "Preferred",
       description:
@@ -394,6 +396,7 @@ const TOUR_STEPS = [
   },
   {
     element: ".control:has(#max)",
+    info: { target: 'label[for="max-number"]' },
     popover: {
       title: "Max",
       description: "The biggest the text can get, on large screens.",
@@ -401,6 +404,7 @@ const TOUR_STEPS = [
   },
   {
     element: ".control:has(#vw)",
+    info: { target: 'label[for="vw-number"]' },
     popover: {
       title: "Viewport",
       description: "A pretend screen width. Change it to see your text at phone, tablet or desktop size.",
@@ -408,6 +412,7 @@ const TOUR_STEPS = [
   },
   {
     element: ".control:has(#font)",
+    info: { target: 'label[for="font"]' },
     popover: {
       title: "Font family",
       description:
@@ -416,6 +421,7 @@ const TOUR_STEPS = [
   },
   {
     element: ".control:has(#weight)",
+    info: { target: 'label[for="weight"]' },
     popover: {
       title: "Weight",
       description: "How bold the text is, from 300 (light) to 900 (black).",
@@ -430,6 +436,7 @@ const TOUR_STEPS = [
   },
   {
     element: ".preview",
+    info: { target: ".preview__bar" },
     popover: {
       title: "Preview",
       description:
@@ -438,6 +445,7 @@ const TOUR_STEPS = [
   },
   {
     element: ".card:has(.graph)",
+    info: { target: ".card:has(.graph)", corner: true },
     popover: {
       title: "Size across screens",
       description:
@@ -446,6 +454,7 @@ const TOUR_STEPS = [
   },
   {
     element: ".card:has(#css-code)",
+    info: { target: ".card:has(#css-code) .card__title" },
     popover: {
       title: "CSS for developers",
       description: "The code that gives this result. Copy it into a ticket or your design spec.",
@@ -453,6 +462,7 @@ const TOUR_STEPS = [
   },
   {
     element: ".card:has(#values)",
+    info: { target: ".card:has(#values)", corner: true },
     popover: {
       title: "The numbers",
       description: "Exact sizes for the current viewport, and the screen widths where the text is still growing.",
@@ -460,6 +470,7 @@ const TOUR_STEPS = [
   },
   {
     element: ".compat",
+    info: { target: "#compat-title" },
     popover: {
       title: "Browser support",
       description:
@@ -477,3 +488,6 @@ const TOUR_STEPS = [
 ];
 
 window.setupTour({ key: "clamp-tour-done", steps: TOUR_STEPS });
+
+// Info icons: the steps that say where their icon goes (same wording as the tour).
+window.setupInfoTips(TOUR_STEPS.filter((step) => step.info));

@@ -12,6 +12,7 @@ Based on the component library's `Popover` primitive (`Popover.module.scss`) and
 - **HTML and CSS output** with Copy: just the rules for the chosen placement, its `@position-try` fallbacks and the animation.
 - **All twelve placements** side by side (`manual`, open several to compare).
 - **Escapes `overflow: hidden`:** a popover inside a clipped box isn't cut off.
+- **Info icons:** a small "i" next to each control and section; hover for a short explanation, click or tap to pin it (`../shared/info.js`, same wording as the walkthrough).
 - **Walkthrough** (13 steps) and **Browser support** for popover, anchor positioning, `popover="hint"` and `@starting-style`.
 
 ## How placement works
@@ -26,6 +27,10 @@ Based on the component library's `Popover` primitive (`Popover.module.scss`) and
 ## Gotcha: don't transform the anchor
 
 Firefox anchors to the button's box **before** transforms, Chrome and Safari after. A button moved with `translate` (or inside a translated wrapper) puts the popover off by that amount in Firefox. The builder positions its draggable button with `left`/`top` for this reason.
+
+## Flipped popovers stay flipped
+
+Once a popover has flipped to a fallback, browsers keep it there while it still fits, even after you scroll back to where the first choice would fit again. That's the spec's "last successful position", so popovers don't jump back and forth while scrolling. The readout reports what's on screen, so it can say "flipped" with room to spare.
 
 ## Files
 

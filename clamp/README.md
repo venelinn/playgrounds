@@ -24,6 +24,7 @@ No build step and no dependencies: plain HTML, CSS and JavaScript.
 - **Warning** when min is larger than max (`clamp()` then always returns the min).
 - **Light and dark themes:** follows your system setting until you pick one with the toggle; your choice is remembered.
 - **Browser support:** live Baseline status and the first supported version per browser for `clamp()`, plus a check of your own browser, with links to Can I use and MDN (`../shared/compat.js`).
+- **Info icons:** a small "i" next to each control and card. Hover shows what it does, click or tap pins it, Esc or a click elsewhere closes it. Same wording as the walkthrough (`../shared/info.js`).
 - **Walkthrough:** a short guided tour starts on the first visit and explains each part. Replay it any time with the **?** button. Built with [driver.js](https://driverjs.com/) (loaded from a CDN; if it can't load, the button is hidden).
 
 ## Run it

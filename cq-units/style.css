@@ -1,0 +1,150 @@
+/* Container Units playground. Tokens, panel, controls and stage come from ../shared/. */
+
+.cq-playground {
+  --app-width: 1240px;
+}
+
+/* ---------- Section: its big title uses the section's width ---------- */
+
+.cq-section {
+  container-type: inline-size;
+  display: grid;
+  gap: 8px;
+}
+
+.cq-section__eyebrow {
+  margin: 0;
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cq-section__title {
+  margin: 0;
+  font-size: clamp(28px, var(--heading-size, 6cqi), 72px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.cq-section__readout {
+  justify-self: start;
+  margin-block-end: 10px;
+  padding: 3px 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+/* ---------- Cards ---------- */
+
+.cq-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr));
+  gap: 16px;
+}
+
+.cq-grid[data-wide="true"] > :first-child {
+  grid-column: span min(2, var(--cols, 3));
+}
+
+/* The card is the container: its title's cqi/cqw are a % of the card's width */
+.cq-card {
+  --_card-state: var(--accent);
+
+  container-type: inline-size;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--field);
+}
+
+.cq-card[data-state="min"] {
+  --_card-state: var(--min);
+}
+
+.cq-card[data-state="max"] {
+  --_card-state: var(--max);
+}
+
+/* Also sized by the card: 30% of its width, kept between 80px and 140px */
+.cq-card__media {
+  height: clamp(80px, 30cqi, 140px);
+  border-radius: 10px;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent) 55%, transparent),
+    color-mix(in srgb, var(--accent2) 55%, transparent)
+  );
+}
+
+.cq-card__eyebrow {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.cq-card__title {
+  margin: 0;
+  font-size: clamp(var(--min-size, 18px), var(--size, 7cqi), var(--max-size, 48px));
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+}
+
+.cq-card__text {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.cq-card__readout {
+  justify-self: start;
+  padding: 3px 9px;
+  border: 1px solid var(--_card-state);
+  border-radius: 999px;
+  color: var(--_card-state);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+/* ---------- Bottom row ---------- */
+
+.compare {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 10px;
+}
+
+.tips {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-inline-start: 18px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.tips strong {
+  color: var(--text);
+}
+
+.tips code {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.stage__heading .stage__hint {
+  font-weight: 400;
+}

@@ -21,6 +21,7 @@ Based on the CSSnippets video "New CSS Functions Explained: sibling-index() & si
 - **CSS output** with Copy, updated live.
 - **Card inspector:** hover or focus a card to see its index, count, hue, delay and number, with the math.
 - **Browser support:** live Baseline status and first supported versions for `sibling-index()` / `sibling-count()` and `@property`, plus a check of your own browser (`../shared/compat.js`).
+- **Info icons:** a small "i" next to each control and section; hover for a short explanation, click or tap to pin it (`../shared/info.js`, same wording as the walkthrough).
 - **Walkthrough:** a 12-step guided tour on the first visit; replay it with the **?** button (`../shared/tour.js`, driver.js). If driver.js can't load, the button is hidden.
 - Light and dark themes, plus a back button to the index.
 

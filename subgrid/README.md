@@ -12,6 +12,7 @@ Cards in a row rarely have the same amount of content, so their titles, text and
 - **Live check:** says whether text and prices in the first row line up, and why not.
 - **How it works**, plus **CSS** and **React** output with Copy.
 - **Form (columns subgrid):** four fields whose inputs line up when the fields share the form's columns; its own switch and live check.
+- **Info icons:** a small "i" next to each control and section; hover for a short explanation, click or tap to pin it (`../shared/info.js`, same wording as the walkthrough).
 - **Walkthrough** (11 steps, `../shared/tour.js`) and **Browser support** for subgrid and grid.
 
 ## The catch with our grid component

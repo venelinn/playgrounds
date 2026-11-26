@@ -6,13 +6,14 @@ No build step and no dependencies: plain HTML, CSS and JavaScript.
 
 ## Playgrounds
 
-| Playground                      | What it shows                                                                                                                   | Docs                                                                  |
-| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| [Clamp](clamp/index.html)       | Fluid type with `clamp(min, preferred, max)`: sizes, fonts, graph, CSS output                                                   | [README](clamp/README.md) · [specs](clamp/docs/specs/README.md)       |
-| [Siblings](siblings/index.html) | `sibling-index()` and `sibling-count()`: cards that pick their own color, number and animation delay                            | [README](siblings/README.md) · [specs](siblings/docs/specs/README.md) |
-| [Grid](grid/index.html)         | Up to N columns that drop when too narrow, no breakpoints; cells as containers. Based on our component library's `Row` / `Cell` | [README](grid/README.md) · [specs](grid/docs/specs/README.md)         |
-| [Subgrid](subgrid/index.html)   | Cards and form fields that share their parent grid's rows or columns so their parts line up; the container catch                | [README](subgrid/README.md) · [specs](subgrid/docs/specs/README.md)   |
-| [Popover](popover/index.html)   | Native popovers placed with anchor positioning: 12 placements, flipping, types, animation, no JavaScript needed                 | [README](popover/README.md) · [specs](popover/docs/specs/README.md)   |
+| Playground                             | What it shows                                                                                                                   | Docs                                                                  |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| [Clamp](clamp/index.html)              | Fluid type with `clamp(min, preferred, max)`: sizes, fonts, graph, CSS output                                                   | [README](clamp/README.md) · [specs](clamp/docs/specs/README.md)       |
+| [Siblings](siblings/index.html)        | `sibling-index()` and `sibling-count()`: cards that pick their own color, number and animation delay                            | [README](siblings/README.md) · [specs](siblings/docs/specs/README.md) |
+| [Grid](grid/index.html)                | Up to N columns that drop when too narrow, no breakpoints; cells as containers. Based on our component library's `Row` / `Cell` | [README](grid/README.md) · [specs](grid/docs/specs/README.md)         |
+| [Subgrid](subgrid/index.html)          | Cards and form fields that share their parent grid's rows or columns so their parts line up; the container catch                | [README](subgrid/README.md) · [specs](subgrid/docs/specs/README.md)   |
+| [Popover](popover/index.html)          | Native popovers placed with anchor positioning: 12 placements, flipping, types, animation, no JavaScript needed                 | [README](popover/README.md) · [specs](popover/docs/specs/README.md)   |
+| [Container Units](cq-units/index.html) | Titles sized with `cqi`: each follows its own card (or section), not the screen                                                 | [README](cq-units/README.md) · [specs](cq-units/docs/specs/README.md) |
 
 The [index page](index.html) links to all of them.
 
@@ -54,6 +55,8 @@ shared/
   theme.js        Light/dark toggle, one saved choice for every page
   tour.css
   tour.js         First-visit walkthrough (driver.js): window.setupTour({ key, steps })
+  info.css
+  info.js         Discreet "i" info icons with tooltips: window.setupInfoTips(steps), reusing the tour's wording
   grid.css        The component library's Row/Cell grid CSS + resizable demo stage (Grid, Subgrid)
   frame.js        Keeps a width slider, the frame's drag corner and the window in sync
 clamp/            Clamp playground (index.html, style.css, script.js, README, docs/specs)
@@ -61,6 +64,7 @@ siblings/         Siblings playground (same layout)
 grid/             Grid playground (same layout)
 subgrid/          Subgrid playground (same layout)
 popover/          Popover playground (same layout)
+cq-units/         Container Units playground (same layout)
 ```
 
 ## Adding a playground

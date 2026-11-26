@@ -257,95 +257,107 @@ update();
 
 /* ---------- Walkthrough (shared/tour.js) ---------- */
 
-window.setupTour({
-  key: "siblings-tour-done",
-  steps: [
-    {
-      popover: {
-        title: "Welcome to the Siblings Playground",
-        description: "A quick tour of what each part does. It takes about 30 seconds.",
-      },
+const TOUR_STEPS = [
+  {
+    popover: {
+      title: "Welcome to the Siblings Playground",
+      description: "A quick tour of what each part does. It takes about 30 seconds.",
     },
-    {
-      element: ".app__intro",
-      popover: {
-        title: "Two new CSS functions",
-        description:
-          "<strong>sibling-index()</strong> is an element's position: 1, 2, 3… <strong>sibling-count()</strong> is how many siblings it has.",
-      },
+  },
+  {
+    element: ".app__intro",
+    popover: {
+      title: "Two new CSS functions",
+      description:
+        "<strong>sibling-index()</strong> is an element's position: 1, 2, 3… <strong>sibling-count()</strong> is how many siblings it has.",
     },
-    {
-      element: ".control:has(#count)",
-      popover: {
-        title: "Cards",
-        description: "Add or remove cards. Every card recolors and renumbers itself, because the count changed.",
-      },
+  },
+  {
+    element: ".control:has(#count)",
+    info: { target: 'label[for="count-number"]' },
+    popover: {
+      title: "Cards",
+      description: "Add or remove cards. Every card recolors and renumbers itself, because the count changed.",
     },
-    {
-      element: ".control:has(#stagger)",
-      popover: {
-        title: "Stagger",
-        description: "The pause between cards as they appear. Card 3 waits (3 − 1) × 100ms = 200ms.",
-      },
+  },
+  {
+    element: ".control:has(#stagger)",
+    info: { target: 'label[for="stagger-number"]' },
+    popover: {
+      title: "Stagger",
+      description: "The pause between cards as they appear. Card 3 waits (3 − 1) × 100ms = 200ms.",
     },
-    {
-      element: ".control:has(#hue)",
-      popover: {
-        title: "Start hue",
-        description: "Where on the color wheel the first card starts. The others are spread evenly around the wheel.",
-      },
+  },
+  {
+    element: ".control:has(#hue)",
+    info: { target: 'label[for="hue-number"]' },
+    popover: {
+      title: "Start hue",
+      description: "Where on the color wheel the first card starts. The others are spread evenly around the wheel.",
     },
-    {
-      element: ".control:has(#sat)",
-      popover: {
-        title: "Saturation",
-        description: "How strong the card colors are, from gray (0%) to vivid (100%).",
-      },
+  },
+  {
+    element: ".control:has(#sat)",
+    info: { target: 'label[for="sat-number"]' },
+    popover: {
+      title: "Saturation",
+      description: "How strong the card colors are, from gray (0%) to vivid (100%).",
     },
-    {
-      element: ".control--actions",
-      popover: {
-        title: "Show values and Replay",
-        description:
-          "<strong>Show values</strong> puts each card's position and total on it, like 3 / 8. <strong>Replay</strong> runs the entrance animation again.",
-      },
+  },
+  {
+    element: ".control--actions",
+    info: { target: ".control--actions", corner: true },
+    popover: {
+      title: "Show values and Replay",
+      description:
+        "<strong>Show values</strong> puts each card's position and total on it, like 3 / 8. <strong>Replay</strong> runs the entrance animation again.",
     },
-    {
-      element: ".products .product:first-child",
-      popover: {
-        title: "A card",
-        description:
-          "Each card works out its own color, big number and animation delay from its position. No extra classes, nothing set by hand.",
-      },
+  },
+  {
+    element: ".products .product:first-child",
+    info: { target: "#stage-title" },
+    popover: {
+      title: "A card",
+      description:
+        "Each card works out its own color, big number and animation delay from its position. No extra classes, nothing set by hand.",
     },
-    {
-      element: ".card:has(#css-code)",
-      popover: {
-        title: "CSS for developers",
-        description: "The code behind the cards, with your current settings. Copy it into a ticket or your spec.",
-      },
+  },
+  {
+    element: ".card:has(#css-code)",
+    info: { target: ".card:has(#css-code) .card__title" },
+    popover: {
+      title: "CSS for developers",
+      description: "The code behind the cards, with your current settings. Copy it into a ticket or your spec.",
     },
-    {
-      element: ".card:has(#inspect)",
-      popover: {
-        title: "Card inspector",
-        description: "Hover or focus a card to see its numbers and the math behind its color and delay.",
-      },
+  },
+  {
+    element: ".card:has(#inspect)",
+    info: { target: ".card:has(#inspect)", corner: true },
+    popover: {
+      title: "Card inspector",
+      description: "Hover or focus a card to see its numbers and the math behind its color and delay.",
     },
-    {
-      element: ".compat",
-      popover: {
-        title: "Browser support",
-        description: "Which browsers support these functions, since which version, and whether yours does.",
-      },
+  },
+  {
+    element: ".compat",
+    info: { target: "#compat-title" },
+    popover: {
+      title: "Browser support",
+      description: "Which browsers support these functions, since which version, and whether yours does.",
     },
-    {
-      element: ".app__actions",
-      popover: {
-        title: "Replay or switch theme",
-        description:
-          "Use <strong>?</strong> to see this tour again, and the other button to switch between light and dark.",
-      },
+  },
+  {
+    element: ".app__actions",
+    popover: {
+      title: "Replay or switch theme",
+      description:
+        "Use <strong>?</strong> to see this tour again, and the other button to switch between light and dark.",
     },
-  ],
-});
+  },
+];
+
+window.setupTour({ key: "siblings-tour-done", steps: TOUR_STEPS });
+
+// Info icons: tour steps that say where their icon goes, plus a few controls the tour doesn't cover.
+const INFO_ONLY = [];
+window.setupInfoTips([...TOUR_STEPS.filter((step) => step.info), ...INFO_ONLY]);

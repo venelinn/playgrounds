@@ -80,6 +80,7 @@ body {
   position: relative;
   width: min(var(--app-width, 1400px), 100%);
   display: grid;
+  grid-template-columns: minmax(0, 1fr); /* the panel's width wins: content can't widen it */
   gap: var(--app-gap, 14px);
   padding: var(--app-padding, clamp(16px, 3vw, 28px));
   border-radius: 20px;

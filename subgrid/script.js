@@ -222,92 +222,143 @@ apply();
 
 /* ---------- Walkthrough (shared/tour.js) ---------- */
 
-window.setupTour({
-  key: "subgrid-tour-done",
-  steps: [
-    {
-      popover: {
-        title: "Welcome to the Subgrid Playground",
-        description: "A quick tour of how subgrid lines things up. It takes about a minute.",
-      },
+const TOUR_STEPS = [
+  {
+    popover: {
+      title: "Welcome to the Subgrid Playground",
+      description: "A quick tour of how subgrid lines things up. It takes about a minute.",
     },
-    {
-      element: ".app__intro",
-      popover: {
-        title: "What subgrid does",
-        description:
-          "A card can use its parent grid's rows instead of making its own. Then the cards in a row share the same rows, so their parts line up.",
-      },
+  },
+  {
+    element: ".app__intro",
+    popover: {
+      title: "What subgrid does",
+      description:
+        "A card can use its parent grid's rows instead of making its own. Then the cards in a row share the same rows, so their parts line up.",
     },
-    {
-      element: ".controls .control:first-child",
-      popover: {
-        title: "The grid",
-        description:
-          "The same grid as the Grid playground: max columns, min width, gap and container width. Drag the corner of the cards to resize too.",
-      },
+  },
+  {
+    element: ".controls .control:first-child",
+    info: { target: 'label[for="cols-number"]' },
+    popover: {
+      title: "The grid",
+      description:
+        "The same grid as the Grid playground: max columns, min width, gap and container width. Drag the corner of the cards to resize too.",
     },
-    {
-      element: ".control--switches",
-      popover: {
-        title: "Switches",
-        description:
-          "<strong>Use subgrid</strong> turns it on and off. <strong>Show rows</strong> outlines the shared rows. <strong>Cells are containers</strong> shows the catch.",
-      },
+  },
+  {
+    element: ".control--switches",
+    popover: {
+      title: "Switches",
+      description:
+        "<strong>Use subgrid</strong> turns it on and off. <strong>Show rows</strong> outlines the shared rows. <strong>Cells are containers</strong> shows the catch.",
     },
-    {
-      element: "#cards .demo-grid__cell:nth-child(2)",
-      popover: {
-        title: "Edit a card",
-        description:
-          "Click a title or text and type. With subgrid on, the whole row grows with the longest one, and the other cards stay lined up.",
-      },
+  },
+  {
+    element: "#cards .demo-grid__cell:nth-child(2)",
+    info: { target: "#cards-title" },
+    popover: {
+      title: "Edit a card",
+      description:
+        "Click a title or text and type. With subgrid on, the whole row grows with the longest one, and the other cards stay lined up.",
     },
-    {
-      element: "#cards-check",
-      popover: {
-        title: "Live check",
-        description: "Says whether the text and prices in the first row line up, and why not when they don't.",
-      },
+  },
+  {
+    element: "#cards-check",
+    popover: {
+      title: "Live check",
+      description: "Says whether the text and prices in the first row line up, and why not when they don't.",
     },
-    {
-      element: ".subgrid-info .card:first-child",
-      popover: {
-        title: "How it works",
-        description:
-          "Five short steps, including the catch for our grid component: subgrid cards need <code>&lt;Cell cellNormal&gt;</code>.",
-      },
+  },
+  {
+    element: ".subgrid-info .card:first-child",
+    info: { target: ".subgrid-info .card:first-child .card__head" },
+    popover: {
+      title: "How it works",
+      description:
+        "Five short steps, including the catch for our grid component: subgrid cards need <code>&lt;Cell cellNormal&gt;</code>.",
     },
-    {
-      element: ".subgrid-info .card:nth-child(2)",
-      popover: {
-        title: "CSS and React",
-        description:
-          "The code for your current settings, as plain CSS and with the Row / Cell component. Copy either one.",
-      },
+  },
+  {
+    element: ".subgrid-info .card:nth-child(2)",
+    info: { target: ".subgrid-info .card:nth-child(2) .card__title" },
+    popover: {
+      title: "CSS and React",
+      description:
+        "The code for your current settings, as plain CSS and with the Row / Cell component. Copy either one.",
     },
-    {
-      element: ".stage--form",
-      popover: {
-        title: "Columns too",
-        description:
-          "Subgrid also lines up columns. Here every field shares the form's columns, so the inputs start in the same place.",
-      },
+  },
+  {
+    element: ".stage--form",
+    info: { target: "#form-title" },
+    popover: {
+      title: "Columns too",
+      description:
+        "Subgrid also lines up columns. Here every field shares the form's columns, so the inputs start in the same place.",
     },
-    {
-      element: ".compat",
-      popover: {
-        title: "Browser support",
-        description: "Which browsers support subgrid, since which version, and whether yours does.",
-      },
+  },
+  {
+    element: ".compat",
+    info: { target: "#compat-title" },
+    popover: {
+      title: "Browser support",
+      description: "Which browsers support subgrid, since which version, and whether yours does.",
     },
-    {
-      element: ".app__actions",
-      popover: {
-        title: "Replay or switch theme",
-        description:
-          "Use <strong>?</strong> to see this tour again, and the other button to switch between light and dark.",
-      },
+  },
+  {
+    element: ".app__actions",
+    popover: {
+      title: "Replay or switch theme",
+      description:
+        "Use <strong>?</strong> to see this tour again, and the other button to switch between light and dark.",
     },
-  ],
-});
+  },
+];
+
+window.setupTour({ key: "subgrid-tour-done", steps: TOUR_STEPS });
+
+// Info icons: tour steps that say where their icon goes, plus a few controls the tour doesn't cover.
+const INFO_ONLY = [
+  {
+    info: { target: 'label[for="min-number"]' },
+    popover: {
+      title: "Min width",
+      description: "The narrowest a card may get. With less room, the grid shows fewer cards per row.",
+    },
+  },
+  { info: { target: 'label[for="gap-number"]' }, popover: { title: "Gap", description: "The space between cards." } },
+  {
+    info: { target: 'label[for="width-number"]' },
+    popover: {
+      title: "Container",
+      description: "Pretend the cards sit in a narrower space. You can also drag the corner of the cards.",
+    },
+  },
+  {
+    info: { target: ".control--switches .switch:nth-child(1)" },
+    popover: {
+      title: "Use subgrid",
+      description: "On, the cards share the grid's rows so their parts line up. Off, each card sizes its own parts.",
+    },
+  },
+  {
+    info: { target: ".control--switches .switch:nth-child(2)" },
+    popover: { title: "Show rows", description: "Outlines each part of every card, so you can see the shared rows." },
+  },
+  {
+    info: { target: ".control--switches .switch:nth-child(3)" },
+    popover: {
+      title: "Cells are containers",
+      description:
+        "Turns each cell into a container (like our <code>Cell</code> by default). A container can't be a subgrid, so the cards stop lining up.",
+    },
+  },
+  {
+    info: { target: ".stage--form .switch" },
+    popover: {
+      title: "Use subgrid (form)",
+      description: "On, every field shares the form's columns, so all inputs start in the same place.",
+    },
+  },
+];
+window.setupInfoTips([...TOUR_STEPS.filter((step) => step.info), ...INFO_ONLY]);

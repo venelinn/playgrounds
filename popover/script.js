@@ -140,7 +140,8 @@ function updateReadout() {
   builderText.textContent = flipped ? `Asked for ${asked}, flipped` : "Anchored to the button";
 }
 
-const watch = () => requestAnimationFrame(updateReadout);
+// Two frames: the browser re-places (and may un-flip) the popover after layout, then we measure.
+const watch = () => requestAnimationFrame(() => requestAnimationFrame(updateReadout));
 
 /* ---------- Apply settings ---------- */
 
@@ -228,6 +229,7 @@ typeSelect.addEventListener("change", apply);
 flip.addEventListener("change", apply);
 builder.addEventListener("toggle", watch);
 window.addEventListener("scroll", watch, { passive: true });
+window.addEventListener("scrollend", watch);
 window.addEventListener("resize", watch);
 
 /* ---------- Drag the button around the playfield ---------- */
@@ -316,97 +318,118 @@ watch();
 
 /* ---------- Walkthrough (shared/tour.js) ---------- */
 
-window.setupTour({
-  key: "popover-tour-done",
-  steps: [
-    {
-      popover: {
-        title: "Welcome to the Popover Playground",
-        description: "A quick tour of native popovers and anchor positioning. It takes about a minute.",
-      },
+const TOUR_STEPS = [
+  {
+    popover: {
+      title: "Welcome to the Popover Playground",
+      description: "A quick tour of native popovers and anchor positioning. It takes about a minute.",
     },
-    {
-      element: ".app__intro",
-      popover: {
-        title: "No JavaScript needed",
-        description:
-          "A button with <code>popovertarget</code> opens the popover. The browser puts it on top of everything, and anchor positioning places it next to the button.",
-      },
+  },
+  {
+    element: ".app__intro",
+    popover: {
+      title: "No JavaScript needed",
+      description:
+        "A button with <code>popovertarget</code> opens the popover. The browser puts it on top of everything, and anchor positioning places it next to the button.",
     },
-    {
-      element: ".control--placement",
-      popover: {
-        title: "Placement",
-        description: "Pick one of 12 spots around the button: a side (top, bottom, left, right) and an alignment.",
-      },
+  },
+  {
+    element: ".control--placement",
+    info: { target: ".control--placement .control__label" },
+    popover: {
+      title: "Placement",
+      description: "Pick one of 12 spots around the button: a side (top, bottom, left, right) and an alignment.",
     },
-    {
-      element: ".control:has(#type)",
-      popover: {
-        title: "Type",
-        description:
-          "<strong>manual</strong> stays open, <strong>auto</strong> closes on Esc or a click elsewhere, <strong>hint</strong> is for tooltips.",
-      },
+  },
+  {
+    element: ".control:has(#type)",
+    info: { target: 'label[for="type"]' },
+    popover: {
+      title: "Type",
+      description:
+        "<strong>manual</strong> stays open, <strong>auto</strong> closes on Esc or a click elsewhere, <strong>hint</strong> is for tooltips.",
     },
-    {
-      element: ".control:has(#offset)",
-      popover: { title: "Offset", description: "The space between the button and the popover." },
+  },
+  {
+    element: ".control:has(#offset)",
+    info: { target: 'label[for="offset-number"]' },
+    popover: { title: "Offset", description: "The space between the button and the popover." },
+  },
+  {
+    element: ".control:has(#duration)",
+    info: { target: 'label[for="duration-number"]' },
+    popover: {
+      title: "Animation",
+      description: "How long the fade and slide take when it opens and closes. 0 turns it off.",
     },
-    {
-      element: ".control:has(#duration)",
-      popover: {
-        title: "Animation",
-        description: "How long the fade and slide take when it opens and closes. 0 turns it off.",
-      },
+  },
+  {
+    element: ".control:has(#flip)",
+    info: { target: ".control:has(#flip) .switch" },
+    popover: {
+      title: "Flip when out of room",
+      description: "On, the popover tries the other side when it doesn't fit in the window. Off, it just overflows.",
     },
-    {
-      element: ".control:has(#flip)",
-      popover: {
-        title: "Flip when out of room",
-        description: "On, the popover tries the other side when it doesn't fit in the window. Off, it just overflows.",
-      },
+  },
+  {
+    element: "#playfield",
+    info: { target: "#builder-title" },
+    popover: {
+      title: "Drag the button",
+      description:
+        "Drag it toward an edge of the window (or scroll so it sits near the top or bottom) and watch the popover flip.",
     },
-    {
-      element: "#playfield",
-      popover: {
-        title: "Drag the button",
-        description:
-          "Drag it toward an edge of the window (or scroll so it sits near the top or bottom) and watch the popover flip.",
-      },
+  },
+  {
+    element: "#readout",
+    popover: {
+      title: "What happened",
+      description: "Which placement you asked for, and which one the browser is showing.",
     },
-    {
-      element: "#readout",
-      popover: {
-        title: "What happened",
-        description: "Which placement you asked for, and which one the browser is showing.",
-      },
+  },
+  {
+    element: ".compare",
+    info: { target: ".compare .card:first-child .card__title" },
+    popover: {
+      title: "HTML and CSS",
+      description: "The code for your current settings. Copy it into a ticket or your spec.",
     },
-    {
-      element: ".compare",
-      popover: {
-        title: "HTML and CSS",
-        description: "The code for your current settings. Copy it into a ticket or your spec.",
-      },
+  },
+  {
+    element: "#matrix",
+    info: { target: "#matrix-title" },
+    popover: { title: "All twelve", description: "Every placement side by side. Open several to compare." },
+  },
+  {
+    element: ".compat",
+    info: { target: "#compat-title" },
+    popover: {
+      title: "Browser support",
+      description:
+        "Popovers work everywhere modern. Anchor positioning is newer: older browsers show the popover centered.",
     },
-    {
-      element: "#matrix",
-      popover: { title: "All twelve", description: "Every placement side by side. Open several to compare." },
+  },
+  {
+    element: ".app__actions",
+    popover: {
+      title: "Replay or switch theme",
+      description:
+        "Use <strong>?</strong> to see this tour again, and the other button to switch between light and dark.",
     },
-    {
-      element: ".compat",
-      popover: {
-        title: "Browser support",
-        description:
-          "Popovers work everywhere modern. Anchor positioning is newer: older browsers show the popover centered.",
-      },
+  },
+];
+
+window.setupTour({ key: "popover-tour-done", steps: TOUR_STEPS });
+
+// Info icons: tour steps that say where their icon goes, plus a few controls the tour doesn't cover.
+const INFO_ONLY = [
+  {
+    info: { target: "#clip-title" },
+    popover: {
+      title: "Escapes overflow: hidden",
+      description:
+        "The popover renders in the browser's top layer, above the page, so a parent with <code>overflow: hidden</code> can't cut it off.",
     },
-    {
-      element: ".app__actions",
-      popover: {
-        title: "Replay or switch theme",
-        description:
-          "Use <strong>?</strong> to see this tour again, and the other button to switch between light and dark.",
-      },
-    },
-  ],
-});
+  },
+];
+window.setupInfoTips([...TOUR_STEPS.filter((step) => step.info), ...INFO_ONLY]);

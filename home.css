@@ -16,6 +16,15 @@
   list-style: none;
 }
 
+/* Subgrid: every tile spans 4 shared rows (preview, name, text, footer), so tiles in a row
+   line up their names, text and tags. The <li> sits between grid and tile, so it needs it too. */
+.home__grid > li {
+  display: grid;
+  grid-row: span 4;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+}
+
 /* ---------- Tile (one per playground) ---------- */
 
 .tile {
@@ -25,8 +34,9 @@
 
   position: relative;
   display: grid;
-  grid-template-rows: auto 1fr;
-  height: 100%;
+  grid-row: span 4;
+  grid-template-rows: subgrid;
+  row-gap: 0;
   border: 1px solid var(--_tile-border);
   border-radius: 16px;
   background: var(--card);
@@ -190,6 +200,37 @@
   background: var(--accent);
 }
 
+/* Container Units preview: a wide and a narrow card, each title sized by its own card (cqi) */
+.tile__preview--cq {
+  align-items: center;
+  gap: 10px;
+}
+
+.cq-mini {
+  container-type: inline-size;
+  display: grid;
+  place-items: center start;
+  width: 70px;
+  height: 64px;
+  padding-inline: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--field);
+}
+
+.cq-mini--wide {
+  width: 150px;
+}
+
+.cq-mini b {
+  font-size: 30cqi;
+  font-weight: 800;
+  line-height: 1;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  background-clip: text;
+  color: transparent;
+}
+
 .tile__preview--clamp span:nth-child(1) {
   font-size: 1.25rem;
   color: var(--text-muted);
@@ -219,29 +260,31 @@
   --_i: 5;
 }
 
-.tile__body {
-  display: grid;
-  gap: 6px;
-  align-content: start;
-  padding: 16px 48px 18px 18px;
-}
-
 .tile__name {
+  padding: 16px 18px 6px;
   font-size: 1.1rem;
   font-weight: 700;
 }
 
 .tile__text {
+  padding-inline: 18px;
   font-size: 0.85rem;
   line-height: 1.45;
   color: var(--text-muted);
+}
+
+.tile__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 18px 18px;
 }
 
 .tile__tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-block-start: 6px;
 }
 
 .tile__tags code {
@@ -254,11 +297,11 @@
 }
 
 .tile__arrow {
-  position: absolute;
-  inset-block-end: 18px;
-  inset-inline-end: 18px;
+  flex: 0 0 auto;
+  align-self: end;
   color: var(--accent);
   font-size: 1.1rem;
+  line-height: 1.2;
   translate: var(--_arrow-shift) 0;
   transition: translate 0.2s ease;
 }

@@ -30,6 +30,7 @@ The even share stops the grid from going over `cols` columns; the min width make
 - **Overflow warning** when the min width is wider than the container (cells overflow; tip: `min(100%, …)`).
 - **CSS** and **React** output with Copy. A gap other than 16px is shown as `--_gap` on a class, since `Row` only takes `gap` as on/off.
 - **Subgrid note:** a short pointer to the [Subgrid playground](../subgrid/README.md), with the catch: subgrid cards need `<Cell cellNormal>`, because a container can't be a subgrid.
+- **Info icons:** a small "i" next to each control and section; hover for a short explanation, click or tap to pin it (`../shared/info.js`, same wording as the walkthrough).
 - **Walkthrough:** a 13-step guided tour on the first visit; replay it with **?** (`../shared/tour.js`).
 - **Browser support** for Grid, `max()`/`calc()` and container queries (`../shared/compat.js`).
 

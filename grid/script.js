@@ -209,108 +209,125 @@ update();
 
 /* ---------- Walkthrough (shared/tour.js) ---------- */
 
-window.setupTour({
-  key: "grid-tour-done",
-  steps: [
-    {
-      popover: {
-        title: "Welcome to the Grid Playground",
-        description: "A quick tour of how this grid decides how many columns to show. It takes about a minute.",
-      },
+const TOUR_STEPS = [
+  {
+    popover: {
+      title: "Welcome to the Grid Playground",
+      description: "A quick tour of how this grid decides how many columns to show. It takes about a minute.",
     },
-    {
-      element: ".app__intro",
-      popover: {
-        title: "How this grid works",
-        description:
-          "It shows <strong>up to</strong> a number of columns, and drops columns on its own when they'd get too narrow. No breakpoints: it reacts to the space it's in.",
-      },
+  },
+  {
+    element: ".app__intro",
+    popover: {
+      title: "How this grid works",
+      description:
+        "It shows <strong>up to</strong> a number of columns, and drops columns on its own when they'd get too narrow. No breakpoints: it reacts to the space it's in.",
     },
-    {
-      element: ".control:has(#cols)",
-      popover: {
-        title: "Max columns",
-        description:
-          "The <strong>most</strong> columns the grid will show, not always what you get. With less space you'll see fewer.",
-      },
+  },
+  {
+    element: ".control:has(#cols)",
+    info: { target: 'label[for="cols-number"]' },
+    popover: {
+      title: "Max columns",
+      description:
+        "The <strong>most</strong> columns the grid will show, not always what you get. With less space you'll see fewer.",
     },
-    {
-      element: ".control:has(#min)",
-      popover: {
-        title: "Min width",
-        description:
-          "The narrowest a column may get. When there isn't room for every column at this width, the grid drops a column.",
-      },
+  },
+  {
+    element: ".control:has(#min)",
+    info: { target: 'label[for="min-number"]' },
+    popover: {
+      title: "Min width",
+      description:
+        "The narrowest a column may get. When there isn't room for every column at this width, the grid drops a column.",
     },
-    {
-      element: ".control:has(#gap)",
-      popover: {
-        title: "Gap and Items",
-        description: "The space between cells, and next to it how many cells to show.",
-      },
+  },
+  {
+    element: ".control:has(#gap)",
+    info: { target: 'label[for="gap-number"]' },
+    popover: {
+      title: "Gap and Items",
+      description: "The space between cells, and next to it how many cells to show.",
     },
-    {
-      element: ".control:has(#width)",
-      popover: {
-        title: "Container",
-        description:
-          "Pretend the grid sits in a narrower space, like a sidebar or a modal. You can also drag the corner of the grid.",
-      },
+  },
+  {
+    element: ".control:has(#width)",
+    info: { target: 'label[for="width-number"]' },
+    popover: {
+      title: "Container",
+      description:
+        "Pretend the grid sits in a narrower space, like a sidebar or a modal. You can also drag the corner of the grid.",
     },
-    {
-      element: "#frame",
-      popover: {
-        title: "The grid",
-        description:
-          "The dashed frame is the space the grid has. The line above it says how many columns fit right now and how wide they are.",
-      },
+  },
+  {
+    element: "#frame",
+    info: { target: ".stage__hint" },
+    popover: {
+      title: "The grid",
+      description:
+        "The dashed frame is the space the grid has. The line above it says how many columns fit right now and how wide they are.",
     },
-    {
-      element: "#grid .demo-grid__cell:first-child",
-      popover: {
-        title: "A cell",
-        description:
-          "Each cell shows its own width. At 300px or wider it switches to side by side. That depends on the <strong>cell's</strong> width, not the page's.",
-      },
+  },
+  {
+    element: "#grid .demo-grid__cell:first-child",
+    popover: {
+      title: "A cell",
+      description:
+        "Each cell shows its own width. At 300px or wider it switches to side by side. That depends on the <strong>cell's</strong> width, not the page's.",
     },
-    {
-      element: ".control--switch",
-      popover: {
-        title: "Cells are containers",
-        description:
-          "On, each cell is a container, so its content can adapt to the cell. Off is <code>cellNormal</code>: the content can't adapt. Subgrid cards need it off; see the Subgrid playground.",
-      },
+  },
+  {
+    element: ".control--switch",
+    info: { target: ".control--switch .switch" },
+    popover: {
+      title: "Cells are containers",
+      description:
+        "On, each cell is a container, so its content can adapt to the cell. Off is <code>cellNormal</code>: the content can't adapt. Subgrid cards need it off; see the Subgrid playground.",
     },
-    {
-      element: ".card:has(#values)",
-      popover: {
-        title: "How many columns?",
-        description: "The math behind what you see: the even share, the column minimum, and why this many columns fit.",
-      },
+  },
+  {
+    element: ".card:has(#values)",
+    info: { target: ".card:has(#values) .card__head" },
+    popover: {
+      title: "How many columns?",
+      description: "The math behind what you see: the even share, the column minimum, and why this many columns fit.",
     },
-    {
-      element: ".card:has(#css-code)",
-      popover: {
-        title: "CSS and React",
-        description:
-          "The code for your current settings: plain CSS here, and the <code>Row</code> / <code>Cell</code> component next to it. Copy either one.",
-      },
+  },
+  {
+    element: ".card:has(#css-code)",
+    info: { target: ".card:has(#css-code) .card__title" },
+    popover: {
+      title: "CSS and React",
+      description:
+        "The code for your current settings: plain CSS here, and the <code>Row</code> / <code>Cell</code> component next to it. Copy either one.",
     },
-    {
-      element: ".compat",
-      popover: {
-        title: "Browser support",
-        description:
-          "Which browsers support grid, max() and container queries, since which version, and whether yours does.",
-      },
+  },
+  {
+    element: ".compat",
+    info: { target: "#compat-title" },
+    popover: {
+      title: "Browser support",
+      description:
+        "Which browsers support grid, max() and container queries, since which version, and whether yours does.",
     },
-    {
-      element: ".app__actions",
-      popover: {
-        title: "Replay or switch theme",
-        description:
-          "Use <strong>?</strong> to see this tour again, and the other button to switch between light and dark.",
-      },
+  },
+  {
+    element: ".app__actions",
+    popover: {
+      title: "Replay or switch theme",
+      description:
+        "Use <strong>?</strong> to see this tour again, and the other button to switch between light and dark.",
     },
-  ],
-});
+  },
+];
+
+window.setupTour({ key: "grid-tour-done", steps: TOUR_STEPS });
+
+// Info icons: tour steps that say where their icon goes, plus a few controls the tour doesn't cover.
+const INFO_ONLY = [
+  {
+    info: { target: 'label[for="items-number"]' },
+    popover: { title: "Items", description: "How many cells to show in the grid." },
+  },
+];
+window.setupInfoTips([...TOUR_STEPS.filter((step) => step.info), ...INFO_ONLY]);
