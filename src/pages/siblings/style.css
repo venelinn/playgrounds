@@ -25,11 +25,12 @@
 
 .siblings {
   --app-width: 1240px;
+  --compare-card-min: 320px;
 }
 
 .support {
   margin: 0;
-  padding: 8px 12px;
+  padding: var(--spacing-2) var(--spacing-3);
   border-radius: 8px;
   background: var(--warning-bg);
   color: var(--warning-text);
@@ -40,11 +41,11 @@
 /* ---------- Extra controls ---------- */
 
 .control__range--hue {
-  accent-color: hsl(var(--hue-start, 0deg) var(--sat, 85%) var(--swatch-l));
+  --_range-accent: hsl(var(--hue-start, 0deg) var(--sat, 85%) var(--swatch-l));
 }
 
 .control--actions {
-  align-content: space-between;
+  --control-align: space-between;
 }
 
 .replay {
@@ -54,8 +55,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 5px 10px;
+  gap: var(--spacing-1-5);
+  padding: var(--spacing-1) var(--spacing-2-5);
   border: 1px solid var(--accent);
   border-radius: 6px;
   background: var(--_replay-bg);
@@ -82,18 +83,18 @@
 
 /* ---------- Stage (the demo from the video) ---------- */
 
-.stage {
+.showcase {
   display: grid;
   justify-items: center;
-  gap: 14px;
-  padding: clamp(24px, 4vw, 44px) clamp(14px, 3vw, 32px);
+  gap: var(--spacing-3-5);
+  padding: clamp(var(--spacing-6), 4vw, var(--spacing-12)) clamp(var(--spacing-3-5), 3vw, var(--spacing-8));
   border: 1px solid var(--line);
   border-radius: 16px;
   background: var(--card);
 }
 
-.stage__pill {
-  padding: 6px 14px;
+.showcase__pill {
+  padding: var(--spacing-1-5) var(--spacing-3-5);
   border: 1px solid var(--line);
   border-radius: 999px;
   background: var(--field);
@@ -102,7 +103,7 @@
   font-weight: 600;
 }
 
-.stage__title {
+.showcase__title {
   margin: 0;
   font-size: clamp(2rem, 5vw, 3.25rem);
   font-weight: 800;
@@ -111,9 +112,9 @@
   text-align: center;
 }
 
-.stage__text {
+.showcase__text {
   max-width: 58ch;
-  margin: 0 0 18px;
+  margin: 0 0 var(--spacing-4-5);
   color: var(--text-muted);
   font-size: 0.95rem;
   line-height: 1.55;
@@ -127,7 +128,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
-  gap: 20px;
+  gap: var(--spacing-5);
 }
 
 /* ---------- Product card ---------- */
@@ -148,7 +149,7 @@
   display: grid;
   grid-template-rows: auto auto 1fr auto;
   min-height: 250px;
-  padding: 24px 24px 22px;
+  padding: var(--spacing-6) var(--spacing-6) var(--spacing-5-5);
   border: 1px solid var(--_border);
   border-radius: 22px;
   background: linear-gradient(150deg, var(--field), var(--card));
@@ -156,12 +157,6 @@
   overflow: hidden;
   counter-reset: product var(--i) total var(--n);
   translate: 0 var(--_lift);
-  transition:
-    border-color 0.25s,
-    box-shadow 0.25s,
-    translate 0.25s;
-  animation: var(--_reveal) 0.8s both;
-  animation-delay: calc((var(--i) - 1) * var(--stagger, 100ms));
   outline-offset: 4px;
 }
 
@@ -178,14 +173,13 @@
 .product::before {
   content: "";
   position: absolute;
-  inset-block-start: -60px;
-  inset-inline-end: -40px;
+  inset-block-start: calc(var(--spacing-14) * -1);
+  inset-inline-end: calc(var(--spacing-10) * -1);
   width: 160px;
   aspect-ratio: 1;
   border-radius: 50%;
   background: var(--_color);
   opacity: var(--_blob-opacity);
-  transition: opacity 0.25s;
   pointer-events: none;
 }
 
@@ -193,8 +187,8 @@
 .product::after {
   content: counter(product, decimal-leading-zero);
   position: absolute;
-  inset-block-end: 6px;
-  inset-inline-end: 22px;
+  inset-block-end: var(--spacing-1-5);
+  inset-inline-end: var(--spacing-5-5);
   color: color-mix(in srgb, var(--text) 8%, transparent);
   font-size: 4.5rem;
   font-weight: 800;
@@ -225,7 +219,7 @@
 }
 
 .product__title {
-  margin: 22px 0 6px;
+  margin: var(--spacing-5-5) 0 var(--spacing-1-5);
   font-size: 1.3rem;
   font-weight: 700;
 }
@@ -238,11 +232,10 @@
 }
 
 .product__arrow {
-  margin-block-start: 18px;
+  margin-block-start: var(--spacing-4-5);
   font-size: 1.2rem;
   font-weight: 700;
   translate: var(--_arrow-shift) 0;
-  transition: translate 0.25s;
 }
 
 /* "3 / 8" badge, written by CSS counters (no JS text) */
@@ -251,9 +244,9 @@
 
   display: var(--_badge-display);
   position: absolute;
-  inset-block-start: 16px;
-  inset-inline-end: 16px;
-  padding: 3px 9px;
+  inset-block-start: var(--spacing-4);
+  inset-inline-end: var(--spacing-4);
+  padding: var(--spacing-0-5) var(--spacing-2);
   border: 1px solid var(--_color);
   border-radius: 999px;
   background: var(--card);
@@ -282,18 +275,24 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .products {
-    --_reveal: none;
+/* The staggered entrance and the hover moves, only for people who don't ask for less motion */
+@media (prefers-reduced-motion: no-preference) {
+  .product {
+    transition:
+      border-color 0.25s,
+      box-shadow 0.25s,
+      translate 0.25s;
+    animation: var(--_reveal) 0.8s both;
+    animation-delay: calc((var(--i) - 1) * var(--stagger, 100ms));
   }
-}
 
-/* ---------- Bottom row: CSS | this card ---------- */
+  .product::before {
+    transition: opacity 0.25s;
+  }
 
-.compare {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-  gap: 10px;
+  .product__arrow {
+    transition: translate 0.25s;
+  }
 }
 
 .card__hint {
@@ -302,38 +301,11 @@
   font-size: 0.75rem;
 }
 
-.stats {
-  display: grid;
-  margin: 0;
-}
-
-.stats__row {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding-block: 4px;
-  border-block-end: 1px solid var(--line);
-}
-
-.stats__row:last-child {
-  border-block-end: 0;
-}
-
-.stats dt {
-  opacity: 0.8;
-}
-
-.stats dd {
-  margin: 0;
-  font-family: var(--font-mono);
-  text-align: end;
-}
-
 .stats__swatch {
   display: inline-block;
   width: 10px;
   height: 10px;
-  margin-inline-end: 6px;
+  margin-inline-end: var(--spacing-1-5);
   border-radius: 50%;
   background: var(--swatch);
   vertical-align: baseline;

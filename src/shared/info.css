@@ -10,7 +10,7 @@
   flex: 0 0 auto;
   width: 14px;
   height: 14px;
-  margin-inline-start: 5px;
+  margin-inline-start: var(--spacing-1);
   border: 1px solid var(--_info-border);
   border-radius: 50%;
   color: var(--_info-color);
@@ -24,10 +24,15 @@
   cursor: help;
   user-select: none;
   anchor-name: var(--info-anchor);
-  transition:
-    opacity 0.15s,
-    color 0.15s,
-    border-color 0.15s;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .info {
+    transition:
+      opacity 0.15s,
+      color 0.15s,
+      border-color 0.15s;
+  }
 }
 
 .info:hover,
@@ -39,25 +44,27 @@
 
 /* Corner variant: top-right of a card that has no heading */
 .has-info-corner {
-  --_card-padding-end: 32px; /* cards (shared/controls.css) keep content clear of the icon */
+  --_card-padding-end: var(--spacing-8); /* cards (shared/controls.css) keep content clear of the icon */
 
   position: relative;
 }
 
 .info--corner {
   position: absolute;
-  inset-block-start: 10px;
-  inset-inline-end: 10px;
+  inset-block-start: var(--spacing-2-5);
+  inset-inline-end: var(--spacing-2-5);
   margin: 0;
 }
 
 /* ---------- Tooltip ---------- */
 
+/* Closed: hidden. Open (:popover-open): a grid. Placed by anchor positioning where supported. */
 .info-tip {
-  display: none;
+  display: var(--_tip-display, none);
+  gap: var(--spacing-0-5);
   max-width: min(260px, calc(100vw - 32px));
-  margin: 0;
-  padding: 10px 12px;
+  margin: var(--_tip-margin, 0);
+  padding: var(--spacing-2-5) var(--spacing-3);
   border: 1px solid var(--line);
   border-radius: 10px;
   background: var(--field);
@@ -69,8 +76,7 @@
 }
 
 .info-tip:popover-open {
-  display: grid;
-  gap: 3px;
+  --_tip-display: grid;
 }
 
 .info-tip__title {
@@ -103,6 +109,6 @@
       bottom span-right,
       top span-right;
     inset: auto;
-    margin: 6px;
+    --_tip-margin: var(--spacing-1-5);
   }
 }

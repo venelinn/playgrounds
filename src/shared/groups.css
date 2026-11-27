@@ -1,5 +1,9 @@
 /* Shared control groups: a bordered group with a title (fieldset + legend), and radio cards.
-   Load after controls.css. */
+   Load after controls.css.
+
+   Pages tune them only through these variables (set on the group or a parent):
+     --group-hint-basis   100% puts a title's grey hint on its own line (auto)
+     --group-hint-order   1 moves the hint after the title's "i" icon (0), so the icon stays by the title */
 
 /* Groups side by side: one column, two on wide screens */
 .groups {
@@ -7,7 +11,7 @@
 
   display: grid;
   grid-template-columns: var(--_groups);
-  gap: 10px 16px;
+  gap: var(--spacing-2-5) var(--spacing-4);
 }
 
 @media (width >= 900px) {
@@ -19,7 +23,7 @@
 /* A switch on a slim row of its own, under the sliders (a group can set --_switch-span: auto to keep it in line) */
 .group__switch {
   grid-column: var(--_switch-span, 1 / -1);
-  padding: 10px 12px;
+  padding: var(--spacing-2-5) var(--spacing-3);
   border-radius: 12px;
   background: var(--card);
 }
@@ -28,10 +32,10 @@
 .group {
   display: grid;
   align-content: start;
-  gap: 8px;
+  gap: var(--spacing-2);
   min-width: 0;
   margin: 0;
-  padding: 12px;
+  padding: var(--spacing-3);
   border: 1px solid var(--line);
   border-radius: 14px;
 }
@@ -43,7 +47,9 @@
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 4px 10px;
+  gap: var(--spacing-1) var(--spacing-2-5);
+  /* the same height with or without an "i" icon, so titles of groups side by side line up */
+  min-block-size: var(--spacing-4-5);
   padding: 0;
   font-size: 0.8rem;
   font-weight: 700;
@@ -56,6 +62,8 @@
   font-weight: 400;
   letter-spacing: 0;
   text-transform: none;
+  flex-basis: var(--group-hint-basis, auto);
+  order: var(--group-hint-order, 0);
 }
 
 .group__formula {
@@ -73,7 +81,7 @@
 .choices {
   display: grid;
   grid-template-columns: repeat(var(--_choices, 3), minmax(0, 1fr));
-  gap: 10px;
+  gap: var(--spacing-2-5);
 }
 
 .choices--two {
@@ -88,8 +96,8 @@
   grid-template-columns: auto minmax(0, 1fr);
   align-content: start;
   align-items: center;
-  gap: 4px 8px;
-  padding: 12px;
+  gap: var(--spacing-1) var(--spacing-2);
+  padding: var(--spacing-3);
   border: 1px solid var(--_choice-border);
   border-radius: 12px;
   background: var(--card);

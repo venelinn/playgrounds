@@ -6,13 +6,9 @@
 
 /* ---------- Controls: the groups come from shared/groups.css ---------- */
 
-.group--layout .controls {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.group--heading .controls,
-.group--title .controls {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr));
+/* Columns and Section width side by side */
+.group--layout {
+  --controls-columns: repeat(2, minmax(0, 1fr));
 }
 
 /* ---------- Section: its big title uses the section's width ---------- */
@@ -20,7 +16,7 @@
 .cq-section {
   container-type: inline-size;
   display: grid;
-  gap: 8px;
+  gap: var(--spacing-2);
 }
 
 .cq-section__eyebrow {
@@ -42,8 +38,8 @@
 
 .cq-section__readout {
   justify-self: start;
-  margin-block-end: 10px;
-  padding: 3px 9px;
+  margin-block-end: var(--spacing-2-5);
+  padding: var(--spacing-0-5) var(--spacing-2);
   border: 1px solid var(--line);
   border-radius: 999px;
   color: var(--text-muted);
@@ -56,7 +52,7 @@
 .cq-grid {
   display: grid;
   grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr));
-  gap: 16px;
+  gap: var(--spacing-4);
 }
 
 .cq-grid[data-wide="true"] > :first-child {
@@ -70,8 +66,8 @@
   container-type: inline-size;
   display: grid;
   align-content: start;
-  gap: 10px;
-  padding: 14px;
+  gap: var(--spacing-2-5);
+  padding: var(--spacing-3-5);
   border: 1px solid var(--line);
   border-radius: 14px;
   background: var(--field);
@@ -121,20 +117,12 @@
 
 .cq-card__readout {
   justify-self: start;
-  padding: 3px 9px;
+  padding: var(--spacing-0-5) var(--spacing-2);
   border: 1px solid var(--_card-state);
   border-radius: 999px;
   color: var(--_card-state);
   font-family: var(--font-mono);
   font-size: 0.72rem;
-}
-
-/* ---------- Bottom row ---------- */
-
-.compare {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-  gap: 10px;
 }
 
 .stage__heading .stage__hint {

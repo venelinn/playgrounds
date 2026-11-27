@@ -111,13 +111,16 @@ ${lines.join("\n")}
       ? "Same on every screen"
       : { min: "Phone size", fluid: "Growing", max: "Desktop size" }[state];
     values.innerHTML = [
-      ["Now", `<strong>${fmt(size)}px</strong> at ${fmt(width)}px`],
+      ["Now", `<strong class="stats__em">${fmt(size)}px</strong> at ${fmt(width)}px`],
       ["State", stateLabel],
       ["Phones", `${fmt(c.min)}px`],
       ["Desktop", `${fmt(c.max)}px`],
       ["Grows between", fixed ? "n/a" : `${Math.round((c.min * 100) / c.pref)}px – ${brand.desktop}px`],
     ]
-      .map(([k, v]) => `<div class="stats__row"><dt>${k}</dt><dd>${v}</dd></div>`)
+      .map(
+        ([k, v]) =>
+          `<div class="stats__row"><dt class="stats__label">${k}</dt><dd class="stats__value">${v}</dd></div>`,
+      )
       .join("");
 
     scaleCode.textContent = scaleCss();

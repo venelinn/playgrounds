@@ -303,6 +303,14 @@ const TOUR_STEPS = [
     },
   },
   {
+    element: ".group--layout",
+    info: { target: "#layout-title" },
+    popover: {
+      title: "Layout",
+      description: "How the slides sit: how many fit, the space between them, their corners and where each one stops.",
+    },
+  },
+  {
     element: ".control:has(#perview)",
     info: { target: 'label[for="perview-number"]' },
     popover: {

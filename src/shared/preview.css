@@ -8,8 +8,8 @@
 
   display: grid;
   grid-template-columns: minmax(0, 1fr); /* the box's width wins: long words and the bar can't widen it */
-  gap: 8px;
-  padding: 14px 18px 44px;
+  gap: var(--spacing-2);
+  padding: var(--spacing-3-5) var(--spacing-4-5) var(--spacing-12);
   border: 1px solid transparent;
   border-radius: 16px;
   /* layers: soft glow from the top, dot grid, card fill, gradient border */
@@ -25,7 +25,6 @@
     linear-gradient(var(--card), var(--card)) padding-box,
     linear-gradient(120deg, var(--accent), var(--accent2)) border-box;
   box-shadow: 0 10px 40px -12px color-mix(in srgb, var(--_badge-color) 45%, transparent);
-  transition: box-shadow 0.3s;
   /* Resizable: its width is the Viewport. The script sets --preview-width from the slider;
      dragging the corner sets an inline width, kept inside the panel by max-width. */
   width: min(var(--preview-width, 100%), 100%);
@@ -46,7 +45,7 @@
 .preview__bar {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--spacing-2-5);
 }
 
 .preview__input {
@@ -55,7 +54,7 @@
 
   flex: 1 1 auto;
   min-width: 0;
-  padding: 4px 0;
+  padding: var(--spacing-1) 0;
   border: 0;
   border-bottom: 1px dashed var(--_input-line);
   background: transparent;
@@ -82,7 +81,7 @@
 
 .preview__badge {
   flex: 0 0 auto;
-  padding: 2px 8px;
+  padding: var(--spacing-0-5) var(--spacing-2);
   border: 1px solid var(--_badge-color);
   border-radius: 999px;
   color: var(--_badge-color);
@@ -91,7 +90,7 @@
 }
 
 .preview__text {
-  margin: 16px 0 0;
+  margin: var(--spacing-4) 0 0;
   text-align: center;
   font-family: var(--preview-font, var(--font-ui));
   font-size: var(--preview-size, 2rem);
@@ -100,45 +99,14 @@
   letter-spacing: var(--preview-tracking, normal);
   text-transform: var(--preview-transform, none);
   overflow-wrap: anywhere;
-  transition: font-size 0.2s;
 }
 
-/* ---------- Bottom row of cards ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .preview {
+    transition: box-shadow 0.3s;
+  }
 
-.compare {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--compare-card-min, 240px)), 1fr));
-  gap: 10px;
-}
-
-/* ---------- Values ---------- */
-
-.stats {
-  display: grid;
-  margin: 0;
-}
-
-.stats__row {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding-block: 4px;
-  border-block-end: 1px solid var(--line);
-}
-
-.stats__row:last-child {
-  border-block-end: 0;
-}
-
-.stats dt {
-  opacity: 0.8;
-}
-
-.stats dd {
-  margin: 0;
-  font-family: var(--font-mono);
-}
-
-.stats strong {
-  color: var(--accent);
+  .preview__text {
+    transition: font-size 0.2s;
+  }
 }

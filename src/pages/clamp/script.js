@@ -349,11 +349,13 @@ function update() {
   values.innerHTML = [
     ["Viewport", `${fmt(vw)}px`],
     ["Preferred", `${fmt(prefPx)}px`],
-    ["Result", `<strong>${fmt(size)}px</strong>`],
+    ["Result", `<strong class="stats__em">${fmt(size)}px</strong>`],
     ["State", stateLabel],
     ["Fluid between", min <= max && pref > 0 ? `${Math.round(fluidStart)}px – ${Math.round(fluidEnd)}px` : "n/a"],
   ]
-    .map(([k, v]) => `<div class="stats__row"><dt>${k}</dt><dd>${v}</dd></div>`)
+    .map(
+      ([k, v]) => `<div class="stats__row"><dt class="stats__label">${k}</dt><dd class="stats__value">${v}</dd></div>`,
+    )
     .join("");
 
   drawGraph({ min, pref, max, vw, size, fluidStart, fluidEnd });

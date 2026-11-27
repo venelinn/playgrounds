@@ -1,19 +1,7 @@
 /* Grid component mirror + resizable demo stage. Shared by the Grid and Subgrid playgrounds. */
 
 .control--switch {
-  align-content: space-between;
-}
-
-.control__hint {
-  margin: 0;
-  color: var(--text-muted);
-  font-size: 0.7rem;
-  line-height: 1.4;
-}
-
-.control__hint code {
-  color: var(--accent);
-  font-family: var(--font-mono);
+  --control-align: space-between;
 }
 
 /* ---------- Stage ---------- */
@@ -21,8 +9,8 @@
 .stage {
   display: grid;
   grid-template-columns: minmax(0, 1fr); /* so the frame's 100% is the stage's width, not its own */
-  gap: 14px;
-  padding: 16px;
+  gap: var(--spacing-3-5);
+  padding: var(--spacing-4);
   border: 1px solid var(--line);
   border-radius: 16px;
   background:
@@ -35,7 +23,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: var(--spacing-2);
 }
 
 .stage__summary {
@@ -58,18 +46,18 @@
   max-width: 100%; /* dragging the corner sets an inline width: never past the section */
   min-width: 240px;
   min-height: var(--frame-min-height, 120px); /* a page can ask for a taller frame */
-  padding: 12px;
+  padding: var(--spacing-3);
   border: 1px dashed var(--accent);
   border-radius: 10px;
   background: color-mix(in srgb, var(--accent) 4%, transparent);
   overflow: auto;
-  resize: horizontal;
+  resize: var(--_frame-resize, horizontal);
 }
 
 /* ---------- The grid (same CSS as the component) ---------- */
 
 .demo-grid {
-  --_grid-gap: var(--_gap, 16px);
+  --_grid-gap: var(--_gap, var(--spacing-4));
   --_min-column-width: var(--_col-min-width, 260px);
 
   display: grid;
@@ -107,7 +95,7 @@
 .stage__toggles {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: var(--spacing-4);
 }
 
 .stage__explain {
@@ -136,7 +124,7 @@
 }
 
 .frame--static {
-  resize: none;
+  --_frame-resize: none;
 }
 
 /* Cells and cards share the grid's rows when subgrid is on */

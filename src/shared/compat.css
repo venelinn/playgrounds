@@ -2,8 +2,8 @@
 
 .compat {
   display: grid;
-  gap: 10px;
-  padding: 14px;
+  gap: var(--spacing-2-5);
+  padding: var(--spacing-3-5);
   border-radius: 10px;
   background: var(--card);
 }
@@ -19,7 +19,7 @@
 .compat__list {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: var(--spacing-2-5);
 }
 
 .compat__feature {
@@ -27,9 +27,9 @@
   min-width: 0;
   container-type: inline-size;
   display: grid;
-  gap: 8px;
+  gap: var(--spacing-2);
   align-content: start;
-  padding: 12px;
+  padding: var(--spacing-3);
   border: 1px solid var(--line);
   border-radius: 8px;
 }
@@ -39,7 +39,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: var(--spacing-2);
 }
 
 .compat__name {
@@ -52,7 +52,7 @@
   --_badge-color: var(--max);
 
   flex: 0 0 auto;
-  padding: 2px 8px;
+  padding: var(--spacing-0-5) var(--spacing-2);
   border: 1px solid var(--_badge-color);
   border-radius: 999px;
   color: var(--_badge-color);
@@ -77,7 +77,7 @@
 .compat__you {
   --_you-color: var(--max);
 
-  margin-inline-start: 6px;
+  margin-inline-start: var(--spacing-1-5);
   color: var(--_you-color);
   font-weight: 600;
   white-space: nowrap;
@@ -90,7 +90,7 @@
 .compat__browsers {
   display: grid;
   grid-template-columns: repeat(var(--_browser-cols, 3), minmax(0, 1fr));
-  gap: 6px;
+  gap: var(--spacing-1-5);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -106,8 +106,8 @@
   --_browser-color: var(--max);
 
   display: grid;
-  gap: 2px;
-  padding: 6px 8px;
+  gap: var(--spacing-0-5);
+  padding: var(--spacing-1-5) var(--spacing-2);
   border-radius: 6px;
   background: color-mix(in srgb, var(--_browser-color) 10%, transparent);
 }
@@ -122,8 +122,8 @@
   --compat-ok: var(--_req-color, var(--min));
 
   display: grid;
-  gap: 6px;
-  padding: 10px;
+  gap: var(--spacing-1-5);
+  padding: var(--spacing-2-5);
   border: 1px solid color-mix(in srgb, var(--_req-color, var(--line)) 45%, transparent);
   border-radius: 8px;
   background: color-mix(in srgb, var(--_req-color, transparent) 7%, transparent);
@@ -135,7 +135,7 @@
 }
 
 .compat__req-name {
-  padding: 1px 8px;
+  padding: 1px var(--spacing-2);
   border-radius: 999px;
   background: var(--_req-color, var(--line));
   color: var(--_req-on, var(--text));
@@ -162,7 +162,7 @@
 .compat__links {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: var(--spacing-3);
   margin: 0;
   font-size: 0.75rem;
 }
@@ -188,7 +188,7 @@
 
 .compat__extra {
   margin: 0;
-  padding: 6px 8px;
+  padding: var(--spacing-1-5) var(--spacing-2);
   border-radius: 6px;
   background: var(--warning-bg);
   color: var(--warning-text);
@@ -200,9 +200,9 @@
 
 .refs {
   display: grid;
-  gap: 10px;
-  margin-block-start: 8px;
-  padding: 14px;
+  gap: var(--spacing-2-5);
+  margin-block-start: var(--spacing-2);
+  padding: var(--spacing-3-5);
   border-radius: 10px;
   background: var(--card);
 }
@@ -215,7 +215,7 @@
 
 .refs__list {
   display: grid;
-  gap: 8px;
+  gap: var(--spacing-2);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -225,7 +225,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 4px 10px;
+  gap: var(--spacing-1) var(--spacing-2-5);
   font-size: 0.85rem;
 }
 

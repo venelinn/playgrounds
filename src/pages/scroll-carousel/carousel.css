@@ -62,15 +62,27 @@
   --_counter-bg: var(--scroll-carousel-counter-bg, CanvasText);
   --_counter-radius: var(--scroll-carousel-counter-radius, 0);
 
-  --_scroll-behavior: smooth;
-
   position: relative;
   padding-block-start: var(--_arrows-room);
 }
 
-@media (prefers-reduced-motion: reduce) {
+/* Smooth scrolling and fades only for people who don't ask for less motion */
+@media (prefers-reduced-motion: no-preference) {
   .scroll-carousel {
-    --_scroll-behavior: auto;
+    --_scroll-behavior: smooth;
+  }
+
+  .scroll-carousel__arrow {
+    transition:
+      opacity var(--_duration) ease,
+      color var(--_duration) ease,
+      background-color var(--_duration) ease;
+  }
+
+  .scroll-carousel__dot::before {
+    transition:
+      background-color var(--_duration) ease,
+      opacity var(--_duration) ease;
   }
 }
 
@@ -133,7 +145,7 @@
   /* Quick taps must not trigger double-tap zoom. */
   touch-action: manipulation;
   scroll-snap-type: x mandatory;
-  scroll-behavior: var(--_scroll-behavior);
+  scroll-behavior: var(--_scroll-behavior, auto);
   scrollbar-width: none;
   border-radius: var(--_radius);
 }
@@ -187,13 +199,9 @@
   font-size: var(--_arrow-icon-size);
   box-shadow: var(--_arrow-shadow);
   opacity: var(--_arrow-opacity);
-  cursor: pointer;
+  cursor: var(--_arrow-cursor, pointer);
   touch-action: manipulation;
   translate: var(--_arrow-translate);
-  transition:
-    opacity var(--_duration) ease,
-    color var(--_duration) ease,
-    background-color var(--_duration) ease;
 }
 
 @media (any-hover: hover) {
@@ -211,8 +219,7 @@
 .scroll-carousel__arrow:disabled {
   --_arrow-current-color: var(--_arrow-disabled-color);
   --_arrow-opacity: calc(var(--_arrow-visibility) * var(--_arrow-disabled-opacity));
-
-  cursor: default;
+  --_arrow-cursor: default;
 }
 
 .scroll-carousel__arrow--prev {
@@ -258,7 +265,7 @@
   justify-content: center;
   align-items: center;
   gap: var(--_dots-gap);
-  margin-block-start: var(--_dots-spacing);
+  margin-block-start: var(--_dots-margin, var(--_dots-spacing));
   padding: var(--_dots-padding);
   border-radius: var(--_dots-radius);
   background: var(--_dots-bg);
@@ -268,10 +275,10 @@
 .scroll-carousel[data-dots="overlay"] > .scroll-carousel__dots {
   --_dots-position: absolute;
   --_dots-translate: -50% 0;
+  --_dots-margin: 0;
 
   bottom: var(--_dots-offset);
   left: 50%;
-  margin-block-start: 0;
 }
 
 /* Large hit area around a small dot (WCAG 2.5.8 target size). */
@@ -302,9 +309,6 @@
   border-radius: var(--_dot-radius);
   background: var(--_dot-fill);
   opacity: var(--_dot-alpha);
-  transition:
-    background-color var(--_duration) ease,
-    opacity var(--_duration) ease;
 }
 
 .scroll-carousel__dot[aria-current="true"] {

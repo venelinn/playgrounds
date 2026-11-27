@@ -13,8 +13,8 @@
       <ul class="home__grid">
         <li>
           <a class="tile" href="./clamp/index.html">
-            <span class="tile__preview tile__preview--clamp" aria-hidden="true">
-              <span>Aa</span><span>Aa</span><span>Aa</span>
+            <span class="tile__preview tile__preview--bottom" aria-hidden="true">
+              <span class="aa aa--min">Aa</span><span class="aa aa--pref">Aa</span><span class="aa aa--max">Aa</span>
             </span>
             <span class="tile__name">Clamp</span>
             <span class="tile__text">Fluid type that grows with the screen, between a smallest and a biggest size.</span>
@@ -26,8 +26,8 @@
         </li>
         <li>
           <a class="tile" href="./siblings/index.html">
-            <span class="tile__preview tile__preview--siblings" aria-hidden="true">
-              <span></span><span></span><span></span><span></span><span></span>
+            <span class="tile__preview" aria-hidden="true">
+              <span class="sib-mini sib-mini--1"></span><span class="sib-mini sib-mini--2"></span><span class="sib-mini sib-mini--3"></span><span class="sib-mini sib-mini--4"></span><span class="sib-mini sib-mini--5"></span>
             </span>
             <span class="tile__name">Siblings</span>
             <span class="tile__text">Cards that know their own position and how many there are, then pick their color, number and animation delay.</span>
@@ -39,8 +39,8 @@
         </li>
         <li>
           <a class="tile" href="./grid/index.html">
-            <span class="tile__preview tile__preview--grid" aria-hidden="true">
-              <span></span><span></span><span></span><span></span><span></span><span></span>
+            <span class="tile__preview" aria-hidden="true">
+              <span class="grid-mini"><span class="grid-mini__cell"></span><span class="grid-mini__cell"></span><span class="grid-mini__cell"></span><span class="grid-mini__cell"></span><span class="grid-mini__cell"></span><span class="grid-mini__cell"></span></span>
             </span>
             <span class="tile__name">Grid</span>
             <span class="tile__text">Up to N columns that drop on their own when they'd get too narrow. No breakpoints, and cells that adapt to their own width.</span>
@@ -52,10 +52,10 @@
         </li>
         <li>
           <a class="tile" href="./subgrid/index.html">
-            <span class="tile__preview tile__preview--subgrid" aria-hidden="true">
-              <span class="mini"><span class="mini__img"></span><span class="mini__lines"><span></span><span></span></span><span class="mini__price"></span></span>
-              <span class="mini"><span class="mini__img"></span><span class="mini__lines"><span></span></span><span class="mini__price"></span></span>
-              <span class="mini"><span class="mini__img"></span><span class="mini__lines"><span></span><span></span><span></span></span><span class="mini__price"></span></span>
+            <span class="tile__preview tile__preview--stretch" aria-hidden="true">
+              <span class="mini"><span class="mini__img"></span><span class="mini__lines"><span class="mini__line"></span><span class="mini__line"></span></span><span class="mini__price"></span></span>
+              <span class="mini"><span class="mini__img"></span><span class="mini__lines"><span class="mini__line"></span></span><span class="mini__price"></span></span>
+              <span class="mini"><span class="mini__img"></span><span class="mini__lines"><span class="mini__line"></span><span class="mini__line"></span><span class="mini__line"></span></span><span class="mini__price"></span></span>
             </span>
             <span class="tile__name">Subgrid</span>
             <span class="tile__text">Cards and form fields that share their parent grid's rows or columns, so titles, text, prices and inputs line up.</span>
@@ -67,9 +67,11 @@
         </li>
         <li>
           <a class="tile" href="./popover/index.html">
-            <span class="tile__preview tile__preview--popover" aria-hidden="true">
-              <span class="pop-btn">Button</span>
-              <span class="pop-box"><span></span><span></span></span>
+            <span class="tile__preview" aria-hidden="true">
+              <span class="pop-mini">
+                <span class="pop-mini__button">Button</span>
+                <span class="pop-mini__box"><span class="pop-mini__line pop-mini__line--accent"></span><span class="pop-mini__line"></span></span>
+              </span>
             </span>
             <span class="tile__name">Popover</span>
             <span class="tile__text">Menus and tooltips without JavaScript: native popovers placed next to their button, flipping when there isn't room.</span>
@@ -81,9 +83,9 @@
         </li>
         <li>
           <a class="tile" href="./cq-units/index.html">
-            <span class="tile__preview tile__preview--cq" aria-hidden="true">
-              <span class="cq-mini cq-mini--wide"><b>Aa</b></span>
-              <span class="cq-mini"><b>Aa</b></span>
+            <span class="tile__preview" aria-hidden="true">
+              <span class="cq-mini cq-mini--wide"><span class="cq-mini__aa">Aa</span></span>
+              <span class="cq-mini"><span class="cq-mini__aa">Aa</span></span>
             </span>
             <span class="tile__name">Container Units</span>
             <span class="tile__text">Titles sized with cqi follow their card, not the screen: wide card, big title; narrow card, smaller title.</span>
@@ -95,7 +97,7 @@
         </li>
         <li>
           <a class="tile" href="./style-queries/index.html">
-            <span class="tile__preview tile__preview--sq" aria-hidden="true">
+            <span class="tile__preview" aria-hidden="true">
               <span class="sq-mini sq-mini--big"><span class="sq-mini__img"></span><span class="sq-mini__line"></span><span class="sq-mini__line"></span></span>
               <span class="sq-side">
                 <span class="sq-mini"><span class="sq-mini__img"></span><span class="sq-mini__line"></span><span class="sq-mini__line"></span></span>
@@ -113,13 +115,15 @@
         </li>
         <li>
           <a class="tile" href="./scroll-carousel/index.html">
-            <span class="tile__preview tile__preview--carousel" aria-hidden="true">
+            <span class="tile__preview" aria-hidden="true">
+              <span class="carousel-mini">
               <span class="sc-mini">
                 <span class="sc-mini__track"><span class="sc-mini__slide"></span><span class="sc-mini__slide"></span><span class="sc-mini__slide"></span></span>
                 <span class="sc-mini__arrow sc-mini__arrow--prev"></span>
                 <span class="sc-mini__arrow sc-mini__arrow--next"></span>
               </span>
               <span class="sc-mini__dots"><span class="sc-mini__dot sc-mini__dot--on"></span><span class="sc-mini__dot"></span><span class="sc-mini__dot"></span><span class="sc-mini__dot"></span></span>
+              </span>
             </span>
             <span class="tile__name">Scroll Carousel</span>
             <span class="tile__text">A carousel where the browser does the swiping: native scroll snap, arrows and dots. Tune it, then copy the CSS and HTML.</span>
@@ -138,8 +142,8 @@
         <ul class="home__grid">
           <li>
             <a class="tile tile--westjet" href="./brands/westjet/index.html">
-              <span class="tile__preview tile__preview--ramp" aria-hidden="true">
-                <span>Headline</span><span>Title</span><span>Body text</span>
+              <span class="tile__preview tile__preview--start" aria-hidden="true">
+                <span class="ramp"><span class="ramp__text ramp__text--headline">Headline</span><span class="ramp__text ramp__text--title">Title</span><span class="ramp__text ramp__text--body">Body text</span></span>
               </span>
               <span class="tile__name">WestJet Vacations</span>
               <span class="tile__text">Every WestJet text style as clamp(): pick one, drag the preview to any screen width, copy the whole scale.</span>

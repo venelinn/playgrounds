@@ -87,11 +87,13 @@ function update() {
   values.innerHTML = [
     ["Container width", px(width)],
     [`Even share for ${cols}`, `(${px(width)} − ${cols - 1} × ${gap}px) / ${cols} = ${px(share)}`],
-    ["Column min", `max(${px(min)}, ${px(share)}) = <strong>${px(columnMin)}</strong>`],
-    ["Columns", `<strong>${count}</strong> of max ${cols}. ${reason}`],
+    ["Column min", `max(${px(min)}, ${px(share)}) = <strong class="stats__em">${px(columnMin)}</strong>`],
+    ["Columns", `<strong class="stats__em">${count}</strong> of max ${cols}. ${reason}`],
     ["Cells", containers.checked ? "Containers (inline-size): content adapts" : "Normal: content can't adapt"],
   ]
-    .map(([k, v]) => `<div class="stats__row"><dt>${k}</dt><dd>${v}</dd></div>`)
+    .map(
+      ([k, v]) => `<div class="stats__row"><dt class="stats__label">${k}</dt><dd class="stats__value">${v}</dd></div>`,
+    )
     .join("");
 
   warning.hidden = !overflow;

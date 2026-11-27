@@ -3,7 +3,7 @@
    (Chrome / Edge 140+), the link of the section on screen is highlighted with :target-current. */
 
 html:has(.toc) {
-  scroll-padding-block-start: 24px;
+  scroll-padding-block-start: var(--spacing-6);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -20,7 +20,7 @@ html:has(.toc) {
 
   position: absolute;
   inset-block: 0;
-  inset-inline-start: calc(100% + 28px);
+  inset-inline-start: calc(100% + var(--spacing-7));
   display: var(--_toc-display);
   width: 160px;
 }
@@ -43,12 +43,12 @@ html:has(.toc) {
   position: sticky;
   top: 24px;
   display: grid;
-  gap: 8px;
+  gap: var(--spacing-2);
 }
 
 .toc__title {
   margin: 0;
-  padding-inline-start: 12px;
+  padding-inline-start: var(--spacing-3);
   color: var(--text-muted);
   font-size: 0.7rem;
   font-weight: 700;
@@ -59,7 +59,7 @@ html:has(.toc) {
 /* scroll-target-group: the browser tracks which of these links' targets is on screen */
 .toc__list {
   display: grid;
-  gap: 2px;
+  gap: var(--spacing-0-5);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -73,7 +73,7 @@ html:has(.toc) {
   --_link-weight: 400;
 
   display: block;
-  padding: 10px;
+  padding: var(--spacing-2-5);
   border-inline-start: 2px solid var(--_link-line);
   border-radius: 0 6px 6px 0;
   background: var(--_link-bg);
@@ -81,10 +81,15 @@ html:has(.toc) {
   font-size: 0.85rem;
   font-weight: var(--_link-weight);
   text-decoration: none;
-  transition:
-    color 0.2s,
-    border-color 0.2s,
-    background-color 0.2s;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .toc__link {
+    transition:
+      color 0.2s,
+      border-color 0.2s,
+      background-color 0.2s;
+  }
 }
 
 .toc__link:hover,
@@ -103,7 +108,7 @@ html:has(.toc) {
 
 .toc__note {
   margin: 0;
-  padding-inline-start: 12px;
+  padding-inline-start: var(--spacing-3);
   color: var(--text-muted);
   font-size: 0.68rem;
   line-height: 1.4;

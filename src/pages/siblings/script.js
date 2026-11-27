@@ -187,7 +187,9 @@ function updateInspect() {
     ["Delay", `(${i} − 1) × ${read("stagger")}ms = ${delay}ms`],
     ["Number", String(i).padStart(2, "0")],
   ]
-    .map(([k, v]) => `<div class="stats__row"><dt>${k}</dt><dd>${v}</dd></div>`)
+    .map(
+      ([k, v]) => `<div class="stats__row"><dt class="stats__label">${k}</dt><dd class="stats__value">${v}</dd></div>`,
+    )
     .join("");
 }
 

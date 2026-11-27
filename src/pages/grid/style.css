@@ -14,10 +14,10 @@
 
   display: grid;
   grid-template-columns: var(--_item-columns);
-  gap: 12px;
+  gap: var(--spacing-3);
   align-items: center;
   height: 100%;
-  padding: 12px;
+  padding: var(--spacing-3);
   border: 1px solid var(--line);
   border-radius: 12px;
   background: var(--field);
@@ -44,7 +44,7 @@
 
 .item__body {
   display: grid;
-  gap: 2px;
+  gap: var(--spacing-0-5);
   min-width: 0;
 }
 
@@ -72,49 +72,10 @@
   display: var(--_side-display);
 }
 
-/* ---------- Bottom row ---------- */
-
-.compare {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-  gap: 10px;
-}
-
-.stats {
-  display: grid;
-  margin: 0;
-}
-
-.stats__row {
-  display: grid;
-  gap: 2px;
-  padding-block: 6px;
-  border-block-end: 1px solid var(--line);
-}
-
-.stats__row:last-child {
-  border-block-end: 0;
-}
-
-.stats dt {
-  font-size: 0.75rem;
-  opacity: 0.8;
-}
-
-.stats dd {
-  margin: 0;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-}
-
-.stats strong {
-  color: var(--accent);
-}
-
 /* Pointer to the Subgrid playground */
 .grid-note {
   margin: 0;
-  padding: 10px 14px;
+  padding: var(--spacing-2-5) var(--spacing-3-5);
   border: 1px solid var(--line);
   border-radius: 10px;
   background: var(--card);

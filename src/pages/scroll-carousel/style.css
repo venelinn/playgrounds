@@ -3,13 +3,14 @@
 
 .sc-playground {
   --app-width: 1440px;
+  --compare-card-min: 320px;
 }
 
 /* "This is a playground" note under the intro */
 .sc-note {
   max-width: 80ch;
-  margin: -4px auto 0;
-  padding: 8px 12px;
+  margin: calc(var(--spacing-1) * -1) auto 0;
+  padding: var(--spacing-2) var(--spacing-3);
   border: 1px dashed var(--line);
   border-radius: 10px;
   color: var(--text-muted);
@@ -28,15 +29,26 @@
 
 /* ---------- Controls ---------- */
 
-.group--layout .controls,
-.group--nav .controls {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+/* Arrows and dots: the two sizes split the row (one each on narrow screens) */
+.group--nav {
+  --controls-min: max(180px, (100% - var(--spacing-2-5)) / 2);
+}
+
+/* Layout: at most 3 controls a row (a third of the row each), fewer when it gets narrow.
+   Its title's hint goes on its own line, under the title and its "i". */
+.group--layout {
+  --group-hint-basis: 100%;
+  --group-hint-order: 1;
+  --controls-min: max(150px, (100% - 2 * var(--spacing-2-5)) / 3);
 }
 
 /* A labelled row of radio cards (Arrows, Dots) */
+/* Extra room after each row of options, so the rows breathe but the first one starts level with the
+   Layout group's controls */
 .sc-row {
   display: grid;
-  gap: 6px;
+  gap: var(--spacing-2);
+  padding-block-end: var(--spacing-2);
 }
 
 .sc-row__label {
@@ -75,14 +87,14 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: start;
-  gap: 8px;
+  gap: var(--spacing-2);
   height: 220px;
-  padding: 16px;
+  padding: var(--spacing-4);
   border-radius: var(--scroll-carousel-radius, 0);
   background:
     radial-gradient(circle at 85% 15%, hsl(var(--_hue) 80% 70% / 0.45), transparent 45%),
     linear-gradient(140deg, hsl(var(--_hue) 55% 32%), hsl(calc(var(--_hue) + 40) 55% 22%));
-  color: #ffffff;
+  color: var(--on-image);
   user-select: none;
 }
 
@@ -103,13 +115,7 @@
 .sc-buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-}
-
-.compare {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-  gap: 10px;
+  gap: var(--spacing-1-5);
 }
 
 .sc-extras-intro {

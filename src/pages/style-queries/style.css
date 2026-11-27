@@ -4,6 +4,7 @@
 
 .sq-playground {
   --app-width: 1440px;
+  --compare-card-min: 340px;
   --frame-min-height: 560px; /* room to see the page change, not just the cards */
 }
 
@@ -12,12 +13,9 @@
 /* Page: full row on wide screens; its two sliders and the switch side by side */
 .group--page {
   --_switch-span: auto;
+  --controls-min: 220px;
 
   grid-column: 1 / -1;
-}
-
-.group--page .controls {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
 }
 
 .group--page .group__switch {
@@ -63,7 +61,7 @@
 .layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 16px;
+  gap: var(--spacing-4);
   min-height: calc(var(--frame-min-height) - 2 * (12px + 1px));
 }
 
@@ -71,14 +69,14 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
   align-content: start;
-  gap: 14px;
+  gap: var(--spacing-3-5);
 }
 
 .sidebar {
   display: grid;
   align-content: start;
-  gap: 10px;
-  padding: 12px;
+  gap: var(--spacing-2-5);
+  padding: var(--spacing-3);
   border-radius: 12px;
   background: color-mix(in srgb, var(--text) 4%, transparent);
 }
@@ -137,7 +135,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 4px 8px;
+  gap: var(--spacing-1) var(--spacing-2);
   color: var(--text-muted);
   font-size: 0.8rem;
 }
@@ -146,49 +144,33 @@
   color: var(--text);
 }
 
-/* Badge: which look the card has, written by the same style queries */
+/* Badge: which look the card has, written by the same style queries (label and colour are variables) */
 .deal__state {
-  --_state-color: var(--text-muted);
-
   margin-inline-start: auto;
-  padding: 1px 8px;
-  border: 1px solid var(--_state-color);
+  padding: 1px var(--spacing-2);
+  border: 1px solid var(--_state-color, var(--text-muted));
   border-radius: 999px;
-  color: var(--_state-color);
+  color: var(--_state-color, var(--text-muted));
   font-family: var(--font-mono);
   font-size: 0.68rem;
 }
 
 .deal__state::before {
-  content: "default";
+  content: var(--_state-label, "default");
 }
 
 @container style(--deal-layout: row) {
   .deal__state {
     --_state-color: var(--accent2);
-  }
-
-  .deal__state::before {
-    content: "row";
+    --_state-label: "row";
   }
 }
 
 @container style(--deal-density: compact) {
   .deal__state {
     --_state-color: var(--accent);
+    --_state-label: "compact";
   }
-
-  .deal__state::before {
-    content: "compact";
-  }
-}
-
-/* ---------- Bottom row ---------- */
-
-.compare {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
-  gap: 10px;
 }
 
 .stage__heading .stage__hint {

@@ -4,15 +4,15 @@
   /* 1100px on laptops, grows with big screens (75% of the width), up to 1600px:
      1920px screen → 1440px, 2560px (27") → 1600px. More room = more tiles a row. */
   --app-width: clamp(1100px, 75vw, 1600px);
-  --app-title-gutter: 44px;
-  --app-gap: 24px;
-  --app-padding: clamp(24px, 5vw, 44px) clamp(16px, 4vw, 40px);
+  --app-title-gutter: calc(var(--action-size) + var(--spacing-2));
+  --app-gap: var(--spacing-6);
+  --app-padding: clamp(var(--spacing-6), 5vw, var(--spacing-12)) clamp(var(--spacing-4), 4vw, var(--spacing-10));
 }
 
 .home__grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
-  gap: 16px;
+  gap: var(--spacing-4);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -31,8 +31,8 @@
 
 .home__section {
   display: grid;
-  gap: 12px;
-  margin-block-start: 16px;
+  gap: var(--spacing-3);
+  margin-block-start: var(--spacing-4);
 }
 
 .home__heading {
@@ -42,7 +42,7 @@
 }
 
 .home__text {
-  margin: 0 0 4px;
+  margin: 0 0 var(--spacing-1);
   font-size: 0.85rem;
   line-height: 1.5;
   color: var(--text-muted);
@@ -57,25 +57,18 @@
 /* ---------- Tile (one per playground) ---------- */
 
 .tile {
-  --_tile-border: var(--line);
-  --_tile-lift: 0;
-  --_arrow-shift: 0;
-
   position: relative;
   display: grid;
   grid-row: span 4;
   grid-template-rows: subgrid;
   row-gap: 0;
-  border: 1px solid var(--_tile-border);
+  border: 1px solid var(--_tile-border, var(--line));
   border-radius: 16px;
   background: var(--card);
   color: var(--text);
   text-decoration: none;
   overflow: hidden;
-  translate: 0 var(--_tile-lift);
-  transition:
-    translate 0.2s ease,
-    border-color 0.2s ease;
+  translate: 0 var(--_tile-lift, 0);
 }
 
 /* A brand tile uses the brand's colors: everything in the tile reads --accent / --accent2 */
@@ -91,35 +84,121 @@
   --_arrow-shift: 4px;
 }
 
+/* Preview box: its content sits in the middle; modifiers move it (variable swap).
+   --_accent-gradient: for the gradient text in the previews. */
 .tile__preview {
+  --_accent-gradient: linear-gradient(90deg, var(--accent), var(--accent2));
+
   display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 14px;
+  align-items: var(--_preview-align, center);
+  justify-content: var(--_preview-justify, center);
+  gap: var(--_preview-gap, var(--spacing-2-5));
   height: 140px;
-  padding: 20px;
+  padding: var(--_preview-padding, var(--spacing-5));
   border-block-end: 1px solid var(--line);
   background:
     radial-gradient(circle, color-mix(in srgb, var(--text) 9%, transparent) 1px, transparent 1.5px) 0 0 / 16px 16px,
     radial-gradient(ellipse 70% 80% at 50% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%);
 }
 
-/* Clamp preview: the same word at min, preferred and max */
-.tile__preview--clamp {
+.tile__preview--bottom {
+  --_preview-align: flex-end;
+  --_preview-gap: var(--spacing-3-5);
+}
+
+.tile__preview--start {
+  --_preview-justify: flex-start;
+  --_preview-padding: var(--spacing-5) var(--spacing-7);
+}
+
+.tile__preview--stretch {
+  --_preview-align: stretch;
+}
+
+.tile__name {
+  padding: var(--spacing-4) var(--spacing-4-5) var(--spacing-1-5);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.tile__text {
+  padding-inline: var(--spacing-4-5);
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.tile__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3) var(--spacing-4-5) var(--spacing-4-5);
+}
+
+.tile__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-1-5);
+}
+
+.tile__tags code {
+  padding: var(--spacing-0-5) var(--spacing-1-5);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+}
+
+.tile__arrow {
+  flex: 0 0 auto;
+  align-self: end;
+  color: var(--accent);
+  font-size: 1.1rem;
+  line-height: 1.2;
+  translate: var(--_arrow-shift, 0) 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tile {
+    transition:
+      translate 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .tile__arrow {
+    transition: translate 0.2s ease;
+  }
+}
+
+/* ---------- Shared bits of the previews ---------- */
+
+/* ---------- Clamp: the same word at min, preferred and max ---------- */
+
+.aa {
+  background: var(--_text-bg, none);
+  background-clip: text;
+  color: var(--_aa-color, var(--text));
+  font-size: var(--_aa-size, 2.25rem);
   font-weight: 800;
   line-height: 1;
 }
 
-/* Siblings preview: five mini cards, hue spread by position */
-.tile__preview--siblings {
-  align-items: center;
-  gap: 8px;
+.aa--min {
+  --_aa-color: var(--text-muted);
+  --_aa-size: 1.25rem;
 }
 
-.tile__preview--siblings span {
-  --_i: 1;
-  --_n: 5;
+.aa--max {
+  --_aa-color: transparent;
+  --_aa-size: 3.5rem;
+  --_text-bg: var(--_accent-gradient);
+}
 
+/* ---------- Siblings: five mini cards, hue spread by position ---------- */
+
+.sib-mini {
   width: 38px;
   height: 52px;
   border: 1px solid var(--line);
@@ -127,22 +206,39 @@
   background:
     radial-gradient(
       circle at 100% 0,
-      hsl(calc(360deg / var(--_n) * (var(--_i) - 1)) 85% 60% / 0.55) 0 14px,
+      hsl(calc(360deg / 5 * (var(--_i, 1) - 1)) 85% 60% / 0.55) 0 14px,
       transparent 15px
     ),
     var(--field);
 }
 
-/* Grid preview: 4 columns, 6 cells (second row half full) */
-.tile__preview--grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  align-content: center;
-  gap: 8px;
-  padding-inline: 32px;
+.sib-mini--2 {
+  --_i: 2;
 }
 
-.tile__preview--grid span {
+.sib-mini--3 {
+  --_i: 3;
+}
+
+.sib-mini--4 {
+  --_i: 4;
+}
+
+.sib-mini--5 {
+  --_i: 5;
+}
+
+/* ---------- Grid: 4 columns, 6 cells (second row half full) ---------- */
+
+.grid-mini {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-2);
+  width: 100%;
+  padding-inline: var(--spacing-3);
+}
+
+.grid-mini__cell {
   height: 34px;
   border: 1px solid var(--line);
   border-radius: 7px;
@@ -153,18 +249,14 @@
   );
 }
 
-/* Subgrid preview: three mini cards with different text lengths; their price bars sit on one line */
-.tile__preview--subgrid {
-  align-items: stretch;
-  gap: 10px;
-}
+/* ---------- Subgrid: three mini cards, their price bars on one line ---------- */
 
 .mini {
   display: grid;
   grid-template-rows: 30px 1fr 8px;
-  gap: 6px;
+  gap: var(--spacing-1-5);
   width: 56px;
-  padding: 6px;
+  padding: var(--spacing-1-5);
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--field);
@@ -182,10 +274,10 @@
 .mini__lines {
   display: grid;
   align-content: start;
-  gap: 4px;
+  gap: var(--spacing-1);
 }
 
-.mini__lines span {
+.mini__line {
   height: 5px;
   border-radius: 3px;
   background: color-mix(in srgb, var(--text) 18%, transparent);
@@ -196,16 +288,16 @@
   background: var(--accent);
 }
 
-/* Popover preview: a button with a popover under it */
-.tile__preview--popover {
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
+/* ---------- Popover: a button with a popover under it ---------- */
+
+.pop-mini {
+  display: grid;
+  justify-items: center;
+  gap: var(--spacing-1-5);
 }
 
-.pop-btn {
-  padding: 5px 12px;
+.pop-mini__button {
+  padding: var(--spacing-1) var(--spacing-3);
   border-radius: 6px;
   background: var(--accent);
   color: var(--on-accent);
@@ -213,112 +305,72 @@
   font-weight: 600;
 }
 
-.pop-box {
+.pop-mini__box {
   display: grid;
-  gap: 5px;
+  gap: var(--spacing-1);
   width: 110px;
-  padding: 9px;
+  padding: var(--spacing-2);
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--field);
   box-shadow: 0 8px 24px var(--shadow);
 }
 
-.pop-box span {
+.pop-mini__line {
+  width: var(--_line-width, 100%);
   height: 5px;
   border-radius: 3px;
-  background: color-mix(in srgb, var(--text) 18%, transparent);
+  background: var(--_line-bg, color-mix(in srgb, var(--text) 18%, transparent));
 }
 
-.pop-box span:first-child {
-  width: 60%;
-  background: var(--accent);
+.pop-mini__line--accent {
+  --_line-width: 60%;
+  --_line-bg: var(--accent);
 }
 
-/* Container Units preview: a wide and a narrow card, each title sized by its own card (cqi) */
-.tile__preview--cq {
-  align-items: center;
-  gap: 10px;
-}
+/* ---------- Container Units: a wide and a narrow card, each title sized by its own card ---------- */
 
 .cq-mini {
   container-type: inline-size;
   display: grid;
   place-items: center start;
-  width: 70px;
+  width: var(--_cq-width, 70px);
   height: 64px;
-  padding-inline: 8px;
+  padding-inline: var(--spacing-2);
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--field);
 }
 
 .cq-mini--wide {
-  width: 150px;
+  --_cq-width: 150px;
 }
 
-.cq-mini b {
+.cq-mini__aa {
+  background: var(--_accent-gradient);
+  background-clip: text;
+  color: transparent;
   font-size: 30cqi;
   font-weight: 800;
   line-height: 1;
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
-  background-clip: text;
-  color: transparent;
 }
 
-/* Brand preview: a type ramp, headline to body */
-.tile__preview--ramp {
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 4px;
-  padding-inline: 28px;
-  font-weight: 700;
-  line-height: 1.1;
-}
-
-.tile__preview--ramp span:nth-child(1) {
-  font-size: 2rem;
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
-  background-clip: text;
-  color: transparent;
-}
-
-.tile__preview--ramp span:nth-child(2) {
-  font-size: 1.25rem;
-}
-
-.tile__preview--ramp span:nth-child(3) {
-  font-size: 0.85rem;
-  font-weight: 400;
-  color: var(--text-muted);
-}
-
-/* Style Queries preview: a full card in the main area, compact cards in the sidebar */
-.tile__preview--sq {
-  align-items: center;
-  gap: 10px;
-}
+/* ---------- Style Queries: a full card in the main area, compact cards in the sidebar ---------- */
 
 .sq-side {
   display: grid;
-  gap: 6px;
-  padding: 6px;
+  gap: var(--spacing-1-5);
+  padding: var(--spacing-1-5);
   border-radius: 8px;
   background: color-mix(in srgb, var(--text) 5%, transparent);
 }
 
-/* Compact: picture on the left of two text lines. Big: picture on top (var swap). */
+/* Compact: picture on the left of two text lines. Big: picture on top. */
 .sq-mini {
-  --_mini-columns: 18px 44px;
-  --_mini-img-rows: span 2;
-  --_mini-img-height: 18px;
-  --_mini-img-bg: var(--accent);
-
   display: grid;
-  grid-template-columns: var(--_mini-columns);
-  gap: 3px 6px;
-  padding: 5px;
+  grid-template-columns: var(--_mini-columns, 18px 44px);
+  gap: var(--spacing-0-5) var(--spacing-1-5);
+  padding: var(--_mini-padding, var(--spacing-1));
   border: 1px solid var(--line);
   border-radius: 6px;
   background: var(--field);
@@ -326,6 +378,7 @@
 
 .sq-mini--big {
   --_mini-columns: 90px;
+  --_mini-padding: var(--spacing-1-5);
   --_mini-img-rows: auto;
   --_mini-img-height: 44px;
   --_mini-img-bg: linear-gradient(
@@ -333,15 +386,13 @@
     color-mix(in srgb, var(--accent) 45%, var(--field)),
     color-mix(in srgb, var(--accent2) 45%, var(--field))
   );
-
-  padding: 7px;
 }
 
 .sq-mini__img {
-  grid-row: var(--_mini-img-rows);
-  height: var(--_mini-img-height);
+  grid-row: var(--_mini-img-rows, span 2);
+  height: var(--_mini-img-height, 18px);
   border-radius: 3px;
-  background: var(--_mini-img-bg);
+  background: var(--_mini-img-bg, var(--accent));
 }
 
 .sq-mini__line {
@@ -350,12 +401,12 @@
   background: color-mix(in srgb, var(--text) 18%, transparent);
 }
 
-/* Scroll Carousel preview: a track with the next slide peeking in, arrows and dots */
-.tile__preview--carousel {
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+/* ---------- Scroll Carousel: the next slide peeking in, arrows and dots ---------- */
+
+.carousel-mini {
+  display: grid;
+  justify-items: center;
+  gap: var(--spacing-2);
 }
 
 .sc-mini {
@@ -367,7 +418,7 @@
 
 .sc-mini__track {
   display: flex;
-  gap: 6px;
+  gap: var(--spacing-1-5);
 }
 
 .sc-mini__slide {
@@ -382,10 +433,8 @@
 }
 
 .sc-mini__arrow {
-  --_arrow-side: auto auto auto 4px;
-
   position: absolute;
-  inset: var(--_arrow-side);
+  inset: var(--_arrow-side, auto auto auto var(--spacing-1));
   top: 50%;
   width: 14px;
   height: 14px;
@@ -400,93 +449,45 @@
 
 .sc-mini__dots {
   display: flex;
-  gap: 5px;
+  gap: var(--spacing-1);
 }
 
 .sc-mini__dot {
-  --_dot-bg: color-mix(in srgb, var(--text) 30%, transparent);
-
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--_dot-bg);
+  background: var(--_dot-bg, color-mix(in srgb, var(--text) 30%, transparent));
 }
 
 .sc-mini__dot--on {
   --_dot-bg: var(--accent);
 }
 
-.tile__preview--clamp span:nth-child(1) {
-  font-size: 1.25rem;
-  color: var(--text-muted);
+/* ---------- Brand: a type ramp, headline to body ---------- */
+
+.ramp {
+  display: grid;
+  justify-items: start;
+  gap: var(--spacing-1);
 }
 
-.tile__preview--clamp span:nth-child(2) {
-  font-size: 2.25rem;
-}
-
-.tile__preview--clamp span:nth-child(3) {
-  font-size: 3.5rem;
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
+.ramp__text {
+  background: var(--_text-bg, none);
   background-clip: text;
-  color: transparent;
+  color: var(--_ramp-color, var(--text));
+  font-size: var(--_ramp-size, 1.25rem);
+  font-weight: var(--_ramp-weight, 700);
+  line-height: 1.1;
 }
 
-.tile__preview--siblings span:nth-child(2) {
-  --_i: 2;
-}
-.tile__preview--siblings span:nth-child(3) {
-  --_i: 3;
-}
-.tile__preview--siblings span:nth-child(4) {
-  --_i: 4;
-}
-.tile__preview--siblings span:nth-child(5) {
-  --_i: 5;
+.ramp__text--headline {
+  --_ramp-color: transparent;
+  --_ramp-size: 2rem;
+  --_text-bg: var(--_accent-gradient);
 }
 
-.tile__name {
-  padding: 16px 18px 6px;
-  font-size: 1.1rem;
-  font-weight: 700;
-}
-
-.tile__text {
-  padding-inline: 18px;
-  font-size: 0.85rem;
-  line-height: 1.45;
-  color: var(--text-muted);
-}
-
-.tile__footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 12px 18px 18px;
-}
-
-.tile__tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.tile__tags code {
-  padding: 2px 7px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-}
-
-.tile__arrow {
-  flex: 0 0 auto;
-  align-self: end;
-  color: var(--accent);
-  font-size: 1.1rem;
-  line-height: 1.2;
-  translate: var(--_arrow-shift) 0;
-  transition: translate 0.2s ease;
+.ramp__text--body {
+  --_ramp-color: var(--text-muted);
+  --_ramp-size: 0.85rem;
+  --_ramp-weight: 400;
 }

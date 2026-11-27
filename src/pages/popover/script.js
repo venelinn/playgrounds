@@ -81,7 +81,7 @@ $("matrix").innerHTML = ALL.map(
   (name) => `<div class="popover-root" data-anchor="--pm-${name}">
   <button class="trigger" type="button" popovertarget="pm-${name}">${name}</button>
   <div id="pm-${name}" class="popover-content" popover="manual" data-placement="${name}">
-    <div class="surface"><strong>${name}</strong><span>Anchored content</span></div>
+    <div class="surface"><strong class="surface__title">${name}</strong><span class="surface__text">Anchored content</span></div>
   </div>
 </div>`,
 ).join("");

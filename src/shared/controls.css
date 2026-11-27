@@ -1,19 +1,27 @@
-/* Shared controls: slider + number cards, warning, code card with Copy. Load after base.css. */
+/* Shared controls: slider + number cards, warning, code card with Copy, values list, card row.
+   Load after base.css.
+
+   Pages and groups tune them only through these variables (set on any parent):
+     --controls-columns   the whole column template of a .controls row
+     --controls-min       or just the narrowest a control may get (140px)
+     --control-align      align-content inside a .control (start)
+     --control-gap        gap inside a .control (spacing-2)
+     --compare-card-min   narrowest card in a .compare row (300px) */
 
 /* ---------- Controls (one row) ---------- */
 
 .controls {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr));
-  gap: 10px;
+  grid-template-columns: var(--controls-columns, repeat(auto-fit, minmax(min(100%, var(--controls-min, 140px)), 1fr)));
+  gap: var(--spacing-2-5);
 }
 
 .control {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 8px;
-  align-content: start;
-  padding: 12px;
+  gap: var(--control-gap, var(--spacing-2));
+  align-content: var(--control-align, start);
+  padding: var(--spacing-3);
   border-radius: 12px;
   background: var(--card);
 }
@@ -22,7 +30,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 6px;
+  gap: var(--spacing-1-5);
 }
 
 .control__label {
@@ -48,7 +56,7 @@
 
 .control__number {
   width: 3.25rem;
-  padding: 3px 2px 3px 6px;
+  padding: var(--spacing-0-5) var(--spacing-0-5) var(--spacing-0-5) var(--spacing-1-5);
   border: 0;
   background: transparent;
   color: var(--text);
@@ -66,7 +74,7 @@
 }
 
 .control__unit {
-  padding-inline-end: 6px;
+  padding-inline-end: var(--spacing-1-5);
   font-family: var(--font-mono);
   font-size: 0.7rem;
   color: var(--text-muted);
@@ -75,14 +83,14 @@
 .control__range {
   width: 100%;
   margin: 0;
-  accent-color: var(--accent);
+  accent-color: var(--_range-accent, var(--accent));
 }
 
 .control__field {
   --_input-border: var(--line);
 
   width: 100%;
-  padding: 5px 6px;
+  padding: var(--spacing-1) var(--spacing-1-5);
   border: 1px solid var(--_input-border);
   border-radius: 6px;
   background: var(--field);
@@ -101,7 +109,7 @@
 
 .warning {
   margin: 0;
-  padding: 8px 12px;
+  padding: var(--spacing-2) var(--spacing-3);
   border-radius: 8px;
   background: var(--warning-bg);
   color: var(--warning-text);
@@ -112,10 +120,10 @@
 
 .card {
   display: grid;
-  gap: 8px;
+  gap: var(--spacing-2);
   align-content: start;
   min-width: 0;
-  padding: 14px var(--_card-padding-end, 14px) 14px 14px;
+  padding: var(--spacing-3-5) var(--_card-padding-end, var(--spacing-3-5)) var(--spacing-3-5) var(--spacing-3-5);
   border-radius: 10px;
   background: var(--card);
   font-size: 0.85rem;
@@ -131,7 +139,7 @@
   --_button-bg: transparent;
   --_button-color: var(--accent);
 
-  padding: 2px 8px;
+  padding: var(--spacing-0-5) var(--spacing-2);
   border: 1px solid var(--accent);
   border-radius: 6px;
   background: var(--_button-bg);
@@ -160,7 +168,7 @@
 .switch {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--spacing-2);
   font-size: 0.8rem;
   cursor: var(--_switch-cursor, pointer);
 }
@@ -185,9 +193,9 @@
 
 .tips {
   display: grid;
-  gap: 8px;
+  gap: var(--spacing-2);
   margin: 0;
-  padding-inline-start: 18px;
+  padding-inline-start: var(--spacing-4-5);
   font-size: 0.8rem;
   line-height: 1.5;
 }
@@ -200,4 +208,81 @@
   color: var(--accent);
   font-family: var(--font-mono);
   font-size: 0.75rem;
+}
+
+/* ---------- Values list: <dl class="stats"> ----------
+   Rows: label on the left, value on the right, a line between rows.
+   .stats--stacked: label above value (narrow cards). */
+
+.stats {
+  display: grid;
+  margin: 0;
+}
+
+.stats--stacked {
+  --_row-display: grid;
+  --_row-justify: normal;
+  --_row-gap: var(--spacing-0-5);
+  --_row-padding: var(--spacing-1-5);
+  --_label-size: 0.75rem;
+  --_value-size: 0.8rem;
+  --_value-align: start;
+}
+
+.stats__row {
+  display: var(--_row-display, flex);
+  justify-content: var(--_row-justify, space-between);
+  gap: var(--_row-gap, var(--spacing-3));
+  padding-block: var(--_row-padding, var(--spacing-1));
+}
+
+.stats__row + .stats__row {
+  border-block-start: 1px solid var(--line);
+}
+
+.stats__label {
+  font-size: var(--_label-size, inherit);
+  opacity: 0.8;
+}
+
+.stats__value {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--_value-size, inherit);
+  text-align: var(--_value-align, end);
+}
+
+/* The key number in a row */
+.stats__em {
+  color: var(--accent);
+}
+
+/* Short line under a control. data-tone="ok" / "error" colours it. */
+.control__hint {
+  margin: 0;
+  color: var(--_hint-color, var(--text-muted));
+  font-size: 0.7rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.control__hint[data-tone="ok"] {
+  --_hint-color: var(--min);
+}
+
+.control__hint[data-tone="error"] {
+  --_hint-color: var(--max);
+}
+
+.control__hint code {
+  color: var(--accent);
+  font-family: var(--font-mono);
+}
+
+/* ---------- Row of cards under a demo (code, values, tips) ---------- */
+
+.compare {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--compare-card-min, 300px)), 1fr));
+  gap: var(--spacing-2-5);
 }

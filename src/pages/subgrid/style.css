@@ -29,9 +29,9 @@
   min-width: 0;
   grid-row: var(--_sub-span, auto);
   grid-template-rows: var(--_sub-rows, auto auto 1fr auto);
-  row-gap: 10px;
+  row-gap: var(--spacing-2-5);
   height: 100%;
-  padding: 12px;
+  padding: var(--spacing-3);
   border: 1px solid var(--line);
   border-radius: 12px;
   background: var(--field);
@@ -70,8 +70,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  padding-block-start: 8px;
+  gap: var(--spacing-2);
+  padding-block-start: var(--spacing-2);
   border-block-start: 1px solid var(--line);
 }
 
@@ -89,15 +89,15 @@
 .subgrid-info {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-  gap: 10px;
+  gap: var(--spacing-2-5);
   align-items: start;
 }
 
 .subgrid-info__steps {
   display: grid;
-  gap: 8px;
+  gap: var(--spacing-2);
   margin: 0;
-  padding-inline-start: 20px;
+  padding-inline-start: var(--spacing-5);
   font-size: 0.85rem;
   line-height: 1.5;
 }
@@ -116,8 +116,7 @@
 /* ---------- Page-specific bits ---------- */
 
 .control--switches {
-  align-content: center;
-  gap: 8px;
+  --control-align: center;
 }
 
 /* Editable card text */
@@ -144,10 +143,10 @@
 
   display: grid;
   grid-template-columns: max-content minmax(0, 1fr) max-content;
-  gap: 10px 12px;
+  gap: var(--spacing-2-5) var(--spacing-3);
   max-width: 760px;
   margin: 0;
-  padding: 16px;
+  padding: var(--spacing-4);
   border: 1px dashed var(--accent);
   border-radius: 10px;
   background: color-mix(in srgb, var(--accent) 4%, transparent);
@@ -162,7 +161,7 @@
   grid-column: 1 / -1;
   grid-template-columns: var(--_field-columns);
   align-items: center;
-  gap: 12px;
+  gap: var(--spacing-3);
 }
 
 .form-demo__label {
@@ -174,7 +173,7 @@
   --_input-border: var(--line);
 
   min-width: 0;
-  padding: 7px 10px;
+  padding: var(--spacing-1-5) var(--spacing-2-5);
   border: 1px solid var(--_input-border);
   border-radius: 8px;
   background: var(--field);

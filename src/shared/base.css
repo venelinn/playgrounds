@@ -20,6 +20,35 @@
   --warning-text: #fde68a;
   --shadow: #000000b3;
 
+  /* Spacing scale (Tailwind-like steps of 4px, with half steps). Use these for gap, padding, margin, inset. */
+  --spacing-0-5: 0.125rem; /* 2px */
+  --spacing-1: 0.25rem; /* 4px */
+  --spacing-1-5: 0.375rem; /* 6px */
+  --spacing-2: 0.5rem; /* 8px */
+  --spacing-2-5: 0.625rem; /* 10px */
+  --spacing-3: 0.75rem; /* 12px */
+  --spacing-3-5: 0.875rem; /* 14px */
+  --spacing-4: 1rem; /* 16px */
+  --spacing-4-5: 1.125rem; /* 18px */
+  --spacing-5: 1.25rem; /* 20px */
+  --spacing-5-5: 1.375rem; /* 22px */
+  --spacing-6: 1.5rem; /* 24px */
+  --spacing-6-5: 1.625rem; /* 26px */
+  --spacing-7: 1.75rem; /* 28px */
+  --spacing-7-5: 1.875rem; /* 30px */
+  --spacing-8: 2rem; /* 32px */
+  --spacing-8-5: 2.125rem; /* 34px */
+  --spacing-10: 2.5rem; /* 40px */
+  --spacing-12: 3rem; /* 48px */
+  --spacing-14: 3.75rem; /* 60px */
+  --spacing-18: 4.5rem; /* 72px */
+
+  /* Text on photos and colour fills that look the same in both themes */
+  --on-image: #ffffff;
+
+  /* Round icon buttons in the panel's corners (back, walkthrough, theme) */
+  --action-size: 2.25rem; /* 36px */
+
   /* Brands (from the Sunwing design tokens) */
   --westjet: #00aaa6; /* wvi color.teal.500 */
   --on-westjet: #010d1a; /* wvi color.slate.200 */
@@ -28,7 +57,9 @@
   --font-ui: "Inter", system-ui, sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
 
-  color-scheme: dark;
+  --scheme: dark;
+
+  color-scheme: var(--scheme);
 }
 
 :root[data-theme="light"] {
@@ -55,7 +86,7 @@
   --on-westjet: #ffffff;
   --westjet-alt: #003c71; /* wvi color.blue.500 */
 
-  color-scheme: light;
+  --scheme: light;
 }
 
 *,
@@ -69,7 +100,8 @@ body {
   min-height: 100dvh;
   display: grid;
   place-items: center;
-  padding: clamp(16px, 3vw, 32px);
+  gap: var(--spacing-4);
+  padding: clamp(var(--spacing-4), 3vw, var(--spacing-8));
   font-family: var(--font-ui);
   color: var(--text);
   background: var(--bg);
@@ -92,7 +124,13 @@ body::after {
   pointer-events: none;
   translate: -50% -50%;
   transform: translate(var(--_spot-x), var(--_spot-y));
-  animation: var(--_spot-path) var(--_spot-time) ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body::before,
+  body::after {
+    animation: var(--_spot-path) var(--_spot-time) ease-in-out infinite;
+  }
 }
 
 body::before {
@@ -173,13 +211,6 @@ body::after {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  body::before,
-  body::after {
-    animation: none;
-  }
-}
-
 /* ---------- App shell: panel, title, intro (shared by every page) ---------- */
 /* Pages tune it with --app-width, --app-gap, --app-padding. */
 
@@ -188,8 +219,8 @@ body::after {
   width: min(var(--app-width, 1400px), 100%);
   display: grid;
   grid-template-columns: minmax(0, 1fr); /* the panel's width wins: content can't widen it */
-  gap: var(--app-gap, 14px);
-  padding: var(--app-padding, clamp(16px, 3vw, 28px));
+  gap: var(--app-gap, var(--spacing-3-5));
+  padding: var(--app-padding, clamp(var(--spacing-4), 3vw, var(--spacing-7)));
   border-radius: 20px;
   background: var(--panel);
   backdrop-filter: blur(15px);
@@ -200,9 +231,14 @@ body::after {
     color-mix(in srgb, var(--bg-glow-2) 55%, transparent),
     calc(var(--light-a-x) * 0.6) calc(var(--light-a-y) * 0.6) 70px -20px
     color-mix(in srgb, var(--accent2) 30%, transparent);
-  animation:
-    light-a 31s ease-in-out infinite,
-    light-b 43s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .app {
+    animation:
+      light-a 31s ease-in-out infinite,
+      light-b 43s ease-in-out infinite;
+  }
 }
 
 /* ---------- The panel catches the light ----------
@@ -310,12 +346,6 @@ body::after {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .app {
-    animation: none;
-  }
-}
-
 /* Muted gradient border. A masked pseudo-element keeps the translucent panel see-through. */
 .app::before {
   content: "";
@@ -328,16 +358,18 @@ body::after {
     color-mix(in srgb, var(--accent) 35%, transparent),
     color-mix(in srgb, var(--accent2) 35%, transparent)
   );
+  /* the mask only uses alpha: any opaque colour works */
   mask:
-    linear-gradient(#000 0 0) content-box exclude,
-    linear-gradient(#000 0 0);
+    linear-gradient(var(--text) 0 0) content-box exclude,
+    linear-gradient(var(--text) 0 0);
   pointer-events: none;
 }
 
 .app__title {
   margin: 0;
-  /* room for the corner buttons; pages with one button per side use 44px */
-  padding-inline: var(--app-title-gutter, 84px);
+  /* room for the corner buttons: two on a side (help + theme) by default; pages with one per side
+     set --app-title-gutter to one button + spacing */
+  padding-inline: var(--app-title-gutter, calc(var(--action-size) * 2 + var(--spacing-3)));
   text-align: center;
   background: linear-gradient(90deg, var(--accent), var(--accent2));
   background-clip: text;
@@ -346,7 +378,7 @@ body::after {
 
 .app__intro {
   max-width: 68ch;
-  margin: -6px auto 4px;
+  margin: calc(var(--spacing-1-5) * -1) auto var(--spacing-1);
   text-align: center;
   font-size: 0.85rem;
   line-height: 1.5;
@@ -361,7 +393,7 @@ body::after {
 
 .app__intro code {
   white-space: nowrap;
-  padding: 1px 5px;
+  padding: 1px var(--spacing-1);
   border-radius: 4px;
   background: var(--card);
   color: var(--accent);
@@ -373,10 +405,10 @@ body::after {
 
 .app__actions {
   position: absolute;
-  inset-block-start: clamp(12px, 2.5vw, 22px);
-  inset-inline-end: clamp(12px, 2.5vw, 22px);
+  inset-block-start: clamp(var(--spacing-3), 2.5vw, var(--spacing-5-5));
+  inset-inline-end: clamp(var(--spacing-3), 2.5vw, var(--spacing-5-5));
   display: flex;
-  gap: 6px;
+  gap: var(--spacing-1-5);
 }
 
 .app__action {
@@ -385,13 +417,14 @@ body::after {
 
   display: var(--_action-display);
   place-items: center;
-  width: 36px;
-  height: 36px;
+  width: var(--action-size);
+  height: var(--action-size);
   padding: 0;
   border: 1px solid var(--line);
   border-radius: 50%;
   background: var(--_action-bg);
   color: var(--text);
+  text-decoration: none;
   cursor: pointer;
 }
 
@@ -429,16 +462,23 @@ body::after {
 /* Top-left "back to all playgrounds" button; same look as .app__action */
 .app__nav {
   position: absolute;
-  inset-block-start: clamp(12px, 2.5vw, 22px);
-  inset-inline-start: clamp(12px, 2.5vw, 22px);
-}
-
-a.app__action {
-  text-decoration: none;
+  inset-block-start: clamp(var(--spacing-3), 2.5vw, var(--spacing-5-5));
+  inset-inline-start: clamp(var(--spacing-3), 2.5vw, var(--spacing-5-5));
 }
 
 .app__icon--back {
   --_icon-display: block;
+}
+
+/* Small line under the panel, on every page */
+.fineprint {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.fineprint__heart {
+  color: var(--max);
 }
 
 /* Text for screen readers only (e.g. labels of icon-only links) */
