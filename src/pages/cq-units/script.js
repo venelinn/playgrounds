@@ -240,7 +240,7 @@ const TOUR_STEPS = [
     },
   },
   {
-    element: ".cq-group--layout",
+    element: ".group--layout",
     popover: {
       title: "Layout",
       description: "These change how much room the titles get. They don't touch the title settings.",
@@ -265,15 +265,15 @@ const TOUR_STEPS = [
     },
   },
   {
-    element: ".cq-group__switch",
-    info: { target: ".cq-group__switch .switch__label" },
+    element: ".group__switch",
+    info: { target: ".group__switch .switch__label" },
     popover: {
       title: "A wide card",
       description: "The first card spans 2 columns, so you can see two title sizes at once.",
     },
   },
   {
-    element: ".cq-group--unit",
+    element: ".group--unit",
     info: { target: "#unit-title" },
     popover: {
       title: "Measured by",
@@ -282,7 +282,7 @@ const TOUR_STEPS = [
     },
   },
   {
-    element: ".cq-group--heading",
+    element: ".group--heading",
     info: { target: "#heading-title" },
     popover: {
       title: "Section title",
@@ -291,7 +291,7 @@ const TOUR_STEPS = [
     },
   },
   {
-    element: ".cq-group--title",
+    element: ".group--title",
     popover: {
       title: "Card title",
       description:
@@ -365,7 +365,7 @@ const TOUR_STEPS = [
 window.setupTour({ key: "cq-units-tour-done", steps: TOUR_STEPS });
 // Info-only (not a tour step): what cqi means, next to the unit's name.
 const CQI_INFO = {
-  info: { target: '.cq-unit:has([value="cqi"]) .cq-unit__name' },
+  info: { target: '.choice:has([value="cqi"]) .choice__name' },
   popover: {
     title: "cqi",
     description:

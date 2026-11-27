@@ -1,12 +1,14 @@
 <%#
   Page end: the "Browser support" panel (filled by shared/compat.js), then closes <main>, <body>, <html>.
 
-  features  [{ feature, label?, test, caniuse, mdn, note? }]  (webstatus.dev id + how to test it)
-            leave out for a page without the panel
+  features    [{ feature, label?, test, caniuse, mdn, note? }]  (webstatus.dev id + how to test it)
+              leave out for a page without the panel
+  references  [{ title, url, source? }]  articles the playground is based on, shown under the panel
+              (styles in shared/compat.css); leave out for none
 -%>
 <% if (typeof features !== "undefined" && features.length) { -%>
 
-      <section class="compat" aria-labelledby="compat-title">
+      <section class="compat" id="browser-support" aria-labelledby="compat-title">
         <h2 class="compat__title" id="compat-title">Browser support</h2>
         <div class="compat__list">
 <% features.forEach((f) => { -%>
@@ -14,6 +16,22 @@
 <% }) -%>
         </div>
         <p class="compat__source"></p>
+      </section>
+<% } -%>
+<% if (typeof references !== "undefined" && references.length) { -%>
+
+      <section class="refs" id="reference" aria-labelledby="refs-title">
+        <h2 class="refs__title" id="refs-title">Reference</h2>
+        <ul class="refs__list">
+<% references.forEach((r) => { -%>
+          <li class="refs__item">
+            <a class="refs__link" href="<%= r.url %>" target="_blank" rel="noopener"><%= r.title %></a>
+<% if (r.source) { -%>
+            <span class="refs__source"><%= r.source %></span>
+<% } -%>
+          </li>
+<% }) -%>
+        </ul>
       </section>
 <% } -%>
     </main>

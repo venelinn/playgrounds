@@ -1,7 +1,9 @@
 /* Index page. Tokens, panel, title and intro come from shared/base.css. */
 
 .home {
-  --app-width: 1100px;
+  /* 1100px on laptops, grows with big screens (75% of the width), up to 1600px:
+     1920px screen → 1440px, 2560px (27") → 1600px. More room = more tiles a row. */
+  --app-width: clamp(1100px, 75vw, 1600px);
   --app-title-gutter: 44px;
   --app-gap: 24px;
   --app-padding: clamp(24px, 5vw, 44px) clamp(16px, 4vw, 40px);
@@ -74,6 +76,12 @@
   transition:
     translate 0.2s ease,
     border-color 0.2s ease;
+}
+
+/* A brand tile uses the brand's colors: everything in the tile reads --accent / --accent2 */
+.tile--westjet {
+  --accent: var(--westjet);
+  --accent2: var(--westjet-alt);
 }
 
 .tile:hover,
@@ -284,6 +292,128 @@
   font-size: 0.85rem;
   font-weight: 400;
   color: var(--text-muted);
+}
+
+/* Style Queries preview: a full card in the main area, compact cards in the sidebar */
+.tile__preview--sq {
+  align-items: center;
+  gap: 10px;
+}
+
+.sq-side {
+  display: grid;
+  gap: 6px;
+  padding: 6px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--text) 5%, transparent);
+}
+
+/* Compact: picture on the left of two text lines. Big: picture on top (var swap). */
+.sq-mini {
+  --_mini-columns: 18px 44px;
+  --_mini-img-rows: span 2;
+  --_mini-img-height: 18px;
+  --_mini-img-bg: var(--accent);
+
+  display: grid;
+  grid-template-columns: var(--_mini-columns);
+  gap: 3px 6px;
+  padding: 5px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--field);
+}
+
+.sq-mini--big {
+  --_mini-columns: 90px;
+  --_mini-img-rows: auto;
+  --_mini-img-height: 44px;
+  --_mini-img-bg: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent) 45%, var(--field)),
+    color-mix(in srgb, var(--accent2) 45%, var(--field))
+  );
+
+  padding: 7px;
+}
+
+.sq-mini__img {
+  grid-row: var(--_mini-img-rows);
+  height: var(--_mini-img-height);
+  border-radius: 3px;
+  background: var(--_mini-img-bg);
+}
+
+.sq-mini__line {
+  height: 5px;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--text) 18%, transparent);
+}
+
+/* Scroll Carousel preview: a track with the next slide peeking in, arrows and dots */
+.tile__preview--carousel {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.sc-mini {
+  position: relative;
+  width: 180px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.sc-mini__track {
+  display: flex;
+  gap: 6px;
+}
+
+.sc-mini__slide {
+  flex: 0 0 70px;
+  height: 56px;
+  border-radius: 6px;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent) 45%, var(--field)),
+    color-mix(in srgb, var(--accent2) 45%, var(--field))
+  );
+}
+
+.sc-mini__arrow {
+  --_arrow-side: auto auto auto 4px;
+
+  position: absolute;
+  inset: var(--_arrow-side);
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--text);
+  translate: 0 -50%;
+}
+
+.sc-mini__arrow--next {
+  --_arrow-side: auto 4px auto auto;
+}
+
+.sc-mini__dots {
+  display: flex;
+  gap: 5px;
+}
+
+.sc-mini__dot {
+  --_dot-bg: color-mix(in srgb, var(--text) 30%, transparent);
+
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--_dot-bg);
+}
+
+.sc-mini__dot--on {
+  --_dot-bg: var(--accent);
 }
 
 .tile__preview--clamp span:nth-child(1) {

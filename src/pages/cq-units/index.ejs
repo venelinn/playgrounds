@@ -1,4 +1,10 @@
 <%- include("/partials/head", {
+  nav: [
+    { id: "settings", label: "Settings" },
+    { id: "demo", label: "Section" },
+    { id: "code", label: "Code and tips" },
+    { id: "browser-support", label: "Browser support" },
+  ],
   title: "Container Units Playground",
   description: "Card titles sized with cqi: they follow the card's width, not the screen's.",
   appClass: "cq-playground",
@@ -8,6 +14,7 @@
     "/shared/compat.css",
     "/shared/tour.css",
     "/shared/info.css",
+    "/shared/groups.css",
     "/shared/grid.css",
     "/pages/cq-units/style.css",
   ],
@@ -25,9 +32,9 @@
         when it's narrow, wherever it's placed. Change the columns and watch the titles.
       </p>
 
-      <div class="cq-controls">
-        <fieldset class="cq-group cq-group--layout">
-          <legend class="cq-group__title">Layout <span class="cq-group__hint">how much room the titles get</span></legend>
+      <div class="groups" id="settings">
+        <fieldset class="group group--layout">
+          <legend class="group__title">Layout <span class="group__hint">how much room the titles get</span></legend>
           <div class="controls">
             <%- include("/components/control/control", {
               id: "cols",
@@ -49,7 +56,7 @@
               numberMax: null
             }) %>
 
-            <div class="cq-group__switch">
+            <div class="group__switch">
               <label class="switch">
                 <input class="switch__input" type="checkbox" id="wide">
                 <span class="switch__label">First card spans 2 columns</span>
@@ -58,29 +65,29 @@
           </div>
         </fieldset>
 
-        <fieldset class="cq-group cq-group--unit">
-          <legend class="cq-group__title" id="unit-title">Measured by <span class="cq-group__hint">the unit both titles use</span></legend>
-          <div class="cq-units">
-            <label class="cq-unit">
-              <input class="cq-unit__input" type="radio" name="unit" value="cqi" checked>
-              <span class="cq-unit__name">cqi</span>
-              <span class="cq-unit__text">container width, follows text direction</span>
+        <fieldset class="group group--unit">
+          <legend class="group__title" id="unit-title">Measured by <span class="group__hint">the unit both titles use</span></legend>
+          <div class="choices">
+            <label class="choice">
+              <input class="choice__input" type="radio" name="unit" value="cqi" checked>
+              <span class="choice__name">cqi</span>
+              <span class="choice__text">container width, follows text direction</span>
             </label>
-            <label class="cq-unit">
-              <input class="cq-unit__input" type="radio" name="unit" value="cqw">
-              <span class="cq-unit__name">cqw</span>
-              <span class="cq-unit__text">container width</span>
+            <label class="choice">
+              <input class="choice__input" type="radio" name="unit" value="cqw">
+              <span class="choice__name">cqw</span>
+              <span class="choice__text">container width</span>
             </label>
-            <label class="cq-unit">
-              <input class="cq-unit__input" type="radio" name="unit" value="vw">
-              <span class="cq-unit__name">vw</span>
-              <span class="cq-unit__text">screen width</span>
+            <label class="choice">
+              <input class="choice__input" type="radio" name="unit" value="vw">
+              <span class="choice__name">vw</span>
+              <span class="choice__text">screen width</span>
             </label>
           </div>
         </fieldset>
 
-        <fieldset class="cq-group cq-group--heading">
-          <legend class="cq-group__title" id="heading-title">Section title <code class="cq-group__formula" id="heading-formula"></code></legend>
+        <fieldset class="group group--heading">
+          <legend class="group__title" id="heading-title">Section title <code class="group__formula" id="heading-formula"></code></legend>
           <div class="controls">
             <%- include("/components/control/control", {
               id: "hmin",
@@ -116,8 +123,8 @@
           </div>
         </fieldset>
 
-        <fieldset class="cq-group cq-group--title">
-          <legend class="cq-group__title" id="card-title">Card title <code class="cq-group__formula" id="formula"></code></legend>
+        <fieldset class="group group--title">
+          <legend class="group__title" id="card-title">Card title <code class="group__formula" id="formula"></code></legend>
           <div class="controls">
             <%- include("/components/control/control", {
               id: "min",
@@ -154,7 +161,7 @@
         </fieldset>
       </div>
 
-      <section class="stage" aria-labelledby="stage-title">
+      <section class="stage" aria-labelledby="stage-title" id="demo">
         <div class="stage__bar">
           <h2 class="stage__heading" id="stage-title">Section <span class="stage__hint">· drag the corner ↘ to resize</span></h2>
         </div>
@@ -168,7 +175,7 @@
         </div>
       </section>
 
-      <div class="compare">
+      <div class="compare" id="code">
         <div class="card">
           <div class="card__head">
             <span class="card__title">CSS</span>

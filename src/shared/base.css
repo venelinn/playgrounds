@@ -20,6 +20,11 @@
   --warning-text: #fde68a;
   --shadow: #000000b3;
 
+  /* Brands (from the Sunwing design tokens) */
+  --westjet: #00aaa6; /* wvi color.teal.500 */
+  --on-westjet: #010d1a; /* wvi color.slate.200 */
+  --westjet-alt: #89c7c2; /* wvi color.teal.600: second gradient color */
+
   --font-ui: "Inter", system-ui, sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
 
@@ -46,6 +51,10 @@
   --warning-text: #78350f;
   --shadow: #0f172a26;
 
+  --westjet: #017f7c; /* wvi color.teal.400: readable on light */
+  --on-westjet: #ffffff;
+  --westjet-alt: #003c71; /* wvi color.blue.500 */
+
   color-scheme: light;
 }
 
@@ -63,14 +72,112 @@ body {
   padding: clamp(16px, 3vw, 32px);
   font-family: var(--font-ui);
   color: var(--text);
-  background:
-    radial-gradient(circle at 20% 20%, var(--bg-glow-1) 0%, transparent 40%),
-    radial-gradient(circle at 80% 70%, var(--bg-glow-2) 0%, transparent 40%), var(--bg);
+  background: var(--bg);
 }
 
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
+/* Two spotlights, each on its own fixed layer, wandering the screen on their own paths. The loops have
+   different lengths (31s, 43s), so together they only repeat every ~22 minutes: it reads as random.
+   Only transform is animated (no repaints). With reduced motion they rest at their start points. */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 70vmax;
+  height: 70vmax;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--_spot-color) 0%, transparent 65%);
+  pointer-events: none;
+  translate: -50% -50%;
+  transform: translate(var(--_spot-x), var(--_spot-y));
+  animation: var(--_spot-path) var(--_spot-time) ease-in-out infinite;
+}
+
+body::before {
+  --_spot-color: var(--bg-glow-1);
+  --_spot-x: 20vw;
+  --_spot-y: 20vh;
+  --_spot-path: spot-a;
+  --_spot-time: 31s;
+}
+
+body::after {
+  --_spot-color: var(--bg-glow-2);
+  --_spot-x: 80vw;
+  --_spot-y: 75vh;
+  --_spot-path: spot-b;
+  --_spot-time: 43s;
+}
+
+@keyframes spot-a {
+  0%,
+  100% {
+    transform: translate(20vw, 20vh) scale(1);
+  }
+
+  14% {
+    transform: translate(62vw, 8vh) scale(0.85);
+  }
+
+  29% {
+    transform: translate(88vw, 46vh) scale(1.1);
+  }
+
+  43% {
+    transform: translate(42vw, 72vh) scale(0.9);
+  }
+
+  57% {
+    transform: translate(8vw, 88vh) scale(1.15);
+  }
+
+  71% {
+    transform: translate(30vw, 38vh) scale(0.95);
+  }
+
+  86% {
+    transform: translate(74vw, 82vh) scale(1.05);
+  }
+}
+
+@keyframes spot-b {
+  0%,
+  100% {
+    transform: translate(80vw, 75vh) scale(1);
+  }
+
+  12% {
+    transform: translate(36vw, 92vh) scale(1.1);
+  }
+
+  27% {
+    transform: translate(6vw, 52vh) scale(0.9);
+  }
+
+  41% {
+    transform: translate(50vw, 14vh) scale(1.15);
+  }
+
+  56% {
+    transform: translate(92vw, 30vh) scale(0.85);
+  }
+
+  70% {
+    transform: translate(64vw, 62vh) scale(1.05);
+  }
+
+  85% {
+    transform: translate(18vw, 24vh) scale(0.95);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  body::after {
+    animation: none;
+  }
 }
 
 /* ---------- App shell: panel, title, intro (shared by every page) ---------- */
@@ -86,7 +193,127 @@ body {
   border-radius: 20px;
   background: var(--panel);
   backdrop-filter: blur(15px);
-  box-shadow: 0 25px 80px var(--shadow);
+  /* shadow away from the blue light, a tint of each light on the side facing it (see "catches the light") */
+  box-shadow:
+    calc(var(--light-b-x) * -0.9) calc(var(--light-b-y) * -0.9 + 20px) 80px var(--shadow),
+    calc(var(--light-b-x) * 0.6) calc(var(--light-b-y) * 0.6) 70px -20px
+    color-mix(in srgb, var(--bg-glow-2) 55%, transparent),
+    calc(var(--light-a-x) * 0.6) calc(var(--light-a-y) * 0.6) 70px -20px
+    color-mix(in srgb, var(--accent2) 30%, transparent);
+  animation:
+    light-a 31s ease-in-out infinite,
+    light-b 43s ease-in-out infinite;
+}
+
+/* ---------- The panel catches the light ----------
+   The panel follows the two spotlights with the same paths, timing and easing (they start together on
+   load, so they stay in step). --light-*-x/y is where each light is, from the screen centre, in px (one
+   px per 1% of the screen). The blue light casts the shadow away from itself and tints the near side;
+   the purple light adds a soft tint on its side. Registered, so the browser can animate them. */
+@property --light-a-x {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: -30px;
+}
+
+@property --light-a-y {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: -30px;
+}
+
+@property --light-b-x {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 30px;
+}
+
+@property --light-b-y {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 25px;
+}
+
+@keyframes light-a {
+  0%,
+  100% {
+    --light-a-x: -30px;
+    --light-a-y: -30px;
+  }
+
+  14% {
+    --light-a-x: 12px;
+    --light-a-y: -42px;
+  }
+
+  29% {
+    --light-a-x: 38px;
+    --light-a-y: -4px;
+  }
+
+  43% {
+    --light-a-x: -8px;
+    --light-a-y: 22px;
+  }
+
+  57% {
+    --light-a-x: -42px;
+    --light-a-y: 38px;
+  }
+
+  71% {
+    --light-a-x: -20px;
+    --light-a-y: -12px;
+  }
+
+  86% {
+    --light-a-x: 24px;
+    --light-a-y: 32px;
+  }
+}
+
+@keyframes light-b {
+  0%,
+  100% {
+    --light-b-x: 30px;
+    --light-b-y: 25px;
+  }
+
+  12% {
+    --light-b-x: -14px;
+    --light-b-y: 42px;
+  }
+
+  27% {
+    --light-b-x: -44px;
+    --light-b-y: 2px;
+  }
+
+  41% {
+    --light-b-x: 0px;
+    --light-b-y: -36px;
+  }
+
+  56% {
+    --light-b-x: 42px;
+    --light-b-y: -20px;
+  }
+
+  70% {
+    --light-b-x: 14px;
+    --light-b-y: 12px;
+  }
+
+  85% {
+    --light-b-x: -32px;
+    --light-b-y: -26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app {
+    animation: none;
+  }
 }
 
 /* Muted gradient border. A masked pseudo-element keeps the translucent panel see-through. */

@@ -4,136 +4,15 @@
   --app-width: 1440px;
 }
 
-/* ---------- Controls: two labelled groups (layout · card title) ---------- */
+/* ---------- Controls: the groups come from shared/groups.css ---------- */
 
-.cq-controls {
-  --_groups: minmax(0, 1fr);
-
-  display: grid;
-  grid-template-columns: var(--_groups);
-  gap: 10px 16px;
-}
-
-/* Wide screens: two columns — layout + unit on top, the two titles below */
-@media (width >= 900px) {
-  .cq-controls {
-    --_groups: repeat(2, minmax(0, 1fr));
-  }
-}
-
-.cq-group--layout .controls {
+.group--layout .controls {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.cq-group--heading .controls,
-.cq-group--title .controls {
+.group--heading .controls,
+.group--title .controls {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr));
-}
-
-/* ---------- Measured by: radio cards ---------- */
-
-.cq-units {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.cq-unit {
-  --_unit-border: transparent;
-  --_unit-name: var(--text);
-
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-content: start;
-  align-items: center;
-  gap: 4px 8px;
-  padding: 12px;
-  border: 1px solid var(--_unit-border);
-  border-radius: 12px;
-  background: var(--card);
-  cursor: pointer;
-}
-
-.cq-unit:has(:checked) {
-  --_unit-border: var(--accent);
-  --_unit-name: var(--accent);
-}
-
-.cq-unit:has(:focus-visible) {
-  --_unit-border: var(--accent);
-}
-
-.cq-unit__input {
-  width: 16px;
-  height: 16px;
-  margin: 0;
-  accent-color: var(--accent);
-}
-
-.cq-unit__name {
-  color: var(--_unit-name);
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  font-weight: 700;
-  white-space: nowrap; /* keeps the cqi "i" icon on the same line */
-}
-
-.cq-unit__text {
-  grid-column: 1 / -1;
-  color: var(--text-muted);
-  font-size: 0.75rem;
-  line-height: 1.4;
-}
-
-/* The switch sits on a slim row under the two layout sliders */
-.cq-group__switch {
-  grid-column: 1 / -1;
-  padding: 10px 12px;
-  border-radius: 12px;
-  background: var(--card);
-}
-
-/* Each group gets a frame, so it reads as one block */
-.cq-group {
-  display: grid;
-  align-content: start;
-  gap: 8px;
-  min-width: 0;
-  margin: 0;
-  padding: 12px;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-}
-
-/* float keeps the legend inside the frame instead of cutting through the border */
-.cq-group__title {
-  float: inline-start;
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 4px 10px;
-  padding: 0;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.cq-group__hint {
-  color: var(--text-muted);
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: none;
-}
-
-.cq-group__formula {
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: none;
 }
 
 /* ---------- Section: its big title uses the section's width ---------- */
@@ -256,25 +135,6 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
   gap: 10px;
-}
-
-.tips {
-  display: grid;
-  gap: 8px;
-  margin: 0;
-  padding-inline-start: 18px;
-  font-size: 0.8rem;
-  line-height: 1.5;
-}
-
-.tips strong {
-  color: var(--text);
-}
-
-.tips code {
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
 }
 
 .stage__heading .stage__hint {

@@ -1,4 +1,4 @@
-/* "Browser support" panel (shared/compat.js). Load after base.css. */
+/* "Browser support" panel (shared/compat.js) and the "Reference" list under it. Load after base.css. */
 
 .compat {
   display: grid;
@@ -14,13 +14,17 @@
   font-weight: 600;
 }
 
+/* Wrapping row, not a grid: each row shares its full width, so a feature alone
+   on the last row stretches to the end instead of leaving a gap */
 .compat__list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
 }
 
 .compat__feature {
+  flex: 1 1 420px;
+  min-width: 0;
   container-type: inline-size;
   display: grid;
   gap: 8px;
@@ -80,7 +84,7 @@
 }
 
 .compat__you[data-ok="true"] {
-  --_you-color: var(--min);
+  --_you-color: var(--compat-ok, var(--min));
 }
 
 .compat__browsers {
@@ -109,7 +113,38 @@
 }
 
 .compat__browser[data-ok="true"] {
-  --_browser-color: var(--min);
+  --_browser-color: var(--compat-ok, var(--min));
+}
+
+/* A project's requirement (e.g. WestJet) under the browser versions.
+   A brand (data-brand) colors the box, its name pill and the "supported" state; unsupported stays red. */
+.compat__req {
+  --compat-ok: var(--_req-color, var(--min));
+
+  display: grid;
+  gap: 6px;
+  padding: 10px;
+  border: 1px solid color-mix(in srgb, var(--_req-color, var(--line)) 45%, transparent);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--_req-color, transparent) 7%, transparent);
+}
+
+.compat__req[data-brand="westjet"] {
+  --_req-color: var(--westjet);
+  --_req-on: var(--on-westjet);
+}
+
+.compat__req-name {
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--_req-color, var(--line));
+  color: var(--_req-on, var(--text));
+  font-weight: 700;
+}
+
+.compat__needs {
+  color: var(--_browser-color);
+  font-size: 0.68rem;
 }
 
 .compat__browser-name {
@@ -159,4 +194,55 @@
   color: var(--warning-text);
   font-size: 0.72rem;
   line-height: 1.4;
+}
+
+/* ---------- Reference: articles the playground is based on ---------- */
+
+.refs {
+  display: grid;
+  gap: 10px;
+  margin-block-start: 8px;
+  padding: 14px;
+  border-radius: 10px;
+  background: var(--card);
+}
+
+.refs__title {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.refs__list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.refs__item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  font-size: 0.85rem;
+}
+
+.refs__link {
+  --_link-line: transparent;
+
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: var(--_link-line);
+  text-underline-offset: 3px;
+}
+
+.refs__link:hover {
+  --_link-line: currentColor;
+}
+
+.refs__source {
+  color: var(--text-muted);
+  font-size: 0.75rem;
 }

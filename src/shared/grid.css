@@ -57,7 +57,7 @@
   width: min(var(--frame-width, 100%), 100%);
   max-width: 100%; /* dragging the corner sets an inline width: never past the section */
   min-width: 240px;
-  min-height: 120px;
+  min-height: var(--frame-min-height, 120px); /* a page can ask for a taller frame */
   padding: 12px;
   border: 1px dashed var(--accent);
   border-radius: 10px;

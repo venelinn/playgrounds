@@ -1,0 +1,212 @@
+<%
+  const SLIDES = [
+    "Lisbon", "Kyoto", "Reykjavík", "Cancún", "Rome", "Banff", "Punta Cana", "Barcelona",
+  ];
+-%>
+<%- include("/partials/head", {
+  nav: [
+    { id: "settings", label: "Settings" },
+    { id: "demo", label: "Carousel" },
+    { id: "code", label: "CSS and HTML" },
+    { id: "extras", label: "What to add" },
+    { id: "browser-support", label: "Browser support" },
+  ],
+  title: "Scroll Carousel Playground",
+  description: "A carousel with native CSS scroll snap, arrows and dots. Tune its --scroll-carousel-* variables and copy the CSS and HTML.",
+  appClass: "sc-playground",
+  tour: true,
+  styles: [
+    "/shared/controls.css",
+    "/shared/compat.css",
+    "/shared/tour.css",
+    "/shared/info.css",
+    "/shared/groups.css",
+    "/shared/grid.css",
+    "/pages/scroll-carousel/carousel.css",
+    "/pages/scroll-carousel/style.css",
+  ],
+  scripts: [
+    "/shared/compat.js",
+    "/shared/tour.js",
+    "/shared/info.js",
+    "/shared/frame.js",
+    "/pages/scroll-carousel/script.js",
+  ],
+}) %>
+      <p class="app__intro">
+        A carousel where the <strong>browser does the swiping</strong>: a row of slides with
+        <code>scroll-snap</code>, plus arrows and dots. Everything you see here is set with
+        <code>--scroll-carousel-*</code> variables. Change them, swipe or click through, then copy the CSS and HTML.
+      </p>
+
+      <p class="sc-note" role="note">
+        <strong>This is a playground.</strong> CSS does the layout and the snapping; a few lines of JavaScript run the
+        arrows and dots. On a real site you'd add a bit more, like keyboard controls: see <a href="#extras">what to add</a>.
+      </p>
+
+      <div class="groups" id="settings">
+        <fieldset class="group group--layout">
+          <legend class="group__title" id="layout-title">Layout <span class="group__hint">slides and spacing</span></legend>
+          <div class="controls">
+            <%- include("/components/control/control", {
+              id: "width", label: "Width", min: 240, max: 1100, step: 1, value: 1100, unit: "px", numberMax: null
+            }) %>
+            <%- include("/components/control/control", {
+              id: "perview", label: "Slides per view", min: 1, max: 4, step: 0.1, value: 2.5, inputmode: "decimal"
+            }) %>
+            <%- include("/components/control/control", {
+              id: "gap", label: "Gap", min: 0, max: 40, step: 1, value: 16, unit: "px"
+            }) %>
+            <%- include("/components/control/control", {
+              id: "padding", label: "Padding", min: 0, max: 24, step: 1, value: 0, unit: "px"
+            }) %>
+            <%- include("/components/control/control", {
+              id: "radius", label: "Corner radius", min: 0, max: 24, step: 1, value: 12, unit: "px"
+            }) %>
+            <div class="group__switch">
+              <label class="switch">
+                <input class="switch__input" type="checkbox" id="snap-one" checked>
+                <span class="switch__label">One slide per swipe</span>
+              </label>
+            </div>
+          </div>
+          <div class="choices choices--two">
+            <label class="choice">
+              <input class="choice__input" type="radio" name="align" value="start" checked>
+              <span class="choice__name">Start</span>
+              <span class="choice__text">slides snap to the left edge</span>
+            </label>
+            <label class="choice">
+              <input class="choice__input" type="radio" name="align" value="center">
+              <span class="choice__name">Center</span>
+              <span class="choice__text">the current slide sits in the middle</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset class="group group--nav">
+          <legend class="group__title" id="nav-title">Arrows and dots</legend>
+          <div class="sc-row">
+            <span class="sc-row__label" id="arrows-label">Arrows</span>
+            <div class="choices" role="radiogroup" aria-labelledby="arrows-label">
+              <label class="choice"><input class="choice__input" type="radio" name="arrows" value="hover"><span class="choice__name">Hover</span><span class="choice__text">on hover or focus; hidden on touch</span></label>
+              <label class="choice"><input class="choice__input" type="radio" name="arrows" value="always" checked><span class="choice__name">Always</span><span class="choice__text">always shown</span></label>
+              <label class="choice"><input class="choice__input" type="radio" name="arrows" value="none"><span class="choice__name">None</span><span class="choice__text">swipe only</span></label>
+            </div>
+          </div>
+          <div class="sc-row">
+            <span class="sc-row__label" id="arrow-pos-label">Arrow position</span>
+            <div class="choices choices--two" role="radiogroup" aria-labelledby="arrow-pos-label">
+              <label class="choice"><input class="choice__input" type="radio" name="arrow-pos" value="inside" checked><span class="choice__name">On the slides</span><span class="choice__text">left and right, over the slides</span></label>
+              <label class="choice"><input class="choice__input" type="radio" name="arrow-pos" value="top"><span class="choice__name">Above</span><span class="choice__text">side by side on the right, outlined</span></label>
+            </div>
+          </div>
+          <div class="sc-row">
+            <span class="sc-row__label" id="dots-label">Dots</span>
+            <div class="choices" role="radiogroup" aria-labelledby="dots-label">
+              <label class="choice"><input class="choice__input" type="radio" name="dots" value="overlay"><span class="choice__name">Overlay</span><span class="choice__text">on the slides, with a scrim</span></label>
+              <label class="choice"><input class="choice__input" type="radio" name="dots" value="below" checked><span class="choice__name">Below</span><span class="choice__text">under the slides</span></label>
+              <label class="choice"><input class="choice__input" type="radio" name="dots" value="none"><span class="choice__name">None</span><span class="choice__text">no dots</span></label>
+            </div>
+          </div>
+          <div class="controls">
+            <%- include("/components/control/control", {
+              id: "arrow-size", label: "Arrow size", min: 24, max: 56, step: 1, value: 40, unit: "px"
+            }) %>
+            <%- include("/components/control/control", {
+              id: "dot-size", label: "Dot size", min: 4, max: 16, step: 1, value: 8, unit: "px"
+            }) %>
+            <div class="group__switch">
+              <label class="switch">
+                <input class="switch__input" type="checkbox" id="counter">
+                <span class="switch__label">Counter (3/8)</span>
+              </label>
+            </div>
+          </div>
+        </fieldset>
+
+      </div>
+
+      <section class="stage" aria-labelledby="stage-title" id="demo">
+        <div class="stage__bar">
+          <h2 class="stage__heading" id="stage-title">Carousel <span class="stage__hint">· swipe, scroll sideways or click · drag the corner ↘ to resize</span></h2>
+          <span class="stage__summary" id="summary"></span>
+        </div>
+        <div class="frame" id="frame">
+          <div class="scroll-carousel" id="carousel" role="region" aria-roledescription="carousel" aria-label="Destinations" data-arrows="always" data-dots="below">
+            <div class="scroll-carousel__viewport">
+              <button class="scroll-carousel__arrow scroll-carousel__arrow--prev" type="button" id="prev" aria-label="Previous slide">
+                <span class="scroll-carousel__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></span>
+              </button>
+              <button class="scroll-carousel__arrow scroll-carousel__arrow--next" type="button" id="next" aria-label="Next slide">
+                <span class="scroll-carousel__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>
+              </button>
+              <div class="scroll-carousel__scroller" id="scroller" data-align="start" role="group" aria-label="Slides" tabindex="0">
+<% SLIDES.forEach((place, i) => { -%>
+                <div class="scroll-carousel__slide" role="group" aria-roledescription="slide" aria-label="<%= i + 1 %> of <%= SLIDES.length %>">
+                  <div class="sc-slide">
+                    <span class="sc-slide__place"><%= place %></span>
+                    <span class="sc-slide__number"><%= i + 1 %></span>
+                  </div>
+                </div>
+<% }) -%>
+              </div>
+              <span class="scroll-carousel__counter" id="counter-text" aria-hidden="true" hidden></span>
+            </div>
+            <div class="scroll-carousel__dots" id="dots"></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="compare" id="code">
+        <div class="card">
+          <div class="card__head">
+            <span class="card__title">CSS</span>
+            <span class="sc-buttons">
+              <button class="card__button" type="button" data-copy="css-code">Copy</button>
+              <button class="card__button" type="button" id="copy-all">Copy with carousel CSS</button>
+            </span>
+          </div>
+          <pre class="card__code"><code id="css-code"></code></pre>
+        </div>
+        <div class="card">
+          <div class="card__head">
+            <span class="card__title">HTML</span>
+            <button class="card__button" type="button" data-copy="html-code">Copy</button>
+          </div>
+          <pre class="card__code"><code id="html-code"></code></pre>
+        </div>
+        <div class="card" id="extras">
+          <div class="card__head"><span class="card__title">What to add with JavaScript</span></div>
+          <p class="sc-extras-intro">This page keeps the JavaScript small. For a real site, add:</p>
+          <ul class="tips">
+            <li><strong>Keyboard controls:</strong> Left / Right and Page Up / Page Down change slides while focus is in the carousel or the pointer is over it. Form fields keep their keys.</li>
+            <li><strong>Screen-reader announcements:</strong> "3 of 8", once scrolling settles. Nothing on load.</li>
+            <li><strong>Dynamic dots:</strong> for long carousels, a few full-size dots that move along with the current one.</li>
+            <li><strong>Focus handoff:</strong> when an arrow becomes disabled, focus moves to the other one.</li>
+            <li><strong>Quick clicks add up:</strong> the active dot changes on click, before the scroll ends.</li>
+            <li><strong>Right-to-left</strong> languages, a <strong>starting slide</strong> (also inside a modal that opens later), and a way for other code to go to slide N.</li>
+            <li><strong>A <code>scrollend</code> fallback</strong> for older Safari: treat scrolling as done 150ms after the last scroll event.</li>
+          </ul>
+          <p class="sc-extras-intro">Often asked for, and best left out: looping, autoplay. Also not here: mouse drag, pinch zoom.</p>
+        </div>
+      </div>
+
+<%- include("/partials/footer", {
+  features: [
+    {
+      feature: "scroll-snap",
+      test: "scroll-snap-type: x mandatory",
+      caniuse: "scroll snap",
+      mdn: "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Scroll_snap"
+    },
+    {
+      feature: "scrollend",
+      label: "scrollend (when the slide has settled)",
+      test: "dom:scrollend",
+      caniuse: "scrollend",
+      mdn: "https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollend_event",
+      note: "Not required: without it, wait 150ms after the last scroll event instead."
+    },
+  ],
+}) %>

@@ -1,4 +1,11 @@
 <%- include("/partials/head", {
+  nav: [
+    { id: "settings", label: "Settings" },
+    { id: "card-rows", label: "Card rows" },
+    { id: "how-it-works", label: "How it works" },
+    { id: "form-columns", label: "Form columns" },
+    { id: "browser-support", label: "Browser support" },
+  ],
   title: "Subgrid Playground",
   description: "Line up the parts of cards and form fields with CSS subgrid.",
   appClass: "subgrid-playground",
@@ -26,7 +33,7 @@
         adjust.
       </p>
 
-      <div class="controls">
+      <div class="controls" id="settings">
         <%- include("/components/control/control", {
           id: "cols",
           label: "Max columns",
@@ -84,7 +91,7 @@
         </div>
       </div>
 
-      <section class="stage stage--cards" aria-labelledby="cards-title">
+      <section class="stage stage--cards" aria-labelledby="cards-title" id="card-rows">
         <div class="stage__bar">
           <h2 class="stage__heading" id="cards-title">Rows: line up the parts of each card</h2>
           <span class="stage__hint">Click a title or text to edit · drag the corner ↘ to resize</span>
@@ -95,7 +102,7 @@
         </div>
       </section>
 
-      <div class="subgrid-info">
+      <div class="subgrid-info" id="how-it-works">
         <div class="card">
           <div class="card__head">How it works</div>
           <ol class="subgrid-info__steps">
@@ -124,7 +131,7 @@
         </div>
       </div>
 
-      <section class="stage stage--form" aria-labelledby="form-title">
+      <section class="stage stage--form" aria-labelledby="form-title" id="form-columns">
         <div class="stage__bar">
           <h2 class="stage__heading" id="form-title">Columns: line up labels in a form</h2>
           <label class="switch">

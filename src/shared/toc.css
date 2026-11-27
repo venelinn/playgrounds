@@ -1,0 +1,118 @@
+/* "On this page" nav (partials/head, `nav` option): a sticky list to the right of the panel on wide screens.
+   The links are plain #anchors, so they work in every browser. Where scroll-target-group is supported
+   (Chrome / Edge 140+), the link of the section on screen is highlighted with :target-current. */
+
+html:has(.toc) {
+  scroll-padding-block-start: 24px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html:has(.toc) {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Hangs off the panel's right edge, full height, so the list can stick while the page scrolls */
+.toc {
+  --_toc-display: none;
+  --_note-on: none;
+  --_note-off: inline;
+
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: calc(100% + 28px);
+  display: var(--_toc-display);
+  width: 160px;
+}
+
+/* Only where there's room beside the widest panels (1440px) */
+@media (width >= 1800px) {
+  .toc {
+    --_toc-display: block;
+  }
+}
+
+@supports (scroll-target-group: auto) {
+  .toc {
+    --_note-on: inline;
+    --_note-off: none;
+  }
+}
+
+.toc__inner {
+  position: sticky;
+  top: 24px;
+  display: grid;
+  gap: 8px;
+}
+
+.toc__title {
+  margin: 0;
+  padding-inline-start: 12px;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* scroll-target-group: the browser tracks which of these links' targets is on screen */
+.toc__list {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  scroll-target-group: auto;
+}
+
+.toc__link {
+  --_link-color: var(--text-muted);
+  --_link-line: var(--line);
+  --_link-bg: transparent;
+  --_link-weight: 400;
+
+  display: block;
+  padding: 10px;
+  border-inline-start: 2px solid var(--_link-line);
+  border-radius: 0 6px 6px 0;
+  background: var(--_link-bg);
+  color: var(--_link-color);
+  font-size: 0.85rem;
+  font-weight: var(--_link-weight);
+  text-decoration: none;
+  transition:
+    color 0.2s,
+    border-color 0.2s,
+    background-color 0.2s;
+}
+
+.toc__link:hover,
+.toc__link:focus-visible {
+  --_link-color: var(--text);
+  --_link-line: var(--text-muted);
+}
+
+/* The section on screen. Browsers without :target-current skip this rule. */
+.toc__link:target-current {
+  --_link-color: var(--accent);
+  --_link-line: var(--accent);
+  --_link-bg: color-mix(in srgb, var(--accent) 10%, transparent);
+  --_link-weight: 600;
+}
+
+.toc__note {
+  margin: 0;
+  padding-inline-start: 12px;
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  line-height: 1.4;
+}
+
+.toc__note-on {
+  display: var(--_note-on);
+}
+
+.toc__note-off {
+  display: var(--_note-off);
+}

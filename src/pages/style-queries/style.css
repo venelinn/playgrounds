@@ -1,0 +1,196 @@
+/* Style Queries playground. Tokens, panel, controls, groups and stage come from ../shared/.
+   How the cards change (layout, sizes) is in the CSS the script writes, shown in the CSS card.
+   This file is only the look: colors, borders, the badges. */
+
+.sq-playground {
+  --app-width: 1440px;
+  --frame-min-height: 560px; /* room to see the page change, not just the cards */
+}
+
+/* ---------- Controls ---------- */
+
+/* Page: full row on wide screens; its two sliders and the switch side by side */
+.group--page {
+  --_switch-span: auto;
+
+  grid-column: 1 / -1;
+}
+
+.group--page .controls {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+}
+
+.group--page .group__switch {
+  display: flex;
+  align-items: center;
+}
+
+/* The option names here are words, not units: one option a row on narrow screens */
+@media (width < 600px) {
+  .sq-playground .choices {
+    --_choices: 1;
+  }
+}
+
+.choice__text code {
+  color: var(--accent);
+  font-family: var(--font-mono);
+}
+
+/* ---------- Modifier-class count above the page ---------- */
+
+.sq-count {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.sq-count strong {
+  color: var(--text);
+}
+
+.sq-count code {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+/* ---------- Demo page ---------- */
+
+/* Fills the frame's height (its min-height minus its padding and border), so the sidebar
+   runs to the bottom. The areas stretch; the cards inside them keep their own height. */
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  min-height: calc(var(--frame-min-height) - 2 * (12px + 1px));
+}
+
+.main {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  align-content: start;
+  gap: 14px;
+}
+
+.sidebar {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--text) 4%, transparent);
+}
+
+.sidebar__title {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ---------- Card look (its layout comes from the live CSS) ---------- */
+
+/* Grid items stretch: the picture fills the card's height when it's side by side */
+.deal {
+  align-content: start;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--field);
+}
+
+.deal__img {
+  min-height: 56px;
+  border-radius: 10px;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent) 55%, transparent),
+    color-mix(in srgb, var(--accent2) 55%, transparent)
+  );
+}
+
+.deal__place {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.deal__title {
+  margin: 0;
+  font-weight: 800;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.deal__text {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.deal__price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.deal__price strong {
+  color: var(--text);
+}
+
+/* Badge: which look the card has, written by the same style queries */
+.deal__state {
+  --_state-color: var(--text-muted);
+
+  margin-inline-start: auto;
+  padding: 1px 8px;
+  border: 1px solid var(--_state-color);
+  border-radius: 999px;
+  color: var(--_state-color);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+}
+
+.deal__state::before {
+  content: "default";
+}
+
+@container style(--deal-layout: row) {
+  .deal__state {
+    --_state-color: var(--accent2);
+  }
+
+  .deal__state::before {
+    content: "row";
+  }
+}
+
+@container style(--deal-density: compact) {
+  .deal__state {
+    --_state-color: var(--accent);
+  }
+
+  .deal__state::before {
+    content: "compact";
+  }
+}
+
+/* ---------- Bottom row ---------- */
+
+.compare {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  gap: 10px;
+}
+
+.stage__heading .stage__hint {
+  font-weight: 400;
+}

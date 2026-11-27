@@ -11,6 +11,7 @@
   back         back link to the gallery, relative to the page; default "../index.html"
   appClass     extra class on <main class="app">
   appId        id on <main> (optional)
+  nav          "On this page" links: [{ id, label }] (optional; shared/toc.css). Give each section that id.
 -%>
 <%
   const _styles = typeof styles !== "undefined" ? styles : [];
@@ -18,6 +19,7 @@
   const _tour = typeof tour !== "undefined" && tour;
   const _home = typeof home !== "undefined" && home;
   const _back = typeof back !== "undefined" ? back : "../index.html";
+  const _nav = typeof nav !== "undefined" ? nav : [];
   const _appClass = typeof appClass !== "undefined" && appClass ? ` ${appClass}` : "";
 -%>
 <!DOCTYPE html>
@@ -36,6 +38,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.3.1/dist/driver.css">
 <% } -%>
     <link rel="stylesheet" href="/shared/base.css">
+<% if (_nav.length) { -%>
+    <link rel="stylesheet" href="/shared/toc.css">
+<% } -%>
 <% _styles.forEach((href) => { -%>
     <link rel="stylesheet" href="<%= href %>">
 <% }) -%>
@@ -59,6 +64,19 @@
 
   <body>
     <main class="app<%= _appClass %>"<% if (typeof appId !== "undefined") { %> id="<%= appId %>"<% } %>>
+<% if (_nav.length) { -%>
+      <nav class="toc" aria-label="On this page">
+        <div class="toc__inner">
+          <p class="toc__title">On this page</p>
+          <ul class="toc__list">
+<% _nav.forEach((item) => { -%>
+            <li><a class="toc__link" href="#<%= item.id %>"><%= item.label %></a></li>
+<% }) -%>
+          </ul>
+          <p class="toc__note"><span class="toc__note-on">Follows your scroll</span><span class="toc__note-off">Chrome 140+ also shows where you are</span></p>
+        </div>
+      </nav>
+<% } -%>
 <% if (!_home) { -%>
       <nav class="app__nav">
         <a class="app__action" href="<%= _back %>" title="All playgrounds">

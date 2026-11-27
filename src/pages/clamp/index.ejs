@@ -1,4 +1,10 @@
 <%- include("/partials/head", {
+  nav: [
+    { id: "settings", label: "Settings" },
+    { id: "preview", label: "Preview" },
+    { id: "code", label: "Graph and code" },
+    { id: "browser-support", label: "Browser support" },
+  ],
   title: "Clamp Playground",
   tour: true,
   styles: [
@@ -23,7 +29,7 @@
         so 45px on a 900px screen. Move the sliders to see where your text stops growing.
       </p>
 
-      <div class="controls">
+      <div class="controls" id="settings">
         <%- include("/components/control/control", {
           id: "min",
           label: "Min",
@@ -124,7 +130,7 @@
 
       <p class="warning" id="warning" role="status" hidden></p>
 
-      <section class="preview" aria-label="Preview">
+      <section class="preview" aria-label="Preview" id="preview">
         <div class="preview__bar">
           <input class="preview__input" type="text" id="sample" value="Fluid Typography" placeholder="Type your text…" aria-label="Preview text" autocomplete="off">
           <span class="preview__note" id="preview-note">drag the corner ↘ to resize</span>
@@ -133,7 +139,7 @@
         <p class="preview__text" id="text">Fluid Typography</p>
       </section>
 
-      <div class="compare">
+      <div class="compare" id="code">
         <div class="card">
           <div class="graph">
             <svg class="graph__svg" viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true">

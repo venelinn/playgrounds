@@ -1,0 +1,203 @@
+<%
+  const MAIN = [
+    ["Lisbon, Portugal", "A long weekend in Lisbon", "Old-town walks, custard tarts and a sunset river cruise.", "$899"],
+    ["Kyoto, Japan", "Kyoto in cherry blossom season", "Temples, tea houses and quiet gardens in early spring.", "$2,149"],
+    ["Reykjavík, Iceland", "The Golden Circle", "Geysers, waterfalls and a dip in the Blue Lagoon.", "$1,299"],
+  ];
+  const SIDEBAR = [
+    ["Cancún, Mexico", "All-inclusive beach week", "Seven nights by the sea, meals and drinks included.", "$1,049"],
+    ["Rome, Italy", "Rome on foot", "The Colosseum, the Forum and long dinners in Trastevere.", "$1,199"],
+    ["Banff, Canada", "Lakes and mountain trails", "Turquoise lakes, hot springs and a gondola ride.", "$749"],
+  ];
+-%>
+<%- include("/partials/head", {
+  nav: [
+    { id: "settings", label: "Settings" },
+    { id: "demo", label: "Page" },
+    { id: "code", label: "CSS and tips" },
+    { id: "browser-support", label: "Browser support" },
+    { id: "reference", label: "Reference" },
+  ],
+  title: "Style Queries Playground",
+  description: "Cards that change with the area they're in: @container style() reads a setting from the parent, no modifier classes.",
+  appClass: "sq-playground",
+  tour: true,
+  styles: [
+    "/shared/controls.css",
+    "/shared/compat.css",
+    "/shared/tour.css",
+    "/shared/info.css",
+    "/shared/groups.css",
+    "/shared/grid.css",
+    "/pages/style-queries/style.css",
+  ],
+  scripts: [
+    "/shared/compat.js",
+    "/shared/tour.js",
+    "/shared/info.js",
+    "/shared/frame.js",
+    "/pages/style-queries/script.js",
+  ],
+}) %>
+      <p class="app__intro">
+        Usually a card's look is a class on the card, like <code>.deal--compact</code>, added to every card by hand.
+        With style queries the <strong>area</strong> holds a setting, <code>--deal-density: compact</code>, and every card
+        inside reacts to it with <code>@container style(…)</code>. Same HTML everywhere: the area decides.
+      </p>
+
+      <div class="groups" id="settings">
+        <fieldset class="group group--page">
+          <legend class="group__title" id="page-title">Page <span class="group__hint">how much room there is</span></legend>
+          <div class="controls">
+            <%- include("/components/control/control", {
+              id: "width",
+              label: "Page width",
+              min: 240,
+              max: 1100,
+              step: 1,
+              value: 1100,
+              unit: "px",
+              numberMax: null
+            }) %>
+
+            <%- include("/components/control/control", {
+              id: "beside",
+              label: "Sidebar beside the main area from",
+              min: 400,
+              max: 1000,
+              step: 10,
+              value: 700,
+              unit: "px"
+            }) %>
+
+            <div class="group__switch">
+              <label class="switch">
+                <input class="switch__input" type="checkbox" id="only-beside" checked>
+                <span class="switch__label">Compact sidebar only when it's beside</span>
+              </label>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="group group--density">
+          <legend class="group__title" id="density-title">Compact cards in <code class="group__formula">--deal-density: compact</code></legend>
+          <div class="choices">
+            <label class="choice">
+              <input class="choice__input" type="radio" name="density" value="none">
+              <span class="choice__name">Nowhere</span>
+              <span class="choice__text">every card at full size</span>
+            </label>
+            <label class="choice">
+              <input class="choice__input" type="radio" name="density" value="sidebar" checked>
+              <span class="choice__name">Sidebar</span>
+              <span class="choice__text">set on <code>.sidebar</code></span>
+            </label>
+            <label class="choice">
+              <input class="choice__input" type="radio" name="density" value="page">
+              <span class="choice__name">Everywhere</span>
+              <span class="choice__text">set on <code>.page</code></span>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset class="group group--layout">
+          <legend class="group__title" id="layout-title">Main area cards <code class="group__formula">--deal-layout: row</code></legend>
+          <div class="choices choices--two">
+            <label class="choice">
+              <input class="choice__input" type="radio" name="layout" value="stack" checked>
+              <span class="choice__name">Stacked</span>
+              <span class="choice__text">picture on top</span>
+            </label>
+            <label class="choice">
+              <input class="choice__input" type="radio" name="layout" value="row">
+              <span class="choice__name">Side by side</span>
+              <span class="choice__text">picture on the left: one setting, five properties change</span>
+            </label>
+          </div>
+        </fieldset>
+      </div>
+
+      <section class="stage" aria-labelledby="stage-title" id="demo">
+        <div class="stage__bar">
+          <h2 class="stage__heading" id="stage-title">Page <span class="stage__hint">· drag the corner ↘ to resize</span></h2>
+          <span class="stage__summary" id="summary"></span>
+        </div>
+        <p class="sq-count" id="count" role="status"></p>
+        <div class="frame" id="frame">
+          <div class="page" id="page">
+            <div class="layout">
+              <div class="main">
+<% MAIN.forEach(([place, title, text, price]) => { -%>
+                <article class="deal">
+                  <div class="deal__img" aria-hidden="true"></div>
+                  <span class="deal__place"><%= place %></span>
+                  <h3 class="deal__title"><%= title %></h3>
+                  <p class="deal__text"><%= text %></p>
+                  <span class="deal__price">from <strong><%= price %></strong> <span class="deal__state" aria-hidden="true"></span></span>
+                </article>
+<% }) -%>
+              </div>
+              <aside class="sidebar" aria-label="More deals">
+                <h3 class="sidebar__title">More deals</h3>
+<% SIDEBAR.forEach(([place, title, text, price]) => { -%>
+                <article class="deal">
+                  <div class="deal__img" aria-hidden="true"></div>
+                  <span class="deal__place"><%= place %></span>
+                  <h3 class="deal__title"><%= title %></h3>
+                  <p class="deal__text"><%= text %></p>
+                  <span class="deal__price">from <strong><%= price %></strong> <span class="deal__state" aria-hidden="true"></span></span>
+                </article>
+<% }) -%>
+              </aside>
+            </div>
+          </div>
+        </div>
+        <%# The demo runs on exactly the CSS in the CSS card: the script writes it here. %>
+        <style id="live-css"></style>
+      </section>
+
+      <div class="compare" id="code">
+        <div class="card">
+          <div class="card__head">
+            <span class="card__title">CSS</span>
+            <button class="card__button" type="button" id="copy">Copy</button>
+          </div>
+          <pre class="card__code"><code id="css-code"></code></pre>
+        </div>
+        <div class="card">
+          <div class="card__head"><span class="card__title">Good to know</span></div>
+          <ul class="tips">
+            <li><strong>It reads a parent, never the element itself.</strong> A card can't query a property it sets on itself: set it on the area around it. That's also why <code>.main</code> can't change its own grid from <code>--deal-layout</code>.</li>
+            <li><strong>No <code>container-type</code> needed:</strong> every element is a style container. To check a specific ancestor, name it: <code>container-name: sidebar</code> and <code>@container sidebar style(…)</code>.</li>
+            <li><strong>Custom properties only, for now.</strong> <code>style(display: flex)</code> is in the spec, but no browser supports it.</li>
+            <li><strong>Anything can switch it on:</strong> a class, <code>:has()</code>, a media query, or a size query, like the sidebar here that only goes compact when it's beside the main area.</li>
+            <li><strong>One setting, many changes:</strong> the query can restyle the card and everything in it. <code>if()</code>, now arriving in browsers, works one property at a time.</li>
+            <li><strong>Modifier classes still have a place:</strong> a one-off variant, like an accent button, is fine as <code>.button--accent</code>. Style queries shine when the <em>context</em> decides.</li>
+          </ul>
+        </div>
+      </div>
+
+<%- include("/partials/footer", {
+  features: [
+    {
+      feature: "container-style-queries",
+      test: "dom:style-queries",
+      caniuse: "container style queries",
+      mdn: "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Containment/Container_size_and_style_queries#container_style_queries"
+    },
+    {
+      feature: "container-queries",
+      label: "Container queries (size), for the sidebar",
+      test: "container-type: inline-size",
+      caniuse: "container queries",
+      mdn: "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Containment/Container_queries"
+    },
+  ],
+  references: [
+    {
+      title: "CSS Style Queries as Conditional Modifiers",
+      url: "https://css-tricks.com/css-style-queries-as-conditional-modifiers/",
+      source: "Kevin Powell · CSS-Tricks"
+    },
+  ],
+}) %>

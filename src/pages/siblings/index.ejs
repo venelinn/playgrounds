@@ -1,4 +1,10 @@
 <%- include("/partials/head", {
+  nav: [
+    { id: "settings", label: "Settings" },
+    { id: "demo", label: "Cards" },
+    { id: "code", label: "Code" },
+    { id: "browser-support", label: "Browser support" },
+  ],
   title: "Siblings Playground",
   description: "Try CSS sibling-index() and sibling-count(): cards that pick their own color, number and animation delay.",
   appClass: "siblings",
@@ -27,7 +33,7 @@
         Your browser doesn't support these functions yet. A small script fills in the same values so you can still try it.
       </p>
 
-      <div class="controls">
+      <div class="controls" id="settings">
         <%- include("/components/control/control", {
           id: "count",
           label: "Cards",
@@ -80,14 +86,14 @@
         </div>
       </div>
 
-      <section class="stage" aria-labelledby="stage-title">
+      <section class="stage" aria-labelledby="stage-title" id="demo">
         <span class="stage__pill">CSS · sibling-index() &amp; sibling-count()</span>
         <h2 class="stage__title" id="stage-title">Featured Products</h2>
         <p class="stage__text">Each card automatically knows its position and total count, rendering completely self-contained color gradients and numbering.</p>
         <div class="products" id="products"></div>
       </section>
 
-      <div class="compare">
+      <div class="compare" id="code">
         <div class="card">
           <div class="card__head">
             <span class="card__title">CSS</span>

@@ -1,0 +1,129 @@
+/* Scroll Carousel playground. The carousel itself is carousel.css (what "Copy with carousel CSS" copies);
+   this file is the page around it and the demo slides. */
+
+.sc-playground {
+  --app-width: 1440px;
+}
+
+/* "This is a playground" note under the intro */
+.sc-note {
+  max-width: 80ch;
+  margin: -4px auto 0;
+  padding: 8px 12px;
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.sc-note strong {
+  color: var(--text);
+}
+
+.sc-note a {
+  color: var(--accent);
+}
+
+/* ---------- Controls ---------- */
+
+.group--layout .controls,
+.group--nav .controls {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+}
+
+/* A labelled row of radio cards (Arrows, Dots) */
+.sc-row {
+  display: grid;
+  gap: 6px;
+}
+
+.sc-row__label {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* One option a row on narrow screens, so names never squeeze */
+@media (width < 600px) {
+  .sc-playground .choices {
+    --_choices: 1;
+  }
+}
+
+.choice__text code {
+  color: var(--accent);
+  font-family: var(--font-mono);
+}
+
+/* The script hides the dots when everything fits */
+.scroll-carousel__dots[hidden] {
+  --_dots-display: none;
+}
+
+/* ---------- Demo slides ---------- */
+
+.frame {
+  /* the carousel's own Canvas / CanvasText colors follow the page theme */
+  color-scheme: inherit;
+}
+
+.sc-slide {
+  --_hue: calc(185 + var(--i, 0) * 22);
+
+  /* Name and number on top: the counter and overlay dots sit at the bottom */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 8px;
+  height: 220px;
+  padding: 16px;
+  border-radius: var(--scroll-carousel-radius, 0);
+  background:
+    radial-gradient(circle at 85% 15%, hsl(var(--_hue) 80% 70% / 0.45), transparent 45%),
+    linear-gradient(140deg, hsl(var(--_hue) 55% 32%), hsl(calc(var(--_hue) + 40) 55% 22%));
+  color: #ffffff;
+  user-select: none;
+}
+
+.sc-slide__number {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.sc-slide__place {
+  font-size: 1.4rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+/* ---------- Bottom row ---------- */
+
+.sc-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.compare {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 10px;
+}
+
+.sc-extras-intro {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.sc-extras-intro code {
+  color: var(--accent);
+  font-family: var(--font-mono);
+}
+
+.stage__heading .stage__hint {
+  font-weight: 400;
+}

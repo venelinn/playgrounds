@@ -1,0 +1,128 @@
+/* Shared control groups: a bordered group with a title (fieldset + legend), and radio cards.
+   Load after controls.css. */
+
+/* Groups side by side: one column, two on wide screens */
+.groups {
+  --_groups: minmax(0, 1fr);
+
+  display: grid;
+  grid-template-columns: var(--_groups);
+  gap: 10px 16px;
+}
+
+@media (width >= 900px) {
+  .groups {
+    --_groups: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* A switch on a slim row of its own, under the sliders (a group can set --_switch-span: auto to keep it in line) */
+.group__switch {
+  grid-column: var(--_switch-span, 1 / -1);
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--card);
+}
+
+/* Each group gets a frame, so it reads as one block */
+.group {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+/* float keeps the legend inside the frame instead of cutting through the border */
+.group__title {
+  float: inline-start;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  padding: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.group__hint {
+  color: var(--text-muted);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.group__formula {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* ---------- Radio cards ---------- */
+
+/* Three cards a row; .choices--two for two */
+.choices {
+  display: grid;
+  grid-template-columns: repeat(var(--_choices, 3), minmax(0, 1fr));
+  gap: 10px;
+}
+
+.choices--two {
+  --_choices: 2;
+}
+
+.choice {
+  --_choice-border: transparent;
+  --_choice-name: var(--text);
+
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-content: start;
+  align-items: center;
+  gap: 4px 8px;
+  padding: 12px;
+  border: 1px solid var(--_choice-border);
+  border-radius: 12px;
+  background: var(--card);
+  cursor: pointer;
+}
+
+.choice:has(:checked) {
+  --_choice-border: var(--accent);
+  --_choice-name: var(--accent);
+}
+
+.choice:has(:focus-visible) {
+  --_choice-border: var(--accent);
+}
+
+.choice__input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+.choice__name {
+  color: var(--_choice-name);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap; /* keeps an "i" icon on the same line */
+}
+
+.choice__text {
+  grid-column: 1 / -1;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  line-height: 1.4;
+}

@@ -1,4 +1,12 @@
 <%- include("/partials/head", {
+  nav: [
+    { id: "settings", label: "Settings" },
+    { id: "demo", label: "Builder" },
+    { id: "code", label: "Code" },
+    { id: "placements", label: "All placements" },
+    { id: "escapes", label: "Escapes overflow" },
+    { id: "browser-support", label: "Browser support" },
+  ],
   title: "Popover Playground",
   description: "Native popovers positioned with CSS anchor positioning: placements, flipping, animation, no JavaScript needed.",
   appClass: "popover-playground",
@@ -28,7 +36,7 @@
       </p>
       <p class="warning" id="support-note" role="status" hidden></p>
 
-      <div class="controls">
+      <div class="controls" id="settings">
         <fieldset class="control control--placement">
           <legend class="control__label">Placement: <strong id="placement-name">bottom-start</strong></legend>
           <div class="picker" id="picker">
@@ -78,7 +86,7 @@
         </div>
       </div>
 
-      <section class="stage" aria-labelledby="builder-title">
+      <section class="stage" aria-labelledby="builder-title" id="demo">
         <div class="stage__bar">
           <h2 class="stage__heading" id="builder-title">Builder</h2>
           <span class="stage__hint">Drag the button toward an edge of the window to make it flip</span>
@@ -100,7 +108,7 @@
         </div>
       </section>
 
-      <div class="compare">
+      <div class="compare" id="code">
         <div class="card">
           <div class="card__head">
             <span class="card__title">HTML</span>
@@ -117,7 +125,7 @@
         </div>
       </div>
 
-      <section class="stage" aria-labelledby="matrix-title">
+      <section class="stage" aria-labelledby="matrix-title" id="placements">
         <div class="stage__bar">
           <h2 class="stage__heading" id="matrix-title">All twelve placements</h2>
         </div>
@@ -128,7 +136,7 @@
         <div class="matrix" id="matrix"></div>
       </section>
 
-      <section class="stage" aria-labelledby="clip-title">
+      <section class="stage" aria-labelledby="clip-title" id="escapes">
         <div class="stage__bar">
           <h2 class="stage__heading" id="clip-title">Escapes <code>overflow: hidden</code></h2>
         </div>

@@ -74,6 +74,45 @@
         safari_ios: { version: "16" },
       },
     },
+    "scroll-snap": {
+      name: "Scroll snap",
+      baseline: { status: "widely", low_date: "2020-01-15", high_date: "2022-07-15" },
+      browser_implementations: {
+        chrome: { version: "69" },
+        edge: { version: "79" },
+        firefox: { version: "68" },
+        safari: { version: "11" },
+        chrome_android: { version: "69" },
+        firefox_android: { version: "68" },
+        safari_ios: { version: "11" },
+      },
+    },
+    scrollend: {
+      name: "scrollend",
+      baseline: { status: "newly", low_date: "2025-12-12" },
+      browser_implementations: {
+        chrome: { version: "114" },
+        edge: { version: "114" },
+        firefox: { version: "109" },
+        safari: { version: "26.2" },
+        chrome_android: { version: "114" },
+        firefox_android: { version: "109" },
+        safari_ios: { version: "26.2" },
+      },
+    },
+    "container-style-queries": {
+      name: "Container style queries",
+      baseline: { status: "newly", low_date: "2026-05-19" },
+      browser_implementations: {
+        chrome: { version: "111" },
+        edge: { version: "111" },
+        firefox: { version: "151" },
+        safari: { version: "18" },
+        chrome_android: { version: "111" },
+        firefox_android: { version: "151" },
+        safari_ios: { version: "18" },
+      },
+    },
     subgrid: {
       name: "Subgrid",
       baseline: { status: "widely", low_date: "2023-09-15", high_date: "2026-03-15" },
@@ -159,6 +198,56 @@
     ["safari_ios", "Safari iOS"],
   ];
 
+  // Browsers a project has to support. Each feature gets a row per requirement: green where the feature
+  // already works in that project's oldest supported version, red where it needs something newer.
+  //
+  // WestJet: westjetvacations-com's package.json browserslist, "> 0.5%, last 3 versions, not dead",
+  // resolved with that project's own browserslist data (what its build uses). Checked 2026-11-27.
+  // (The component library has no list: its Vite 6 default is older, Chrome 87 / Firefox 78 / Safari 14.)
+  // Refresh: in westjetvacations-com, npx browserslist, and take the oldest version per browser.
+  const REQUIREMENTS = [
+    {
+      name: "WestJet",
+      brand: "westjet", // colors: --westjet / --on-westjet in base.css
+      source: 'westjetvacations-com browserslist: "> 0.5%, last 3 versions, not dead"',
+      min: { chrome: "105", edge: "138", firefox: "140", safari: "18.4", chrome_android: "139", safari_ios: "18.4" },
+    },
+  ];
+
+  // "13.1" <= "14" → true. Missing feature version = not supported.
+  function versionAtMost(a, b) {
+    if (!a) return false;
+    const pa = a.split(".").map(Number);
+    const pb = b.split(".").map(Number);
+    for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+      const d = (pa[i] ?? 0) - (pb[i] ?? 0);
+      if (d) return d < 0;
+    }
+    return true;
+  }
+
+  function requirementRows(impl) {
+    return REQUIREMENTS.map((req) => {
+      const cells = BROWSERS.map(([key, label]) => {
+        const need = impl[key]?.version;
+        const ok = versionAtMost(need, req.min[key]);
+        return `<li class="compat__browser" data-ok="${ok}">
+            <span class="compat__browser-name">${label}</span>
+            <span class="compat__version">${escapeHtml(req.min[key])}+</span>
+            ${ok ? "" : `<span class="compat__needs">needs ${need ? `${escapeHtml(need)}+` : "support"}</span>`}
+          </li>`;
+      });
+      const all = BROWSERS.every(([key]) => versionAtMost(impl[key]?.version, req.min[key]));
+      return `<div class="compat__req"${req.brand ? ` data-brand="${escapeHtml(req.brand)}"` : ""}>
+          <p class="compat__note">
+            <strong class="compat__req-name" title="${escapeHtml(req.source)}">${escapeHtml(req.name)}</strong> supports
+            <span class="compat__you" data-ok="${all}">${all ? "✓ Safe for every browser it supports" : "✗ Not in all of them: add a fallback"}</span>
+          </p>
+          <ul class="compat__browsers">${cells.join("")}</ul>
+        </div>`;
+    }).join("");
+  }
+
   const monthYear = new Intl.DateTimeFormat(undefined, { month: "short", year: "numeric" });
   const fmtDate = (iso) => (iso ? monthYear.format(new Date(`${iso}T00:00:00`)) : "");
   const escapeHtml = (s) =>
@@ -178,6 +267,21 @@
   // or "dom:name" for one of the DOM checks below.
   const DOM_TESTS = {
     popover: () => "popover" in HTMLElement.prototype,
+    scrollend: () => "onscrollend" in window,
+    // CSS.supports can't test an @container condition: set a property on a parent and see if a child's query matches.
+    "style-queries": () => {
+      const sheet = new CSSStyleSheet();
+      sheet.replaceSync("@container style(--compat-probe: on) { .compat-probe { --compat-hit: yes; } }");
+      document.adoptedStyleSheets = [...document.adoptedStyleSheets, sheet];
+      const parent = document.createElement("div");
+      parent.style.setProperty("--compat-probe", "on");
+      parent.append(Object.assign(document.createElement("div"), { className: "compat-probe" }));
+      document.body.append(parent);
+      const ok = getComputedStyle(parent.firstChild).getPropertyValue("--compat-hit").trim() === "yes";
+      parent.remove();
+      document.adoptedStyleSheets = document.adoptedStyleSheets.filter((s) => s !== sheet);
+      return ok;
+    },
     "popover-hint": () => {
       const el = document.createElement("div");
       el.popover = "hint";
@@ -222,6 +326,7 @@
           </li>`;
         }).join("")}
       </ul>
+      ${requirementRows(impl)}
       <p class="compat__links">${links}</p>
       ${el.dataset.note ? `<p class="compat__extra">${escapeHtml(el.dataset.note)}</p>` : ""}`;
   }

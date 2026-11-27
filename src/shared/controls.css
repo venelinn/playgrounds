@@ -162,7 +162,12 @@
   align-items: center;
   gap: 8px;
   font-size: 0.8rem;
-  cursor: pointer;
+  cursor: var(--_switch-cursor, pointer);
+}
+
+.switch:has(:disabled) {
+  --_switch-cursor: not-allowed;
+  --_switch-label-opacity: 0.4;
 }
 
 .switch__input {
@@ -173,5 +178,26 @@
 }
 
 .switch__label {
-  opacity: 0.8;
+  opacity: var(--_switch-label-opacity, 0.8);
+}
+
+/* ---------- "Good to know" list inside a card ---------- */
+
+.tips {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-inline-start: 18px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.tips strong {
+  color: var(--text);
+}
+
+.tips code {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
 }

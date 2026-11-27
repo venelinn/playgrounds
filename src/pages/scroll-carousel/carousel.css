@@ -1,0 +1,329 @@
+/* Scroll carousel: a row of slides with native CSS scroll snap, plus arrows, dots and a counter.
+   Everything is set with --scroll-carousel-* custom properties (read through private --_ vars).
+   The fallbacks use system colors, so it works on any site without design tokens. */
+
+.scroll-carousel {
+  --_slides-per-view: var(--scroll-carousel-slides-per-view, 1);
+  --_gap: var(--scroll-carousel-gap, 0px);
+  --_scroller-padding: var(--scroll-carousel-padding, 0px);
+  --_radius: var(--scroll-carousel-radius, 0);
+  --_snap-stop: var(--scroll-carousel-snap-stop, always);
+  --_focus-ring: var(--scroll-carousel-focus-ring, 2px solid Highlight);
+  --_focus-offset: var(--scroll-carousel-focus-offset, 2px);
+  --_duration: var(--scroll-carousel-transition-duration, 0.2s);
+
+  --_arrow-size: var(--scroll-carousel-arrow-size, 2.5rem);
+  --_arrow-width: var(--scroll-carousel-arrow-width, var(--_arrow-size));
+  --_arrow-height: var(--scroll-carousel-arrow-height, var(--_arrow-size));
+  --_arrow-icon-size: var(--scroll-carousel-arrow-icon-size, 1.25rem);
+  --_arrow-inset: var(--scroll-carousel-arrow-inset, 0.75rem);
+  --_arrow-top: var(--scroll-carousel-arrow-top, 50%);
+  --_arrow-radius: var(--scroll-carousel-arrow-radius, 50%);
+  --_arrow-prev-radius: var(--scroll-carousel-arrow-prev-radius, var(--_arrow-radius));
+  --_arrow-next-radius: var(--scroll-carousel-arrow-next-radius, var(--_arrow-radius));
+  --_arrow-color: var(--scroll-carousel-arrow-color, CanvasText);
+  --_arrow-hover-color: var(--scroll-carousel-arrow-hover-color, var(--_arrow-color));
+  --_arrow-disabled-color: var(--scroll-carousel-arrow-disabled-color, var(--_arrow-color));
+  --_arrow-bg: var(--scroll-carousel-arrow-bg, Canvas);
+  --_arrow-hover-bg: var(--scroll-carousel-arrow-hover-bg, var(--_arrow-bg));
+  --_arrow-shadow: var(--scroll-carousel-arrow-shadow, 0 1px 4px color-mix(in srgb, CanvasText 20%, transparent));
+  --_arrow-disabled-opacity: var(--scroll-carousel-arrow-disabled-opacity, 0.4);
+  --_arrow-focus-offset: var(--scroll-carousel-arrow-focus-offset, var(--_focus-offset));
+  --_arrow-visibility: 1;
+  --_arrow-display: var(--scroll-carousel-arrow-display, grid);
+  --_arrow-border: var(--scroll-carousel-arrow-border, 0);
+  --_arrow-translate: 0 -50%;
+  --_arrow-prev-start: var(--_arrow-inset);
+  --_arrow-prev-end: auto;
+  --_arrows-gap: var(--scroll-carousel-arrows-gap, 0.75rem);
+  --_arrows-spacing: var(--scroll-carousel-arrows-spacing, 0.75rem);
+  --_arrows-room: 0px;
+
+  --_dot-size: var(--scroll-carousel-dot-size, 0.5rem);
+  --_dot-hit-size: var(--scroll-carousel-dot-hit-size, 1.5rem);
+  --_dot-radius: var(--scroll-carousel-dot-radius, 50%);
+  --_dot-opacity: var(--scroll-carousel-dot-opacity, 0.6);
+  --_dot-color: var(--scroll-carousel-dot-color, color-mix(in srgb, CanvasText 40%, transparent));
+  --_dot-active-color: var(--scroll-carousel-dot-active-color, CanvasText);
+  --_dot-border: var(--scroll-carousel-dot-border, none);
+  --_dot-active-border: var(--scroll-carousel-dot-active-border, var(--_dot-border));
+  --_dots-gap: var(--scroll-carousel-dots-gap, 0px);
+  --_dots-spacing: var(--scroll-carousel-dots-spacing, 0.5rem);
+  --_dots-offset: var(--scroll-carousel-dots-offset, 0.75rem);
+  --_dots-padding: var(--scroll-carousel-dots-padding, 0 0.25rem);
+  --_dots-bg: transparent;
+  --_dots-radius: var(--scroll-carousel-dots-radius, 999px);
+  --_dots-display: var(--scroll-carousel-dots-display, flex);
+
+  --_counter-padding: var(--scroll-carousel-counter-padding, 0.25rem 0.5rem);
+  --_counter-font-size: var(--scroll-carousel-counter-font-size, 0.875rem);
+  --_counter-font-weight: var(--scroll-carousel-counter-font-weight, 600);
+  --_counter-color: var(--scroll-carousel-counter-color, Canvas);
+  --_counter-bg: var(--scroll-carousel-counter-bg, CanvasText);
+  --_counter-radius: var(--scroll-carousel-counter-radius, 0);
+
+  --_scroll-behavior: smooth;
+
+  position: relative;
+  padding-block-start: var(--_arrows-room);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-carousel {
+    --_scroll-behavior: auto;
+  }
+}
+
+/* Dots on top of images need a scrim to stay readable on bright photos. */
+.scroll-carousel[data-dots="overlay"] {
+  --_dot-color: var(--scroll-carousel-overlay-dot-color, white);
+  --_dot-active-color: var(--scroll-carousel-overlay-dot-active-color, white);
+  --_dots-bg: var(--scroll-carousel-dots-bg, color-mix(in srgb, black 30%, transparent));
+}
+
+@media (hover: hover) {
+  .scroll-carousel[data-arrows="hover"] {
+    --_arrow-visibility: 0;
+  }
+
+  .scroll-carousel[data-arrows="hover"]:hover,
+  .scroll-carousel[data-arrows="hover"]:focus-within {
+    --_arrow-visibility: 1;
+  }
+}
+
+/* Touch users swipe; arrows would only cover the content. */
+@media (hover: none) {
+  .scroll-carousel[data-arrows="hover"] {
+    --_arrow-display: none;
+  }
+}
+
+/* Arrows above the slides, side by side on the right, outlined (data-arrows-position="top").
+   The carousel makes room for them on top. --scroll-carousel-arrows-gap: between the two;
+   --scroll-carousel-arrows-spacing: between the arrows and the slides. */
+.scroll-carousel[data-arrows-position="top"] {
+  --_arrows-room: calc(var(--_arrow-height) + var(--_arrows-spacing));
+  --_arrow-top: calc(-1 * var(--_arrows-room));
+  --_arrow-translate: none;
+  --_arrow-inset: var(--scroll-carousel-arrow-inset, 0px);
+  --_arrow-prev-start: auto;
+  --_arrow-prev-end: calc(var(--_arrow-inset) + var(--_arrow-width) + var(--_arrows-gap));
+  --_arrow-bg: var(--scroll-carousel-arrow-bg, transparent);
+  --_arrow-border: var(--scroll-carousel-arrow-border, 1px solid currentColor);
+  --_arrow-shadow: var(--scroll-carousel-arrow-shadow, none);
+}
+
+/* Arrows and the counter sit on the slides, not on the dots below them. */
+.scroll-carousel__viewport {
+  position: relative;
+}
+
+.scroll-carousel__scroller {
+  --_slide-size: calc((100% - (var(--_slides-per-view) - 1) * var(--_gap)) / var(--_slides-per-view));
+  --_snap-align: start;
+
+  display: flex;
+  gap: var(--_gap);
+  padding: var(--_scroller-padding);
+  scroll-padding-inline: var(--_scroller-padding);
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  /* Quick taps must not trigger double-tap zoom. */
+  touch-action: manipulation;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: var(--_scroll-behavior);
+  scrollbar-width: none;
+  border-radius: var(--_radius);
+}
+
+.scroll-carousel__scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-carousel__scroller:focus-visible {
+  outline: var(--_focus-ring);
+  outline-offset: var(--_focus-offset);
+}
+
+/* Spacers let the first and last slides reach the centre. */
+.scroll-carousel__scroller[data-align="center"] {
+  --_snap-align: center;
+}
+
+.scroll-carousel__scroller[data-align="center"]::before,
+.scroll-carousel__scroller[data-align="center"]::after {
+  content: "";
+  flex: 0 0 max(0px, calc((100% - var(--_slide-size)) / 2 - var(--_gap)));
+}
+
+.scroll-carousel__slide {
+  position: relative;
+  flex: 0 0 var(--_slide-size);
+  min-width: 0;
+  scroll-snap-align: var(--_snap-align);
+  scroll-snap-stop: var(--_snap-stop);
+}
+
+.scroll-carousel__arrow {
+  --_arrow-current-color: var(--_arrow-color);
+  --_arrow-current-bg: var(--_arrow-bg);
+  --_arrow-opacity: var(--_arrow-visibility);
+
+  position: absolute;
+  top: var(--_arrow-top);
+  z-index: 2;
+  display: var(--_arrow-display);
+  place-items: center;
+  flex-shrink: 0;
+  width: var(--_arrow-width);
+  height: var(--_arrow-height);
+  padding: 0;
+  border: var(--_arrow-border);
+  border-radius: var(--_arrow-current-radius);
+  background: var(--_arrow-current-bg);
+  color: var(--_arrow-current-color);
+  font-size: var(--_arrow-icon-size);
+  box-shadow: var(--_arrow-shadow);
+  opacity: var(--_arrow-opacity);
+  cursor: pointer;
+  touch-action: manipulation;
+  translate: var(--_arrow-translate);
+  transition:
+    opacity var(--_duration) ease,
+    color var(--_duration) ease,
+    background-color var(--_duration) ease;
+}
+
+@media (any-hover: hover) {
+  .scroll-carousel__arrow:hover {
+    --_arrow-current-color: var(--_arrow-hover-color);
+    --_arrow-current-bg: var(--_arrow-hover-bg);
+  }
+}
+
+.scroll-carousel__arrow:focus-visible {
+  outline: var(--_focus-ring);
+  outline-offset: var(--_arrow-focus-offset);
+}
+
+.scroll-carousel__arrow:disabled {
+  --_arrow-current-color: var(--_arrow-disabled-color);
+  --_arrow-opacity: calc(var(--_arrow-visibility) * var(--_arrow-disabled-opacity));
+
+  cursor: default;
+}
+
+.scroll-carousel__arrow--prev {
+  --_arrow-current-radius: var(--_arrow-prev-radius);
+
+  inset-inline-start: var(--_arrow-prev-start);
+  inset-inline-end: var(--_arrow-prev-end);
+}
+
+.scroll-carousel__arrow--next {
+  --_arrow-current-radius: var(--_arrow-next-radius);
+
+  inset-inline-end: var(--_arrow-inset);
+}
+
+.scroll-carousel__icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.scroll-carousel__counter {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  z-index: 2;
+  padding: var(--_counter-padding);
+  border-radius: var(--_counter-radius);
+  background: var(--_counter-bg);
+  color: var(--_counter-color);
+  font-size: var(--_counter-font-size);
+  font-weight: var(--_counter-font-weight);
+}
+
+.scroll-carousel__dots {
+  --_dots-position: relative;
+  --_dots-translate: none;
+
+  position: var(--_dots-position);
+  z-index: 2;
+  display: var(--_dots-display);
+  justify-content: center;
+  align-items: center;
+  gap: var(--_dots-gap);
+  margin-block-start: var(--_dots-spacing);
+  padding: var(--_dots-padding);
+  border-radius: var(--_dots-radius);
+  background: var(--_dots-bg);
+  translate: var(--_dots-translate);
+}
+
+.scroll-carousel[data-dots="overlay"] > .scroll-carousel__dots {
+  --_dots-position: absolute;
+  --_dots-translate: -50% 0;
+
+  bottom: var(--_dots-offset);
+  left: 50%;
+  margin-block-start: 0;
+}
+
+/* Large hit area around a small dot (WCAG 2.5.8 target size). */
+.scroll-carousel__dot {
+  --_dot-fill: var(--_dot-color);
+  --_dot-alpha: var(--_dot-opacity);
+  --_dot-current-border: var(--_dot-border);
+
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: var(--_dot-hit-size);
+  height: var(--_dot-hit-size);
+  padding: 0;
+  border: 0;
+  border-radius: var(--_dot-radius);
+  background: transparent;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.scroll-carousel__dot::before {
+  content: "";
+  box-sizing: border-box;
+  width: var(--_dot-size);
+  height: var(--_dot-size);
+  border: var(--_dot-current-border);
+  border-radius: var(--_dot-radius);
+  background: var(--_dot-fill);
+  opacity: var(--_dot-alpha);
+  transition:
+    background-color var(--_duration) ease,
+    opacity var(--_duration) ease;
+}
+
+.scroll-carousel__dot[aria-current="true"] {
+  --_dot-fill: var(--_dot-active-color);
+  --_dot-alpha: 1;
+  --_dot-current-border: var(--_dot-active-border);
+}
+
+.scroll-carousel__dot:focus-visible {
+  outline: var(--_focus-ring);
+  outline-offset: calc(var(--_focus-offset) * -1);
+}
+
+/* Screen-reader only: for a "3 of 8" announcement */
+.scroll-carousel__status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

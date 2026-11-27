@@ -1,4 +1,10 @@
 <%- include("/partials/head", {
+  nav: [
+    { id: "settings", label: "Settings" },
+    { id: "demo", label: "Grid" },
+    { id: "code", label: "Code" },
+    { id: "browser-support", label: "Browser support" },
+  ],
   title: "Grid Playground",
   description: "A responsive grid with a maximum number of columns and a minimum column width, no media queries.",
   appClass: "grid-playground",
@@ -26,7 +32,7 @@
         can adapt to the cell's width. Drag the corner of the grid or move the sliders.
       </p>
 
-      <div class="controls">
+      <div class="controls" id="settings">
         <%- include("/components/control/control", {
           id: "cols",
           label: "Max columns",
@@ -88,7 +94,7 @@
 
       <p class="warning" id="warning" role="status" hidden></p>
 
-      <section class="stage" aria-label="Grid demo">
+      <section class="stage" aria-label="Grid demo" id="demo">
         <div class="stage__bar">
           <span class="stage__summary" id="summary"></span>
           <span class="stage__hint">Drag the corner ↘ to resize</span>
@@ -104,7 +110,7 @@
         because a container can't also be a subgrid.
       </p>
 
-      <div class="compare">
+      <div class="compare" id="code">
         <div class="card">
           <div class="card__head">
             <span class="card__title">CSS</span>
