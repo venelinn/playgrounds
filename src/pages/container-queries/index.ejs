@@ -1,0 +1,189 @@
+<%
+  // The same card everywhere: same image, text and buttons. Only the space changes.
+  const card = () => `
+                <article class="trip">
+                  <div class="trip__inner">
+                    <span class="trip__state" aria-hidden="true"><span class="trip__width"></span></span>
+                    <div class="trip__img" aria-hidden="true"></div>
+                    <span class="trip__place">Punta Cana, Dominican Republic</span>
+                    <h3 class="trip__title">Beachfront all-inclusive escape</h3>
+                    <p class="trip__text">Seven nights steps from the sand, with meals, drinks and a kids' club included.</p>
+                    <ul class="trip__details">
+                      <li class="trip__detail">7 nights</li>
+                      <li class="trip__detail">All inclusive</li>
+                      <li class="trip__detail">Free cancellation</li>
+                    </ul>
+                    <p class="trip__price">from <strong class="trip__amount">$1,249</strong> per person</p>
+                    <div class="trip__actions">
+                      <button class="trip__button trip__button--primary" type="button">View deal</button>
+                      <button class="trip__button" type="button">Save</button>
+                    </div>
+                  </div>
+                </article>`;
+-%>
+<%- include("/partials/head", {
+  nav: [
+    { id: "settings", label: "Settings" },
+    { id: "demo", label: "One card, many places" },
+    { id: "code", label: "CSS and tips" },
+    { id: "browser-support", label: "Browser support" },
+    { id: "reference", label: "Reference" },
+  ],
+  title: "Container Queries Playground",
+  description: "The same card in a sidebar, a grid and a full-width section: each one picks its layout from its own width, not the screen.",
+  appClass: "containers-playground",
+  tour: true,
+  styles: [
+    "/shared/controls.css",
+    "/shared/compat.css",
+    "/shared/tour.css",
+    "/shared/info.css",
+    "/shared/groups.css",
+    "/shared/grid.css",
+    "/pages/container-queries/style.css",
+  ],
+  scripts: [
+    "/shared/compat.js",
+    "/shared/tour.js",
+    "/shared/info.js",
+    "/shared/frame.js",
+    "/pages/container-queries/script.js",
+  ],
+}) %>
+      <p class="app__intro">
+        Screen breakpoints tell a component how big the <strong>screen</strong> is. A container query tells it how much
+        <strong>space it has</strong>. Below, the same card sits in four places on one page, and each one picks
+        <em>compact</em>, <em>intermediate</em> or <em>expanded</em> from its own width.
+      </p>
+
+      <div class="groups" id="settings">
+        <fieldset class="group group--mode">
+          <legend class="group__title" id="mode-title">Switch by</legend>
+          <div class="choices choices--two">
+            <label class="choice">
+              <input class="choice__input" type="radio" name="mode" value="container" checked>
+              <span class="choice__name">Its own width</span>
+              <span class="choice__text">container query: each card decides</span>
+            </label>
+            <label class="choice">
+              <input class="choice__input" type="radio" name="mode" value="screen">
+              <span class="choice__name">The screen</span>
+              <span class="choice__text">media query, the old way: every card the same</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset class="group group--points">
+          <legend class="group__title" id="points-title">Switch points <span class="group__hint">the card's width</span></legend>
+          <div class="controls">
+            <%- include("/components/control/control", {
+              id: "inter", label: "Intermediate from", min: 200, max: 700, step: 10, value: 300, unit: "px"
+            }) %>
+            <%- include("/components/control/control", {
+              id: "exp", label: "Expanded from", min: 300, max: 900, step: 10, value: 560, unit: "px"
+            }) %>
+          </div>
+          <p class="warning" id="points-warning" role="status" hidden>Expanded should start after Intermediate.</p>
+        </fieldset>
+
+        <fieldset class="group group--page">
+          <legend class="group__title" id="page-title">Page</legend>
+          <div class="controls">
+            <%- include("/components/control/control", {
+              id: "width", label: "Page width", min: 320, max: 1400, step: 1, value: 1400, unit: "px", numberMax: null
+            }) %>
+            <div class="group__switch">
+              <label class="switch">
+                <input class="switch__input" type="checkbox" id="outlines" checked>
+                <span class="switch__label">Show container outlines and widths</span>
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <section class="stage" aria-labelledby="stage-title" id="demo">
+        <div class="stage__bar">
+          <h2 class="stage__heading" id="stage-title">One card, many places <span class="stage__hint">· drag the corner ↘ to resize the page</span></h2>
+          <span class="stage__summary" id="summary"></span>
+        </div>
+        <div class="frame" id="frame">
+          <div class="site" id="site" data-outlines="true">
+            <section class="site__area" aria-label="Full-width section">
+              <p class="site__label">Full-width section <span class="site__width"></span></p>
+              <div class="site__cards"><%- card() %>
+              </div>
+            </section>
+
+            <section class="site__area" aria-label="Two-column grid">
+              <p class="site__label">Two-column grid <span class="site__width"></span></p>
+              <div class="site__cards site__cards--two"><%- card() %><%- card() %>
+              </div>
+            </section>
+
+            <div class="site__main">
+              <section class="site__area" aria-label="Three-column grid">
+                <p class="site__label">Three-column grid <span class="site__width"></span></p>
+                <div class="site__cards site__cards--three"><%- card() %><%- card() %><%- card() %>
+                </div>
+              </section>
+
+              <aside class="site__area" aria-label="Sidebar">
+                <p class="site__label">Sidebar <span class="site__width"></span></p>
+                <div class="site__cards"><%- card() %>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </div>
+        <%# The demo runs on the CSS in the CSS card (the script writes it here). %>
+        <style id="live-css"></style>
+      </section>
+
+      <div class="compare" id="code">
+        <div class="card">
+          <div class="card__head">
+            <span class="card__title">CSS</span>
+            <button class="card__button" type="button" id="copy">Copy</button>
+          </div>
+          <pre class="card__code"><code id="css-code"></code></pre>
+        </div>
+        <div class="card">
+          <div class="card__head"><span class="card__title">For designers</span></div>
+          <ul class="tips">
+            <li><strong>Design states, not devices:</strong> instead of Desktop / Tablet / Mobile, draw the card as <em>Compact</em>, <em>Intermediate</em> and <em>Expanded</em>, and write the width each one starts at.</li>
+            <li><strong>The switch points above are those widths.</strong> Find the narrowest width where each layout still works, and hand that number over with the design.</li>
+            <li><strong>Who decides what:</strong> the page decides how much space a card gets (columns, sidebar). The card decides how it looks in that space.</li>
+            <li><strong>Screen breakpoints still matter</strong> for the page itself: when the sidebar moves under the content, for example. Here the page stacks its areas when it gets narrow.</li>
+            <li><strong>In Figma:</strong> make one component with three variants named by state, built with auto layout, and note each variant's width range.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card__head"><span class="card__title">Good to know</span></div>
+          <ul class="tips">
+            <li><strong>The card's box is the container:</strong> <code>container: card / inline-size</code>. The query styles what is <em>inside</em> it, never the box itself.</li>
+            <li><strong>Try "The screen":</strong> the same rules measured on the screen give every card the same layout, so the sidebar card gets squeezed. That's the problem container queries fix.</li>
+            <li><strong>Mobile first:</strong> compact is the default; the queries only add room as the card grows.</li>
+            <li>The layout reads <code>--_</code> variables, so each state only swaps values instead of repeating properties.</li>
+          </ul>
+        </div>
+      </div>
+
+<%- include("/partials/footer", {
+  features: [
+    {
+      feature: "container-queries",
+      label: "Container queries (size)",
+      test: "container-type: inline-size",
+      caniuse: "container queries",
+      mdn: "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Containment/Container_queries"
+    },
+  ],
+  references: [
+    {
+      title: "CSS container queries",
+      url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Containment/Container_queries",
+      source: "MDN"
+    },
+  ],
+}) %>

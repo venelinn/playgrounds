@@ -6,16 +6,17 @@ Plain HTML, CSS and JavaScript. The pages are written as [EJS](https://ejs.co/) 
 
 ## Playgrounds
 
-| Playground                                             | What it shows                                                                                                                   | Docs                                                                                                    |
-| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| [Clamp](src/pages/clamp/index.ejs)                     | Fluid type with `clamp(min, preferred, max)`: sizes, fonts, graph, CSS output                                                   | [README](src/pages/clamp/README.md) · [specs](src/pages/clamp/docs/specs/README.md)                     |
-| [Siblings](src/pages/siblings/index.ejs)               | `sibling-index()` and `sibling-count()`: cards that pick their own color, number and animation delay                            | [README](src/pages/siblings/README.md) · [specs](src/pages/siblings/docs/specs/README.md)               |
-| [Grid](src/pages/grid/index.ejs)                       | Up to N columns that drop when too narrow, no breakpoints; cells as containers. Based on our component library's `Row` / `Cell` | [README](src/pages/grid/README.md) · [specs](src/pages/grid/docs/specs/README.md)                       |
-| [Subgrid](src/pages/subgrid/index.ejs)                 | Cards and form fields that share their parent grid's rows or columns so their parts line up; the container catch                | [README](src/pages/subgrid/README.md) · [specs](src/pages/subgrid/docs/specs/README.md)                 |
-| [Popover](src/pages/popover/index.ejs)                 | Native popovers placed with anchor positioning: 12 placements, flipping, types, animation, no JavaScript needed                 | [README](src/pages/popover/README.md) · [specs](src/pages/popover/docs/specs/README.md)                 |
-| [Container Units](src/pages/cq-units/index.ejs)        | Titles sized with `cqi`: each follows its own card (or section), not the screen                                                 | [README](src/pages/cq-units/README.md) · [specs](src/pages/cq-units/docs/specs/README.md)               |
-| [Style Queries](src/pages/style-queries/index.ejs)     | Cards that take their look from the area they're in with `@container style()`, no modifier classes                              | [README](src/pages/style-queries/README.md) · [specs](src/pages/style-queries/docs/specs/README.md)     |
-| [Scroll Carousel](src/pages/scroll-carousel/index.ejs) | A carousel where the browser does the swiping: scroll snap, arrows and dots, `--scroll-carousel-*` variables, CSS + HTML output | [README](src/pages/scroll-carousel/README.md) · [specs](src/pages/scroll-carousel/docs/specs/README.md) |
+| Playground                                                 | What it shows                                                                                                                    | Docs                                                                                                        |
+| ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| [Clamp](src/pages/clamp/index.ejs)                         | Fluid type with `clamp(min, preferred, max)`: sizes, fonts, graph, CSS output                                                    | [README](src/pages/clamp/README.md) · [specs](src/pages/clamp/docs/specs/README.md)                         |
+| [Siblings](src/pages/siblings/index.ejs)                   | `sibling-index()` and `sibling-count()`: cards that pick their own color, number and animation delay                             | [README](src/pages/siblings/README.md) · [specs](src/pages/siblings/docs/specs/README.md)                   |
+| [Grid](src/pages/grid/index.ejs)                           | Up to N columns that drop when too narrow, no breakpoints; cells as containers. Based on our component library's `Row` / `Cell`  | [README](src/pages/grid/README.md) · [specs](src/pages/grid/docs/specs/README.md)                           |
+| [Subgrid](src/pages/subgrid/index.ejs)                     | Cards and form fields that share their parent grid's rows or columns so their parts line up; the container catch                 | [README](src/pages/subgrid/README.md) · [specs](src/pages/subgrid/docs/specs/README.md)                     |
+| [Popover](src/pages/popover/index.ejs)                     | Native popovers placed with anchor positioning: 12 placements, flipping, types, animation, no JavaScript needed                  | [README](src/pages/popover/README.md) · [specs](src/pages/popover/docs/specs/README.md)                     |
+| [Container Units](src/pages/cq-units/index.ejs)            | Titles sized with `cqi`: each follows its own card (or section), not the screen                                                  | [README](src/pages/cq-units/README.md) · [specs](src/pages/cq-units/docs/specs/README.md)                   |
+| [Container Queries](src/pages/container-queries/index.ejs) | One card, many places: the same card picks compact, intermediate or expanded from its own width; compare with screen breakpoints | [README](src/pages/container-queries/README.md) · [specs](src/pages/container-queries/docs/specs/README.md) |
+| [Style Queries](src/pages/style-queries/index.ejs)         | Cards that take their look from the area they're in with `@container style()`, no modifier classes                               | [README](src/pages/style-queries/README.md) · [specs](src/pages/style-queries/docs/specs/README.md)         |
+| [Scroll Carousel](src/pages/scroll-carousel/index.ejs)     | A carousel where the browser does the swiping: scroll snap, arrows and dots, `--scroll-carousel-*` variables, CSS + HTML output  | [README](src/pages/scroll-carousel/README.md) · [specs](src/pages/scroll-carousel/docs/specs/README.md)     |
 
 **Brands** (their own section on the index page): one page per design system, its type scale as `clamp()`.
 
@@ -89,6 +90,7 @@ src/
     subgrid/        Subgrid playground (same layout)
     popover/        Popover playground (same layout)
     cq-units/       Container Units playground (same layout)
+    container-queries/ Container Queries playground: one card, many places (same layout)
     style-queries/  Style Queries playground (same layout)
     scroll-carousel/ Scroll Carousel playground (+ carousel.css: the carousel's own CSS)
     brands/         Brand type scales: shared brand.ejs/.js/.css + one folder per brand (westjet/)

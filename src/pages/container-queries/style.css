@@ -1,0 +1,232 @@
+/* Container Queries playground. Tokens, panel, controls, groups and stage come from ../shared/.
+   The card's three layouts are in the CSS the script writes (shown in the CSS card);
+   this file is the look, and the page-level layout of the demo page. */
+
+.containers-playground {
+  --app-width: 1440px;
+  --frame-min-height: 400px;
+}
+
+/* ---------- Controls ---------- */
+
+.group--page {
+  --_switch-span: auto;
+  --controls-min: 240px;
+
+  grid-column: 1 / -1;
+}
+
+.group--page .group__switch {
+  display: flex;
+  align-items: center;
+}
+
+/* ---------- The demo page ----------
+   The page itself still uses breakpoints (on its own width here): its areas stack when it's
+   narrow. That's the page's job; the cards inside decide their own layout. */
+
+.site {
+  container: site / inline-size;
+  display: grid;
+  gap: var(--spacing-6);
+}
+
+.site__area {
+  display: grid;
+  align-content: start;
+  gap: var(--spacing-2);
+  min-width: 0;
+}
+
+.site__label {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.site__width {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.site__cards {
+  display: grid;
+  grid-template-columns: var(--_site-columns, minmax(0, 1fr));
+  gap: var(--spacing-4);
+}
+
+.site__main {
+  display: grid;
+  grid-template-columns: var(--_main-columns, minmax(0, 1fr));
+  gap: var(--spacing-6);
+}
+
+@container site (width >= 720px) {
+  .site__cards--two {
+    --_site-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .site__cards--three {
+    --_site-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .site__main {
+    --_main-columns: minmax(0, 1fr) 280px;
+  }
+}
+
+/* ---------- The card's look (its layout comes from the live CSS) ---------- */
+
+.trip {
+  position: relative;
+  border-radius: 14px;
+  outline: var(--_trip-outline, 0 solid transparent);
+  outline-offset: var(--spacing-1);
+}
+
+/* "Show container outlines": a dashed line around each card's box (the container) */
+.site[data-outlines="true"] {
+  --_trip-outline: 1px dashed var(--accent);
+  --_state-display: inline-flex;
+}
+
+.trip__inner {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--field);
+}
+
+/* Badge: the state (from the container query) and the card's width (from the script).
+   It sits on the dashed outline, like a tag on the container's edge, so it never covers the card. */
+.trip__state {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: var(--spacing-3);
+  translate: 0 calc(-50% - var(--spacing-1));
+  z-index: 1;
+  display: var(--_state-display, none);
+  gap: var(--spacing-1-5);
+  padding: var(--spacing-0-5) var(--spacing-2);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.trip__state::before {
+  content: var(--_state, "compact");
+}
+
+.trip__width {
+  color: var(--text-muted);
+}
+
+.trip__img {
+  min-height: 0;
+  border-radius: 10px;
+  background:
+    radial-gradient(circle at 75% 25%, color-mix(in srgb, var(--accent) 45%, transparent), transparent 45%),
+    linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--accent) 40%, var(--field)),
+      color-mix(in srgb, var(--accent2) 55%, var(--field))
+    );
+}
+
+.trip__place {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.trip__title {
+  margin: 0;
+  font-weight: 800;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.trip__text {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.trip__details {
+  flex-wrap: wrap;
+  gap: var(--spacing-1-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.trip__detail {
+  padding: var(--spacing-0-5) var(--spacing-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+}
+
+.trip__price {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.trip__amount {
+  color: var(--text);
+  font-size: 1.15rem;
+}
+
+.trip__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+}
+
+.trip__button {
+  padding: var(--spacing-2) var(--spacing-4);
+  border: 1px solid var(--_button-border, var(--line));
+  border-radius: 8px;
+  background: var(--_button-bg, transparent);
+  color: var(--_button-color, var(--text));
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.trip__button--primary {
+  --_button-bg: var(--accent);
+  --_button-border: var(--accent);
+  --_button-color: var(--on-accent);
+}
+
+.trip__button:hover {
+  --_button-border: var(--accent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .trip__button {
+    transition: border-color 0.2s;
+  }
+}
+
+.stage__heading .stage__hint {
+  font-weight: 400;
+}

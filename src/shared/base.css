@@ -473,8 +473,11 @@ body::after {
 /* Small line under the panel, on every page */
 .fineprint {
   color: var(--text-muted);
-  font-size: 0.75rem;
   text-align: center;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05rem;
+  font-size: 0.7rem;
 }
 
 .fineprint__heart {
