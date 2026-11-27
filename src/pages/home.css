@@ -20,7 +20,7 @@
 
 /* Subgrid: every tile spans 4 shared rows (preview, name, text, footer), so tiles in a row
    line up their names, text and tags. The <li> sits between grid and tile, so it needs it too. */
-.home__grid > li {
+.home__item {
   display: grid;
   grid-row: span 4;
   grid-template-rows: subgrid;
@@ -29,7 +29,10 @@
 
 /* ---------- Brands section ---------- */
 
+/* Brands comes in after the eight playground tiles: heading, then text, then its tiles */
 .home__section {
+  --_reveal-after: 640ms;
+
   display: grid;
   gap: var(--spacing-3);
   margin-block-start: var(--spacing-4);
@@ -160,7 +163,29 @@
   translate: var(--_arrow-shift, 0) 0;
 }
 
+/* Entrance, like the Siblings cards: each tile fades in and rises, one after another.
+   The delay comes from sibling-index(); browsers without it skip that line and show all at once.
+   On the <li>, so it doesn't fight the tile's hover lift. */
+.home__grid--brands {
+  --_reveal-after: 800ms;
+}
+
+@keyframes tile-reveal {
+  from {
+    opacity: 0;
+    translate: 0 var(--spacing-8);
+    scale: 0.94;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
+  .home__item,
+  .home__heading,
+  .home__text {
+    animation: tile-reveal 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: calc((sibling-index() - 1) * 80ms + var(--_reveal-after, 0ms));
+  }
+
   .tile {
     transition:
       translate 0.2s ease,
