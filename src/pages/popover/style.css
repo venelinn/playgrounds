@@ -41,7 +41,7 @@
   border: 1px dashed var(--line);
   border-radius: 6px;
   color: var(--text-muted);
-  font-size: 0.65rem;
+  font-size: var(--text-2xs);
 }
 
 .picker__spot {
@@ -163,7 +163,7 @@
   background: var(--_trigger-bg);
   color: var(--_trigger-color, var(--text));
   font: inherit;
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
   font-weight: var(--_trigger-weight, inherit);
   white-space: nowrap;
   cursor: var(--_trigger-cursor, pointer);
@@ -204,7 +204,7 @@
   border-radius: 10px;
   background: var(--field);
   box-shadow: 0 10px 40px var(--shadow);
-  font-size: 0.85rem;
+  font-size: var(--text-md);
 }
 
 .surface__title {
@@ -214,7 +214,7 @@
 
 .surface__text {
   color: var(--text-muted);
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
 }
 
 /* ---------- Builder playfield ---------- */
@@ -269,5 +269,4 @@
 .stage__heading code,
 .control__hint code {
   color: var(--accent);
-  font-family: var(--font-mono);
 }

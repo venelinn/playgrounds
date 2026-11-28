@@ -15,17 +15,17 @@
   }
 
   & .driver-popover-title {
-    font-family: var(--font-ui);
-    font-size: 1rem;
-    font-weight: 600;
+    font: var(--_font, var(--type-title));
     color: var(--text);
+
+    @supports at-rule(@function) {
+      --_font: --type(var(--text-base), 600, normal);
+    }
   }
 
   & .driver-popover-description {
     margin-block-start: var(--spacing-1-5);
-    font-family: var(--font-ui);
-    font-size: 0.85rem;
-    line-height: 1.5;
+    font: var(--type-body);
     color: var(--text-muted);
   }
 
@@ -34,7 +34,7 @@
   }
 
   & .driver-popover-progress-text {
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
     color: var(--text-muted);
   }
 
@@ -68,7 +68,7 @@
   background: var(--_tour-btn-bg);
   color: var(--_tour-btn-color);
   font-family: var(--font-ui);
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
   text-shadow: none;
 }
 
@@ -84,6 +84,5 @@
 
 .driver-popover.tour .driver-popover-description code {
   color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
 }

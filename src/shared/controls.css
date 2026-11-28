@@ -35,7 +35,7 @@
 
 .control__label {
   min-width: 0;
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
   opacity: 0.8;
 }
 
@@ -61,7 +61,7 @@
   background: transparent;
   color: var(--text);
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
   text-align: right;
   outline: none;
   appearance: textfield;
@@ -75,8 +75,7 @@
 
 .control__unit {
   padding-inline-end: var(--spacing-1-5);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font: var(--type-code);
   color: var(--text-muted);
 }
 
@@ -96,7 +95,7 @@
   background: var(--field);
   color: var(--text);
   font: inherit;
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
 
   &:focus-visible {
     --_input-border: var(--accent);
@@ -113,7 +112,7 @@
   border-radius: 8px;
   background: var(--warning-bg);
   color: var(--warning-text);
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
 }
 
 /* ---------- Card (code block with Copy, values, etc.) ---------- */
@@ -126,7 +125,7 @@
   padding: var(--spacing-3-5) var(--_card-padding-end, var(--spacing-3-5)) var(--spacing-3-5) var(--spacing-3-5);
   border-radius: 10px;
   background: var(--card);
-  font-size: 0.85rem;
+  font-size: var(--text-md);
 }
 
 .card__head {
@@ -145,7 +144,7 @@
   background: var(--_button-bg);
   color: var(--_button-color);
   font: inherit;
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   cursor: pointer;
 
   &:hover {
@@ -158,9 +157,11 @@
   margin: 0;
   overflow-x: auto;
   color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  line-height: 1.6;
+  font: var(--_font, var(--type-mono));
+
+  @supports at-rule(@function) {
+    --_font: --type(var(--text-xs), 400, 1.6, var(--font-mono));
+  }
 }
 
 /* ---------- Switch (checkbox + label) ---------- */
@@ -169,7 +170,7 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-2);
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
   cursor: var(--_switch-cursor, pointer);
 
   &:has(:disabled) {
@@ -196,8 +197,7 @@
   gap: var(--spacing-2);
   margin: 0;
   padding-inline-start: var(--spacing-4-5);
-  font-size: 0.8rem;
-  line-height: 1.5;
+  font: var(--type-note);
 
   & strong {
     color: var(--text);
@@ -205,8 +205,7 @@
 
   & code {
     color: var(--accent);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
   }
 }
 
@@ -261,7 +260,7 @@
 .control__hint {
   margin: 0;
   color: var(--_hint-color, var(--text-muted));
-  font-size: 0.7rem;
+  font-size: var(--text-2xs);
   line-height: 1.4;
   overflow-wrap: anywhere;
 
@@ -275,7 +274,6 @@
 
   & code {
     color: var(--accent);
-    font-family: var(--font-mono);
   }
 }
 

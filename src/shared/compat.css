@@ -10,8 +10,7 @@
 
 .compat__title {
   margin: 0;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font: var(--type-heading);
 }
 
 /* Wrapping row, not a grid: each row shares its full width, so a feature alone
@@ -44,8 +43,7 @@
 
 .compat__name {
   min-width: 0;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font: var(--type-heading);
 }
 
 .compat__badge {
@@ -56,7 +54,7 @@
   border: 1px solid var(--_badge-color);
   border-radius: 999px;
   color: var(--_badge-color);
-  font-size: 0.7rem;
+  font-size: var(--text-2xs);
   font-weight: 600;
 
   &[data-tone="widely"] {
@@ -71,7 +69,7 @@
 .compat__note {
   margin: 0;
   color: var(--text-muted);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
 }
 
 .compat__you {
@@ -142,19 +140,21 @@
 
 .compat__needs {
   color: var(--_browser-color);
-  font-size: 0.68rem;
+  font-size: var(--text-2xs);
 }
 
 .compat__browser-name {
   color: var(--text-muted);
-  font-size: 0.7rem;
+  font-size: var(--text-2xs);
 }
 
 .compat__version {
   color: var(--_browser-color);
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  font-weight: 600;
+  font: var(--_font, var(--type-mono));
+
+  @supports at-rule(@function) {
+    --_font: --type(var(--text-md), 600, normal, var(--font-mono));
+  }
 }
 
 .compat__links {
@@ -162,7 +162,7 @@
   flex-wrap: wrap;
   gap: var(--spacing-3);
   margin: 0;
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
 
   & a {
     --_link-line: transparent;
@@ -181,7 +181,7 @@
 .compat__source {
   margin: 0;
   color: var(--text-muted);
-  font-size: 0.7rem;
+  font-size: var(--text-2xs);
 }
 
 .compat__extra {
@@ -190,7 +190,7 @@
   border-radius: 6px;
   background: var(--warning-bg);
   color: var(--warning-text);
-  font-size: 0.72rem;
+  font-size: var(--text-xs);
   line-height: 1.4;
 }
 
@@ -207,8 +207,7 @@
 
 .refs__title {
   margin: 0;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font: var(--type-heading);
 }
 
 .refs__list {
@@ -224,7 +223,7 @@
   flex-wrap: wrap;
   align-items: baseline;
   gap: var(--spacing-1) var(--spacing-2-5);
-  font-size: 0.85rem;
+  font-size: var(--text-md);
 }
 
 .refs__link {
@@ -242,5 +241,5 @@
 
 .refs__source {
   color: var(--text-muted);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
 }

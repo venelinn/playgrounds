@@ -44,7 +44,7 @@ html:has(.toc) {
   margin: 0;
   padding-inline-start: var(--spacing-3);
   color: var(--text-muted);
-  font-size: 0.7rem;
+  font-size: var(--text-2xs);
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -72,7 +72,7 @@ html:has(.toc) {
   border-radius: 0 6px 6px 0;
   background: var(--_link-bg);
   color: var(--_link-color);
-  font-size: 0.85rem;
+  font-size: var(--text-md);
   font-weight: var(--_link-weight);
   text-decoration: none;
 
@@ -102,7 +102,7 @@ html:has(.toc) {
   margin: 0;
   padding-inline-start: var(--spacing-3);
   color: var(--text-muted);
-  font-size: 0.68rem;
+  font-size: var(--text-2xs);
   line-height: 1.4;
 }
 

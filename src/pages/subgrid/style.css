@@ -54,16 +54,17 @@
 
 .offer__title {
   margin: 0;
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1.3;
+  font: var(--_font, var(--type-title));
+
+  @supports at-rule(@function) {
+    --_font: --type(var(--text-base), 700, 1.3);
+  }
 }
 
 .offer__text {
   margin: 0;
   color: var(--text-muted);
-  font-size: 0.85rem;
-  line-height: 1.45;
+  font: var(--type-body);
 }
 
 .offer__footer {
@@ -82,8 +83,7 @@
 
 .offer__cta {
   color: var(--accent);
-  font-size: 0.8rem;
-  font-weight: 600;
+  font: var(--type-label);
 }
 
 .subgrid-info {
@@ -98,8 +98,7 @@
   gap: var(--spacing-2);
   margin: 0;
   padding-inline-start: var(--spacing-5);
-  font-size: 0.85rem;
-  line-height: 1.5;
+  font: var(--type-body);
 
   & strong {
     color: var(--accent);
@@ -109,8 +108,7 @@
 .subgrid-info__steps code,
 .stage__explain code {
   color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
 }
 
 /* ---------- Page-specific bits ---------- */
@@ -165,8 +163,7 @@
 }
 
 .form-demo__label {
-  font-size: 0.85rem;
-  font-weight: 600;
+  font: var(--type-heading);
 }
 
 .form-demo__input {
@@ -179,7 +176,7 @@
   background: var(--field);
   color: var(--text);
   font: inherit;
-  font-size: 0.85rem;
+  font-size: var(--text-md);
 
   &:focus-visible {
     --_input-border: var(--accent);
@@ -188,7 +185,7 @@
 
 .form-demo__hint {
   color: var(--text-muted);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
 }
 
 .stage--form .card {

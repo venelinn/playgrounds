@@ -58,13 +58,12 @@
 }
 
 .pill-demo__title {
-  font-size: 0.95rem;
-  font-weight: 700;
+  font: var(--type-title);
 }
 
 .pill-demo__text {
   color: var(--text-muted);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
 }
 
 /* The pill sits in a dotted area with room for the ring around an off-centre icon */
@@ -97,7 +96,7 @@
   border-radius: 999px;
   background: color-mix(in srgb, var(--_check-color) 14%, transparent);
   color: var(--_check-color);
-  font-size: 0.72rem;
+  font-size: var(--text-xs);
   font-weight: 600;
 
   &[data-ok="true"] {
@@ -108,8 +107,7 @@
 .pill-demo__measures {
   margin: 0;
   color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font: var(--type-mono);
 }
 
 .pill-demo__number {

@@ -73,7 +73,6 @@
 .graph__axis {
   display: flex;
   justify-content: space-between;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font: var(--type-code);
   color: var(--text-muted);
 }

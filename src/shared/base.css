@@ -57,6 +57,27 @@
   --font-ui: "Inter", system-ui, sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
 
+  /* Type scale (like the spacing scale): every font size comes from here */
+  --text-2xs: 0.7rem; /* 11.2px */
+  --text-xs: 0.75rem; /* 12px */
+  --text-sm: 0.8rem; /* 12.8px */
+  --text-md: 0.85rem; /* 13.6px */
+  --text-base: 1rem; /* 16px */
+  --text-lg: 1.1rem; /* 17.6px */
+  --text-xl: 1.25rem; /* 20px */
+  --text-2xl: 1.4rem; /* 22.4px */
+
+  /* Type roles: the combinations used again and again, as one font shorthand.
+     Use them like a mixin: font: var(--type-label). One-offs use --type() below. */
+  --type-body: 400 var(--text-md) / 1.5 var(--font-ui); /* paragraphs and notes in cards */
+  --type-note: 400 var(--text-sm) / 1.5 var(--font-ui); /* smaller explanations */
+  --type-label: 600 var(--text-sm) / normal var(--font-ui); /* buttons, pills, checks */
+  --type-heading: 600 var(--text-md) / normal var(--font-ui); /* small section headings */
+  --type-title: 700 var(--text-base) / normal var(--font-ui); /* card titles */
+  --type-title-lg: 700 var(--text-lg) / normal var(--font-ui); /* tile and section titles */
+  --type-code: 400 var(--text-2xs) / normal var(--font-mono); /* units, badges, axis labels */
+  --type-mono: 400 var(--text-xs) / normal var(--font-mono); /* readouts and values */
+
   --scheme: dark;
 
   color-scheme: var(--scheme);
@@ -89,10 +110,28 @@
   }
 }
 
+/* --type(): any other combination, written the same way as the roles. Custom functions are in
+   Chrome 139+ and Safari 27.3+ (not Firefox yet), so use it as a swap with the closest role as the default:
+     font: var(--_font, var(--type-title-lg));
+     @supports at-rule(@function) { --_font: --type(var(--text-2xl), 800, 1.1); } */
+@function --type(
+  --size <length>,
+  --weight <number>: 400,
+  --leading type(<number> | normal): 1.5,
+  --family: var(--font-ui)
+) {
+  result: var(--weight) var(--size) / var(--leading) var(--family);
+}
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+/* Code everywhere uses the mono font; its size and colour come from where it sits */
+code {
+  font-family: var(--font-mono);
 }
 
 body {
@@ -378,8 +417,7 @@ body {
   max-width: 68ch;
   margin: calc(var(--spacing-1-5) * -1) auto var(--spacing-1);
   text-align: center;
-  font-size: 0.85rem;
-  line-height: 1.5;
+  font: var(--type-body);
   color: var(--text-muted);
   text-wrap: pretty;
 
@@ -394,8 +432,7 @@ body {
     border-radius: 4px;
     background: var(--card);
     color: var(--accent);
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: var(--text-sm);
   }
 }
 
@@ -498,7 +535,7 @@ body {
     box-shadow: 0 8px 24px -10px var(--shadow);
     color: var(--text);
     font-family: var(--font-ui);
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
     line-height: 1.4;
     white-space: nowrap;
     translate: var(--_tip-x, -50%) var(--_tip-shift);
@@ -556,7 +593,7 @@ body {
   text-transform: uppercase;
   font-weight: 600;
   letter-spacing: 0.05rem;
-  font-size: 0.7rem;
+  font-size: var(--text-2xs);
 }
 
 .fineprint__heart {

@@ -47,19 +47,17 @@
 }
 
 .item__title {
-  font-size: 0.95rem;
-  font-weight: 700;
+  font: var(--type-title);
 }
 
 .item__meta {
   color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font: var(--type-mono);
 }
 
 .item__layout {
   color: var(--accent);
-  font-size: 0.7rem;
+  font-size: var(--text-2xs);
 }
 
 .item__layout--stacked {
@@ -78,8 +76,7 @@
   border-radius: 10px;
   background: var(--card);
   color: var(--text-muted);
-  font-size: 0.85rem;
-  line-height: 1.5;
+  font: var(--type-body);
 
   & a {
     color: var(--accent);
@@ -88,7 +85,6 @@
 
   & code {
     color: var(--accent);
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: var(--text-sm);
   }
 }

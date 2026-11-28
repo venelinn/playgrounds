@@ -21,8 +21,7 @@
   border: 1px dashed var(--line);
   border-radius: 10px;
   color: var(--text-muted);
-  font-size: 0.8rem;
-  line-height: 1.5;
+  font: var(--type-note);
   text-align: center;
 
   & strong {
@@ -60,12 +59,11 @@
 
 .sc-row__label {
   color: var(--text-muted);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
 }
 
 .choice__text code {
   color: var(--accent);
-  font-family: var(--font-mono);
 }
 
 /* The script hides the dots when everything fits */
@@ -100,14 +98,16 @@
 
 .sc-slide__number {
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
   opacity: 0.8;
 }
 
 .sc-slide__place {
-  font-size: 1.4rem;
-  font-weight: 800;
-  line-height: 1.1;
+  font: var(--_font, var(--type-title-lg));
+
+  @supports at-rule(@function) {
+    --_font: --type(var(--text-2xl), 800, 1.1);
+  }
 }
 
 /* ---------- Bottom row ---------- */
@@ -121,12 +121,10 @@
 .sc-extras-intro {
   margin: 0;
   color: var(--text-muted);
-  font-size: 0.8rem;
-  line-height: 1.5;
+  font: var(--type-note);
 
   & code {
     color: var(--accent);
-    font-family: var(--font-mono);
   }
 }
 

@@ -68,9 +68,7 @@
   background: var(--field);
   color: var(--text);
   box-shadow: 0 12px 32px var(--shadow);
-  font-family: var(--font-ui);
-  font-size: 0.8rem;
-  line-height: 1.45;
+  font: var(--_font, var(--type-note));
 
   &:popover-open {
     --_tip-display: grid;
@@ -89,10 +87,14 @@
     inset: auto;
     --_tip-margin: var(--spacing-1-5);
   }
+
+  @supports at-rule(@function) {
+    --_font: --type(var(--text-sm), 400, 1.45);
+  }
 }
 
 .info-tip__title {
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
 }
 
 .info-tip__text {
@@ -104,7 +106,6 @@
 
   & code {
     color: var(--accent);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
   }
 }

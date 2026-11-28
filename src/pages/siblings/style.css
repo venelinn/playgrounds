@@ -34,7 +34,7 @@
   border-radius: 8px;
   background: var(--warning-bg);
   color: var(--warning-text);
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
   text-align: center;
 }
 
@@ -62,7 +62,7 @@
   background: var(--_replay-bg);
   color: var(--_replay-color);
   font: inherit;
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
   cursor: pointer;
 
   &:hover {
@@ -99,8 +99,7 @@
   border-radius: 999px;
   background: var(--field);
   color: var(--accent);
-  font-size: 0.8rem;
-  font-weight: 600;
+  font: var(--type-label);
 }
 
 .showcase__title {
@@ -116,7 +115,7 @@
   max-width: 58ch;
   margin: 0 0 var(--spacing-4-5);
   color: var(--text-muted);
-  font-size: 0.95rem;
+  font-size: var(--text-base);
   line-height: 1.55;
   text-align: center;
   text-wrap: pretty;
@@ -234,20 +233,20 @@
 
 .product__title {
   margin: var(--spacing-5-5) 0 var(--spacing-1-5);
-  font-size: 1.3rem;
+  font-size: var(--text-xl);
   font-weight: 700;
 }
 
 .product__text {
   margin: 0;
   color: var(--text-muted);
-  font-size: 0.95rem;
+  font-size: var(--text-base);
   line-height: 1.5;
 }
 
 .product__arrow {
   margin-block-start: var(--spacing-4-5);
-  font-size: 1.2rem;
+  font-size: var(--text-xl);
   font-weight: 700;
   translate: var(--_arrow-shift) 0;
 
@@ -269,8 +268,7 @@
   border-radius: 999px;
   background: var(--card);
   color: var(--_color);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font: var(--type-mono);
 
   &::before {
     content: counter(product) " / " counter(total);
@@ -296,7 +294,7 @@
 .card__hint {
   margin: 0;
   color: var(--text-muted);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
 }
 
 .stats__swatch {

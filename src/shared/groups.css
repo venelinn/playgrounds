@@ -49,7 +49,7 @@
   /* the same height with or without an "i" icon, so titles of groups side by side line up */
   min-block-size: var(--spacing-4-5);
   padding: 0;
-  font-size: 0.8rem;
+  font-size: var(--text-sm);
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -66,9 +66,7 @@
 
 .group__formula {
   color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 400;
+  font: var(--type-mono);
   letter-spacing: 0;
   text-transform: none;
 }
@@ -120,15 +118,17 @@
 
 .choice__name {
   color: var(--_choice-name);
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  font-weight: 700;
+  font: var(--_font, var(--type-mono));
   white-space: nowrap; /* keeps an "i" icon on the same line */
+
+  @supports at-rule(@function) {
+    --_font: --type(var(--text-md), 700, normal, var(--font-mono));
+  }
 }
 
 .choice__text {
   grid-column: 1 / -1;
   color: var(--text-muted);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   line-height: 1.4;
 }
