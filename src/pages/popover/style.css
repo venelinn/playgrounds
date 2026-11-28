@@ -11,19 +11,19 @@
   min-width: 0;
   margin: 0;
   border: 0;
-}
 
-/* A floated legend sits inside the card instead of on its border */
-.control--placement .control__label {
-  float: left;
-  width: 100%;
-  padding: 0;
-}
+  /* A floated legend sits inside the card instead of on its border */
+  & .control__label {
+    float: left;
+    width: 100%;
+    padding: 0;
+  }
 
-.control--placement strong {
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-weight: 600;
+  & strong {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-weight: 600;
+  }
 }
 
 .picker {
@@ -50,26 +50,26 @@
   place-items: center;
   margin: 0;
   cursor: pointer;
-}
 
-.picker__spot input {
-  --_dot: var(--line);
+  & input {
+    --_dot: var(--line);
 
-  width: 12px;
-  height: 12px;
-  margin: 0;
-  border-radius: 50%;
-  background: var(--_dot);
-  appearance: none;
-  cursor: pointer;
-}
+    width: 12px;
+    height: 12px;
+    margin: 0;
+    border-radius: 50%;
+    background: var(--_dot);
+    appearance: none;
+    cursor: pointer;
+  }
 
-.picker__spot input:hover {
-  --_dot: var(--text-muted);
-}
+  & input:hover {
+    --_dot: var(--text-muted);
+  }
 
-.picker__spot input:checked {
-  --_dot: var(--accent);
+  & input:checked {
+    --_dot: var(--accent);
+  }
 }
 
 .control__field + .control__hint {
@@ -104,39 +104,37 @@
   overflow: visible;
   opacity: var(--_opacity);
   translate: var(--_shift);
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .popover-content {
+  @media (prefers-reduced-motion: no-preference) {
     transition:
       opacity var(--_duration),
       translate var(--_duration),
       display var(--_duration) allow-discrete,
       overlay var(--_duration) allow-discrete;
   }
-}
 
-.popover-content:popover-open {
-  --_display: block;
-  --_opacity: 1;
-  --_shift: 0 0;
-}
+  &:popover-open {
+    --_display: block;
+    --_opacity: 1;
+    --_shift: 0 0;
+  }
 
-/* Where the open animation starts: slide in from the button's side */
-.popover-content[data-placement^="top"] {
-  --_from: 0 6px;
-}
+  /* Where the open animation starts: slide in from the button's side */
+  &[data-placement^="top"] {
+    --_from: 0 6px;
+  }
 
-.popover-content[data-placement^="bottom"] {
-  --_from: 0 -6px;
-}
+  &[data-placement^="bottom"] {
+    --_from: 0 -6px;
+  }
 
-.popover-content[data-placement^="left"] {
-  --_from: 6px 0;
-}
+  &[data-placement^="left"] {
+    --_from: 6px 0;
+  }
 
-.popover-content[data-placement^="right"] {
-  --_from: -6px 0;
+  &[data-placement^="right"] {
+    --_from: -6px 0;
+  }
 }
 
 @starting-style {
@@ -170,10 +168,10 @@
   white-space: nowrap;
   cursor: var(--_trigger-cursor, pointer);
   touch-action: var(--_trigger-touch, auto);
-}
 
-.trigger:hover {
-  --_trigger-border: var(--accent);
+  &:hover {
+    --_trigger-border: var(--accent);
+  }
 }
 
 /* The draggable trigger in the builder */
@@ -184,10 +182,10 @@
   --_trigger-weight: 600;
   --_trigger-cursor: grab;
   --_trigger-touch: none;
-}
 
-.trigger--main:active {
-  --_trigger-cursor: grabbing;
+  &:active {
+    --_trigger-cursor: grabbing;
+  }
 }
 
 .trigger__grip {
@@ -251,6 +249,12 @@
   place-items: center;
   gap: var(--_matrix-gap);
   padding: var(--_matrix-padding);
+
+  @media (max-width: 700px) {
+    --_matrix-cols: 2;
+    --_matrix-gap: calc(var(--spacing-12) * 2) var(--spacing-4);
+    --_matrix-padding: calc(var(--spacing-10) * 2) 0;
+  }
 }
 
 .clipped {
@@ -266,12 +270,4 @@
 .control__hint code {
   color: var(--accent);
   font-family: var(--font-mono);
-}
-
-@media (max-width: 700px) {
-  .matrix {
-    --_matrix-cols: 2;
-    --_matrix-gap: calc(var(--spacing-12) * 2) var(--spacing-4);
-    --_matrix-padding: calc(var(--spacing-10) * 2) 0;
-  }
 }

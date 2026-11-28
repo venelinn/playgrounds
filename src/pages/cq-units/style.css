@@ -71,14 +71,14 @@
   border: 1px solid var(--line);
   border-radius: 14px;
   background: var(--field);
-}
 
-.cq-card[data-state="min"] {
-  --_card-state: var(--min);
-}
+  &[data-state="min"] {
+    --_card-state: var(--min);
+  }
 
-.cq-card[data-state="max"] {
-  --_card-state: var(--max);
+  &[data-state="max"] {
+    --_card-state: var(--max);
+  }
 }
 
 /* Also sized by the card: 30% of its width, kept between 80px and 140px */

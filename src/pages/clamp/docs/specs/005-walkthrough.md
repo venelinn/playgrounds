@@ -23,23 +23,23 @@ Keep the version pinned. If you upgrade, re-check the popover styles; they overr
 
 ## Steps
 
-| #   | Highlights            | Title                           | Says                                                 |
-| --- | --------------------- | ------------------------------- | ---------------------------------------------------- |
-| 1   | —                     | Welcome to the Clamp Playground | Quick tour, about 30 seconds                         |
-| 2   | Intro text            | What clamp() does               | Scales with the screen, between min and max          |
-| 3   | Min card              | Min                             | Smallest size; drag or type                          |
-| 4   | Preferred card        | Preferred                       | Growth as % of width; 5vw on 900px = 45px            |
-| 5   | Max card              | Max                             | Biggest size                                         |
-| 6   | Viewport card         | Viewport                        | Pretend screen width                                 |
-| 7   | Font family card      | Font family                     | Presets, or Custom… with a name or Google Fonts link |
-| 8   | Weight card           | Weight                          | 300 light to 900 black                               |
-| 9   | Preview text box      | Your text                       | Type a real headline                                 |
-| 10  | Preview card          | Preview                         | Size badge: green at min, red at max                 |
-| 11  | Graph card            | Size across screens             | Shaded areas, dot = current viewport                 |
-| 12  | CSS card              | CSS for developers              | Copy into a ticket or spec                           |
-| 13  | Values card           | The numbers                     | Exact sizes and fluid range                          |
-| 14  | Browser support panel | Browser support                 | Which browsers, since which version, and yours       |
-| 15  | ? and theme buttons   | Replay or switch theme          | How to replay; light/dark                            |
+| #   | Highlights                 | Title                           | Says                                                 |
+| --- | -------------------------- | ------------------------------- | ---------------------------------------------------- |
+| 1   | —                          | Welcome to the Clamp Playground | Quick tour, about 30 seconds                         |
+| 2   | Intro text                 | What clamp() does               | Scales with the screen, between min and max          |
+| 3   | Min card                   | Min                             | Smallest size; drag or type                          |
+| 4   | Preferred card             | Preferred                       | Growth as % of width; 5vw on 900px = 45px            |
+| 5   | Max card                   | Max                             | Biggest size                                         |
+| 6   | Viewport card              | Viewport                        | Pretend screen width                                 |
+| 7   | Font family card           | Font family                     | Presets, or Custom… with a name or Google Fonts link |
+| 8   | Weight card                | Weight                          | 300 light to 900 black                               |
+| 9   | Preview text box           | Your text                       | Type a real headline                                 |
+| 10  | Preview card               | Preview                         | Size badge: green at min, red at max                 |
+| 11  | Graph card                 | Size across screens             | Shaded areas, dot = current viewport                 |
+| 12  | CSS card                   | CSS for developers              | Copy into a ticket or spec                           |
+| 13  | Values card                | The numbers                     | Exact sizes and fluid range                          |
+| 14  | Browser support panel      | Browser support                 | Which browsers, since which version, and yours       |
+| 15  | Reset, ? and theme buttons | Reset, replay or switch theme   | Reset all controls; how to replay; light/dark        |
 
 Copy rule: plain language, no jargon beyond the terms on screen. Keep each step to one or two short sentences.
 

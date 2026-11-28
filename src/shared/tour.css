@@ -9,39 +9,52 @@
   color: var(--text);
   font-family: var(--font-ui);
   box-shadow: 0 18px 50px var(--shadow);
-}
 
-.driver-popover.tour .driver-popover-arrow {
-  display: none;
-}
+  & .driver-popover-arrow {
+    display: none;
+  }
 
-.driver-popover.tour .driver-popover-title {
-  font-family: var(--font-ui);
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text);
-}
+  & .driver-popover-title {
+    font-family: var(--font-ui);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+  }
 
-.driver-popover.tour .driver-popover-description {
-  margin-block-start: var(--spacing-1-5);
-  font-family: var(--font-ui);
-  font-size: 0.85rem;
-  line-height: 1.5;
-  color: var(--text-muted);
+  & .driver-popover-description {
+    margin-block-start: var(--spacing-1-5);
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+  }
+
+  & .driver-popover-footer {
+    margin-block-start: var(--spacing-3-5);
+  }
+
+  & .driver-popover-progress-text {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  & .driver-popover-close-btn {
+    border-radius: 8px;
+    color: var(--_tour-close-color, var(--text-muted));
+  }
+
+  & .driver-popover-close-btn:hover {
+    --_tour-close-color: var(--text);
+  }
+
+  & .driver-popover-close-btn:focus-visible {
+    outline-offset: -6px;
+  }
 }
 
 .driver-popover.tour .driver-popover-description strong {
   color: var(--text);
   font-weight: 600;
-}
-
-.driver-popover.tour .driver-popover-footer {
-  margin-block-start: var(--spacing-3-5);
-}
-
-.driver-popover.tour .driver-popover-progress-text {
-  font-size: 0.75rem;
-  color: var(--text-muted);
 }
 
 .driver-popover.tour .driver-popover-navigation-btns button {
@@ -67,19 +80,6 @@
   --_tour-btn-bg: var(--accent);
   --_tour-btn-color: var(--on-accent);
   --_tour-btn-border: var(--accent);
-}
-
-.driver-popover.tour .driver-popover-close-btn {
-  border-radius: 8px;
-  color: var(--_tour-close-color, var(--text-muted));
-}
-
-.driver-popover.tour .driver-popover-close-btn:hover {
-  --_tour-close-color: var(--text);
-}
-
-.driver-popover.tour .driver-popover-close-btn:focus-visible {
-  outline-offset: -6px;
 }
 
 .driver-popover.tour .driver-popover-description code {

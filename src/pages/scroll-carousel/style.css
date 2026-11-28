@@ -4,6 +4,13 @@
 .sc-playground {
   --app-width: 1440px;
   --compare-card-min: 320px;
+
+  @media (width < 600px) {
+    /* One option a row on narrow screens, so names never squeeze */
+    & .choices {
+      --_choices: 1;
+    }
+  }
 }
 
 /* "This is a playground" note under the intro */
@@ -17,14 +24,14 @@
   font-size: 0.8rem;
   line-height: 1.5;
   text-align: center;
-}
 
-.sc-note strong {
-  color: var(--text);
-}
+  & strong {
+    color: var(--text);
+  }
 
-.sc-note a {
-  color: var(--accent);
+  & a {
+    color: var(--accent);
+  }
 }
 
 /* ---------- Controls ---------- */
@@ -54,13 +61,6 @@
 .sc-row__label {
   color: var(--text-muted);
   font-size: 0.75rem;
-}
-
-/* One option a row on narrow screens, so names never squeeze */
-@media (width < 600px) {
-  .sc-playground .choices {
-    --_choices: 1;
-  }
 }
 
 .choice__text code {
@@ -123,11 +123,11 @@
   color: var(--text-muted);
   font-size: 0.8rem;
   line-height: 1.5;
-}
 
-.sc-extras-intro code {
-  color: var(--accent);
-  font-family: var(--font-mono);
+  & code {
+    color: var(--accent);
+    font-family: var(--font-mono);
+  }
 }
 
 .stage__heading .stage__hint {

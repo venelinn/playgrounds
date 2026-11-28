@@ -12,10 +12,8 @@
   display: grid;
   grid-template-columns: var(--_groups);
   gap: var(--spacing-2-5) var(--spacing-4);
-}
 
-@media (width >= 900px) {
-  .groups {
+  @media (width >= 900px) {
     --_groups: repeat(2, minmax(0, 1fr));
   }
 }
@@ -102,15 +100,15 @@
   border-radius: 12px;
   background: var(--card);
   cursor: pointer;
-}
 
-.choice:has(:checked) {
-  --_choice-border: var(--accent);
-  --_choice-name: var(--accent);
-}
+  &:has(:checked) {
+    --_choice-border: var(--accent);
+    --_choice-name: var(--accent);
+  }
 
-.choice:has(:focus-visible) {
-  --_choice-border: var(--accent);
+  &:has(:focus-visible) {
+    --_choice-border: var(--accent);
+  }
 }
 
 .choice__input {

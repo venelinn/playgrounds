@@ -15,13 +15,13 @@
   /* layers: soft glow from the top, dot grid, card fill, gradient border */
   background:
     radial-gradient(
-      ellipse 60% 70% at 50% 0%,
-      color-mix(in srgb, var(--_badge-color) 14%, transparent),
-      transparent 70%
-    )
-    padding-box,
+        ellipse 60% 70% at 50% 0%,
+        color-mix(in srgb, var(--_badge-color) 14%, transparent),
+        transparent 70%
+      )
+      padding-box,
     radial-gradient(circle, color-mix(in srgb, var(--text) 9%, transparent) 1px, transparent 1.5px) 0 0 / 18px 18px
-    padding-box,
+      padding-box,
     linear-gradient(var(--card), var(--card)) padding-box,
     linear-gradient(120deg, var(--accent), var(--accent2)) border-box;
   box-shadow: 0 10px 40px -12px color-mix(in srgb, var(--_badge-color) 45%, transparent);
@@ -32,14 +32,18 @@
   max-width: 100%;
   overflow: hidden;
   resize: horizontal;
-}
 
-.preview[data-state="min"] {
-  --_badge-color: var(--min);
-}
+  &[data-state="min"] {
+    --_badge-color: var(--min);
+  }
 
-.preview[data-state="max"] {
-  --_badge-color: var(--max);
+  &[data-state="max"] {
+    --_badge-color: var(--max);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: box-shadow 0.3s;
+  }
 }
 
 .preview__bar {
@@ -62,11 +66,11 @@
   font: inherit;
   font-size: 0.8rem;
   outline: none;
-}
 
-.preview__input:focus-visible {
-  --_input-line: var(--accent);
-  --_input-color: var(--text);
+  &:focus-visible {
+    --_input-line: var(--accent);
+    --_input-color: var(--text);
+  }
 }
 
 .preview__note {
@@ -99,14 +103,8 @@
   letter-spacing: var(--preview-tracking, normal);
   text-transform: var(--preview-transform, none);
   overflow-wrap: anywhere;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .preview {
-    transition: box-shadow 0.3s;
-  }
-
-  .preview__text {
+  @media (prefers-reduced-motion: no-preference) {
     transition: font-size 0.2s;
   }
 }

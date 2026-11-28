@@ -22,6 +22,45 @@
   //   curl https://api.webstatus.dev/v1/features/<id>
   const SNAPSHOT_DATE = "2026-11-26";
   const SNAPSHOT = {
+    lh: {
+      name: "lh unit",
+      baseline: { status: "widely", low_date: "2023-11-21", high_date: "2026-05-21" },
+      browser_implementations: {
+        chrome: { version: "109" },
+        edge: { version: "109" },
+        firefox: { version: "120" },
+        safari: { version: "16.4" },
+        chrome_android: { version: "109" },
+        firefox_android: { version: "120" },
+        safari_ios: { version: "16.4" },
+      },
+    },
+    cap: {
+      name: "cap unit",
+      baseline: { status: "widely", low_date: "2023-12-11", high_date: "2026-06-11" },
+      browser_implementations: {
+        chrome: { version: "118" },
+        edge: { version: "118" },
+        firefox: { version: "97" },
+        safari: { version: "17.2" },
+        chrome_android: { version: "118" },
+        firefox_android: { version: "97" },
+        safari_ios: { version: "17.2" },
+      },
+    },
+    "trig-functions": {
+      name: "Trigonometric functions (CSS)",
+      baseline: { status: "widely", low_date: "2023-03-13", high_date: "2025-09-13" },
+      browser_implementations: {
+        chrome: { version: "111" },
+        edge: { version: "111" },
+        firefox: { version: "108" },
+        safari: { version: "15.4" },
+        chrome_android: { version: "111" },
+        firefox_android: { version: "108" },
+        safari_ios: { version: "15.4" },
+      },
+    },
     "min-max-clamp": {
       name: "min(), max(), and clamp()",
       baseline: { status: "widely", low_date: "2020-07-28", high_date: "2023-01-28" },

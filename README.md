@@ -17,6 +17,7 @@ Plain HTML, CSS and JavaScript. The pages are written as [EJS](https://ejs.co/) 
 | [Container Queries](src/pages/container-queries/index.ejs) | One card, many places: the same card picks compact, intermediate or expanded from its own width; compare with screen breakpoints | [README](src/pages/container-queries/README.md) · [specs](src/pages/container-queries/docs/specs/README.md) |
 | [Style Queries](src/pages/style-queries/index.ejs)         | Cards that take their look from the area they're in with `@container style()`, no modifier classes                               | [README](src/pages/style-queries/README.md) · [specs](src/pages/style-queries/docs/specs/README.md)         |
 | [Scroll Carousel](src/pages/scroll-carousel/index.ejs)     | A carousel where the browser does the swiping: scroll snap, arrows and dots, `--scroll-carousel-*` variables, CSS + HTML output  | [README](src/pages/scroll-carousel/README.md) · [specs](src/pages/scroll-carousel/docs/specs/README.md)     |
+| [Optical Pills](src/pages/optical-pills/index.ejs)         | Pill buttons that look evenly spaced: icon centred in the round end, a π correction for the curve, gap measured to the capitals  | [README](src/pages/optical-pills/README.md) · [specs](src/pages/optical-pills/docs/specs/README.md)         |
 
 **Brands** (their own section on the index page): one page per design system, its type scale as `clamp()`.
 
@@ -82,6 +83,7 @@ src/
     info.js         Discreet "i" info icons with tooltips: window.setupInfoTips(steps), reusing the tour's wording
     grid.css        The component library's Row/Cell grid CSS + resizable demo stage (Grid, Subgrid)
     frame.js        Keeps a width slider, the frame's drag corner and the window in sync
+    reset.js        Header reset button: puts every control back to how the page loaded (loaded on every page by head.ejs)
   pages/
     index.ejs       Index page with a tile per playground (+ home.css)
     clamp/          Clamp playground (index.ejs, style.css, script.js, README, docs/specs)
@@ -93,6 +95,7 @@ src/
     container-queries/ Container Queries playground: one card, many places (same layout)
     style-queries/  Style Queries playground (same layout)
     scroll-carousel/ Scroll Carousel playground (+ carousel.css: the carousel's own CSS)
+    optical-pills/  Optical Pills playground (same layout)
     brands/         Brand type scales: shared brand.ejs/.js/.css + one folder per brand (westjet/)
 ```
 

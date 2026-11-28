@@ -1,0 +1,201 @@
+<%
+  // One pill. The plain one is styled in style.css; the balanced one by the CSS the script writes
+  // (classes button, button__icon, button__label: the same names as the CSS card).
+  const pill = (balanced) => `
+              <button class="pill${balanced ? " button" : " pill--plain"}" type="button" data-guides="true">
+                <span class="pill__icon${balanced ? " button__icon" : ""}" aria-hidden="true">
+                  <svg class="pill__glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m7.5 12.5 3 3 6-6.5"/></svg>
+                </span>
+                <span class="pill__label${balanced ? " button__label" : ""}">Approve</span>
+              </button>`;
+  const demo = (balanced, title, text) => `
+          <figure class="pill-demo${balanced ? " pill-demo--balanced" : ""}">
+            <figcaption class="pill-demo__head">
+              <span class="pill-demo__title">${title}</span>
+              <span class="pill-demo__text">${text}</span>
+            </figcaption>
+            <ul class="pill-demo__checks" aria-live="polite"></ul>
+            <div class="pill-demo__stage">${pill(balanced)}
+            </div>
+            <p class="pill-demo__measures"></p>
+          </figure>`;
+-%>
+<%- include("/partials/head", {
+  nav: [
+    { id: "settings", label: "Settings" },
+    { id: "demo", label: "Plain vs balanced" },
+    { id: "code", label: "CSS and the math" },
+    { id: "browser-support", label: "Browser support" },
+    { id: "reference", label: "Reference" },
+  ],
+  title: "Optical Pills Playground",
+  description: "Pill buttons that look evenly spaced: an icon centred in the round end, and a little π to make up for the space the curve takes from the text.",
+  appClass: "pills-playground",
+  tour: true,
+  styles: [
+    "/shared/controls.css",
+    "/shared/compat.css",
+    "/shared/tour.css",
+    "/shared/info.css",
+    "/shared/groups.css",
+    "/shared/grid.css",
+    "/pages/optical-pills/style.css",
+  ],
+  scripts: [
+    "/shared/compat.js",
+    "/shared/tour.js",
+    "/shared/info.js",
+    "/pages/optical-pills/script.js",
+  ],
+}) %>
+      <p class="app__intro">
+        Same padding on both sides doesn't <strong>look</strong> the same on a pill. The round end cuts into the space
+        next to the text, and an icon only looks right when it sits in the middle of the round end. Three small
+        corrections fix it, all in CSS, all from the same few variables.
+      </p>
+
+      <div class="groups" id="settings">
+        <fieldset class="group group--button">
+          <legend class="group__title" id="button-title">Button</legend>
+          <div class="controls">
+            <%- include("/components/control/control", {
+              id: "size", label: "Text size", min: 12, max: 40, step: 1, value: 24, unit: "px"
+            }) %>
+            <%- include("/components/control/control", {
+              id: "py", label: "Top and bottom", min: 0.25, max: 1, step: 0.05, value: 0.5, unit: "em", inputmode: "decimal"
+            }) %>
+            <%- include("/components/control/control", {
+              id: "px", label: "Sides", min: 0.5, max: 2, step: 0.05, value: 1, unit: "em", inputmode: "decimal"
+            }) %>
+            <%- include("/components/control/control", {
+              id: "round", label: "Roundness", min: 0, max: 100, step: 5, value: 100, unit: "%"
+            }) %>
+          </div>
+        </fieldset>
+
+        <fieldset class="group group--icon">
+          <legend class="group__title" id="icon-title">Icon</legend>
+          <div class="choices choices--two">
+            <label class="choice">
+              <input class="choice__input" type="radio" name="icon" value="start" checked>
+              <span class="choice__name">Start</span>
+              <span class="choice__text">before the text</span>
+            </label>
+            <label class="choice">
+              <input class="choice__input" type="radio" name="icon" value="end">
+              <span class="choice__name">End</span>
+              <span class="choice__text">after the text</span>
+            </label>
+            <label class="choice">
+              <input class="choice__input" type="radio" name="icon" value="none">
+              <span class="choice__name">None</span>
+              <span class="choice__text">text only</span>
+            </label>
+            <label class="choice">
+              <input class="choice__input" type="radio" name="icon" value="only">
+              <span class="choice__name">Icon only</span>
+              <span class="choice__text">a round button</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset class="group group--fixes">
+          <legend class="group__title" id="fixes-title">Corrections <span class="group__hint">on the balanced pill</span></legend>
+          <div class="fixes">
+            <label class="switch">
+              <input class="switch__input" type="checkbox" id="fix-icon" checked>
+              <span class="switch__label">Icon centred in the round end</span>
+            </label>
+            <label class="switch">
+              <input class="switch__input" type="checkbox" id="fix-curve" checked>
+              <span class="switch__label">Make up for the curve (π)</span>
+            </label>
+            <label class="switch">
+              <input class="switch__input" type="checkbox" id="fix-gap" checked>
+              <span class="switch__label">Gap measured to the letters</span>
+            </label>
+            <label class="switch">
+              <input class="switch__input" type="checkbox" id="guides" checked>
+              <span class="switch__label">Show guides</span>
+            </label>
+          </div>
+        </fieldset>
+      </div>
+
+      <section class="stage" aria-labelledby="stage-title" id="demo">
+        <div class="stage__bar">
+          <h2 class="stage__heading" id="stage-title">Plain vs balanced</h2>
+          <span class="stage__hint">Striped: the space beside the text · dashed line: where it looks like it starts · ring: the round end</span>
+        </div>
+        <div class="pills" id="pills"><%- demo(false, "Plain padding", "The same padding all around") %><%- demo(true, "Optically balanced", "Runs on the CSS below") %>
+        </div>
+        <%# The balanced pill runs on the CSS in the CSS card (the script writes it here). %>
+        <style id="live-css"></style>
+      </section>
+
+      <div class="compare" id="code">
+        <div class="card">
+          <div class="card__head">
+            <span class="card__title">CSS</span>
+            <button class="card__button" type="button" id="copy">Copy</button>
+          </div>
+          <pre class="card__code"><code id="css-code"></code></pre>
+        </div>
+        <div class="card">
+          <div class="card__head"><span class="card__title">The math</span></div>
+          <ul class="tips">
+            <li><strong>Icon in the round end:</strong> the icon is one line tall, like the text, so the space above it is <code>--py</code>. Pull it towards the edge by <code>--px − --py</code> and it has <code>--py</code> on every side: its circle shares the centre of the round end.</li>
+            <li><strong>The curve takes space:</strong> a quarter circle of radius <em>r</em> leaves <em>r² × (1 − π/4)</em> empty in its corner, about 21%. Spread over the height, the text side looks <em>r × (1 − π/4) × r / pill</em> narrower, so that much goes back as margin: 4px on a 40px pill.</li>
+            <li><strong>Gap to the letters:</strong> the icon is a full line tall (<code>1lh</code>), the capitals only <code>1cap</code>. Half the difference is empty already, so the gap takes it off, but never goes below <code>--py</code>.</li>
+            <li><strong>Less round, less fix:</strong> drop Roundness and the curve correction shrinks with it, down to nothing on a square button.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card__head"><span class="card__title">Good to know</span></div>
+          <ul class="tips">
+            <li><strong>One <code>--edge</code>, two children:</strong> the icon and the label each say how far they want to move; <code>:first-child</code> and <code>:last-child</code> apply it. Move the icon to the end and nothing else changes. With only the icon, it is first <em>and</em> last, so it moves on both sides and the button becomes a circle.</li>
+            <li><strong>Roundness is a number</strong> (<code>--round</code>, 0 to 1), not a length: the original multiplies <code>r × r</code>, and multiplying two lengths in <code>calc()</code> doesn't work in every browser yet.</li>
+            <li><strong>Everything is in <code>em</code> and <code>lh</code></strong>, so the button keeps its balance at any text size.</li>
+            <li><strong>Older browsers:</strong> without the <code>cap</code> unit (Chrome before 118) the gap stays <code>--py</code>, thanks to <code>@supports</code>. Without <code>pi</code> the margins are dropped and the pill is plain, never broken.</li>
+          </ul>
+        </div>
+      </div>
+
+<%- include("/partials/footer", {
+  features: [
+    {
+      feature: "trig-functions",
+      label: "pi in calc()",
+      test: "width: calc(1px * pi)",
+      caniuse: "css trig",
+      mdn: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/calc-keyword"
+    },
+    {
+      feature: "lh",
+      label: "lh unit",
+      test: "width: 1lh",
+      caniuse: "lh unit",
+      mdn: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length#lh"
+    },
+    {
+      feature: "cap",
+      label: "cap unit",
+      test: "width: 1cap",
+      caniuse: "cap unit",
+      note: "Fallback included: without it the gap stays --py (@supports)",
+      mdn: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length#cap"
+    },
+  ],
+  references: [
+    {
+      title: "Ariakit: styling pills, and the π that gets them right (video)",
+      url: "https://ariakit.org",
+      source: "Ariakit"
+    },
+    {
+      title: "CSS calc() constants: pi, e, infinity",
+      url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/calc-keyword",
+      source: "MDN"
+    },
+  ],
+}) %>

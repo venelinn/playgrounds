@@ -60,33 +60,33 @@
   --scheme: dark;
 
   color-scheme: var(--scheme);
-}
 
-:root[data-theme="light"] {
-  --bg: #eef1f8;
-  --bg-glow-1: #c7d2fe;
-  --bg-glow-2: #bae6fd;
-  --panel: #ffffffd9;
-  --card: #f5f7fb;
-  --field: #ffffff;
-  --line: #d5dce8;
-  --accent: #0891b2;
-  --accent2: #7c3aed;
-  --on-accent: #ffffff;
-  --text: #0f172a;
-  --text-muted: #5b6a80;
-  --min: #16a34a;
-  --max: #dc2626;
-  --pref: #ca8a04;
-  --warning-bg: #fef3c7;
-  --warning-text: #78350f;
-  --shadow: #0f172a26;
+  &[data-theme="light"] {
+    --bg: #eef1f8;
+    --bg-glow-1: #c7d2fe;
+    --bg-glow-2: #bae6fd;
+    --panel: #ffffffd9;
+    --card: #f5f7fb;
+    --field: #ffffff;
+    --line: #d5dce8;
+    --accent: #0891b2;
+    --accent2: #7c3aed;
+    --on-accent: #ffffff;
+    --text: #0f172a;
+    --text-muted: #5b6a80;
+    --min: #16a34a;
+    --max: #dc2626;
+    --pref: #ca8a04;
+    --warning-bg: #fef3c7;
+    --warning-text: #78350f;
+    --shadow: #0f172a26;
 
-  --westjet: #017f7c; /* wvi color.teal.400: readable on light */
-  --on-westjet: #ffffff;
-  --westjet-alt: #003c71; /* wvi color.blue.500 */
+    --westjet: #017f7c; /* wvi color.teal.400: readable on light */
+    --on-westjet: #ffffff;
+    --westjet-alt: #003c71; /* wvi color.blue.500 */
 
-  --scheme: light;
+    --scheme: light;
+  }
 }
 
 *,
@@ -105,48 +105,48 @@ body {
   font-family: var(--font-ui);
   color: var(--text);
   background: var(--bg);
-}
 
-/* Two spotlights, each on its own fixed layer, wandering the screen on their own paths. The loops have
+  /* Two spotlights, each on its own fixed layer, wandering the screen on their own paths. The loops have
    different lengths (31s, 43s), so together they only repeat every ~22 minutes: it reads as random.
    Only transform is animated (no repaints). With reduced motion they rest at their start points. */
-body::before,
-body::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  width: 70vmax;
-  height: 70vmax;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--_spot-color) 0%, transparent 65%);
-  pointer-events: none;
-  translate: -50% -50%;
-  transform: translate(var(--_spot-x), var(--_spot-y));
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  body::before,
-  body::after {
-    animation: var(--_spot-path) var(--_spot-time) ease-in-out infinite;
+  &::before,
+  &::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 70vmax;
+    height: 70vmax;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--_spot-color) 0%, transparent 65%);
+    pointer-events: none;
+    translate: -50% -50%;
+    transform: translate(var(--_spot-x), var(--_spot-y));
   }
-}
 
-body::before {
-  --_spot-color: var(--bg-glow-1);
-  --_spot-x: 20vw;
-  --_spot-y: 20vh;
-  --_spot-path: spot-a;
-  --_spot-time: 31s;
-}
+  @media (prefers-reduced-motion: no-preference) {
+    &::before,
+    &::after {
+      animation: var(--_spot-path) var(--_spot-time) ease-in-out infinite;
+    }
+  }
 
-body::after {
-  --_spot-color: var(--bg-glow-2);
-  --_spot-x: 80vw;
-  --_spot-y: 75vh;
-  --_spot-path: spot-b;
-  --_spot-time: 43s;
+  &::before {
+    --_spot-color: var(--bg-glow-1);
+    --_spot-x: 20vw;
+    --_spot-y: 20vh;
+    --_spot-path: spot-a;
+    --_spot-time: 31s;
+  }
+
+  &::after {
+    --_spot-color: var(--bg-glow-2);
+    --_spot-x: 80vw;
+    --_spot-y: 75vh;
+    --_spot-path: spot-b;
+    --_spot-time: 43s;
+  }
 }
 
 @keyframes spot-a {
@@ -228,16 +228,33 @@ body::after {
   box-shadow:
     calc(var(--light-b-x) * -0.9) calc(var(--light-b-y) * -0.9 + 20px) 80px var(--shadow),
     calc(var(--light-b-x) * 0.6) calc(var(--light-b-y) * 0.6) 70px -20px
-    color-mix(in srgb, var(--bg-glow-2) 55%, transparent),
+      color-mix(in srgb, var(--bg-glow-2) 55%, transparent),
     calc(var(--light-a-x) * 0.6) calc(var(--light-a-y) * 0.6) 70px -20px
-    color-mix(in srgb, var(--accent2) 30%, transparent);
-}
+      color-mix(in srgb, var(--accent2) 30%, transparent);
 
-@media (prefers-reduced-motion: no-preference) {
-  .app {
+  @media (prefers-reduced-motion: no-preference) {
     animation:
       light-a 31s ease-in-out infinite,
       light-b 43s ease-in-out infinite;
+  }
+
+  /* Muted gradient border. A masked pseudo-element keeps the translucent panel see-through. */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(
+      120deg,
+      color-mix(in srgb, var(--accent) 35%, transparent),
+      color-mix(in srgb, var(--accent2) 35%, transparent)
+    );
+    /* the mask only uses alpha: any opaque colour works */
+    mask:
+      linear-gradient(var(--text) 0 0) content-box exclude,
+      linear-gradient(var(--text) 0 0);
+    pointer-events: none;
   }
 }
 
@@ -346,25 +363,6 @@ body::after {
   }
 }
 
-/* Muted gradient border. A masked pseudo-element keeps the translucent panel see-through. */
-.app::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  padding: 1px;
-  border-radius: inherit;
-  background: linear-gradient(
-    120deg,
-    color-mix(in srgb, var(--accent) 35%, transparent),
-    color-mix(in srgb, var(--accent2) 35%, transparent)
-  );
-  /* the mask only uses alpha: any opaque colour works */
-  mask:
-    linear-gradient(var(--text) 0 0) content-box exclude,
-    linear-gradient(var(--text) 0 0);
-  pointer-events: none;
-}
-
 .app__title {
   margin: 0;
   /* room for the corner buttons: two on a side (help + theme) by default; pages with one per side
@@ -384,21 +382,21 @@ body::after {
   line-height: 1.5;
   color: var(--text-muted);
   text-wrap: pretty;
-}
 
-.app__intro strong {
-  color: var(--text);
-  font-weight: 600;
-}
+  & strong {
+    color: var(--text);
+    font-weight: 600;
+  }
 
-.app__intro code {
-  white-space: nowrap;
-  padding: 1px var(--spacing-1);
-  border-radius: 4px;
-  background: var(--card);
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
+  & code {
+    white-space: nowrap;
+    padding: 1px var(--spacing-1);
+    border-radius: 4px;
+    background: var(--card);
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
 }
 
 /* ---------- Corner buttons (theme toggle, help, back) ---------- */
@@ -426,14 +424,94 @@ body::after {
   color: var(--text);
   text-decoration: none;
   cursor: pointer;
+
+  &[hidden] {
+    --_action-display: none;
+  }
+
+  &:hover {
+    --_action-bg: var(--card);
+  }
 }
 
-.app__action[hidden] {
-  --_action-display: none;
-}
+/* Tooltips on the header buttons (reset, walkthrough, theme): the button's aria-label, so the
+   text and the accessible name are the same. Centred under the button; the last one lines up with
+   its button's right edge instead, so it never pokes out of the page. Shows on hover (after a short
+   pause) and on keyboard focus.
+   The bubble is a pill balanced like the Optical Pills playground: the round ends take
+   pill × (1 − π/4) from the space beside the text, so that much goes back on each side. */
+.app__action--tip {
+  --_tip-opacity: 0;
+  --_tip-shift: calc(var(--spacing-1) * -1);
+  --_tip-delay: 0s;
 
-.app__action:hover {
-  --_action-bg: var(--card);
+  position: relative;
+
+  &:hover,
+  &:focus-visible {
+    --_tip-opacity: 1;
+    --_tip-shift: 0;
+    --_tip-delay: 0.3s;
+  }
+
+  &:last-child {
+    --_tip-start: auto;
+    --_tip-end: 0;
+    --_tip-x: 0;
+  }
+
+  &::before,
+  &::after {
+    position: absolute;
+    border: 1px solid var(--line);
+    background: var(--field);
+    opacity: var(--_tip-opacity);
+    pointer-events: none;
+  }
+
+  /* The little arrow, under the middle of the button. Drawn over the bubble: its fill covers the
+     bubble's top border there, so the outline runs into the arrow */
+  &::before {
+    content: "";
+    z-index: 11;
+    inset-block-start: calc(100% + var(--spacing-1));
+    inset-inline-start: calc(50% - var(--spacing-1));
+    inline-size: var(--spacing-2);
+    block-size: var(--spacing-2);
+    border-inline-end: 0;
+    border-block-end: 0;
+    translate: 0 var(--_tip-shift);
+    rotate: 45deg;
+  }
+
+  &::after {
+    --_tip-py: var(--spacing-1);
+    --_tip-px: var(--spacing-2-5);
+    --_tip-pill: calc(var(--_tip-py) + 0.5lh); /* half the bubble's height */
+
+    content: attr(aria-label);
+    z-index: 10;
+    inset-block-start: calc(100% + var(--spacing-2));
+    inset-inline: var(--_tip-start, 50%) var(--_tip-end, auto);
+    padding: var(--_tip-py) calc(var(--_tip-px) + var(--_tip-pill) * (1 - pi / 4));
+    border-radius: var(--_tip-pill);
+    box-shadow: 0 8px 24px -10px var(--shadow);
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    line-height: 1.4;
+    white-space: nowrap;
+    translate: var(--_tip-x, -50%) var(--_tip-shift);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    &::before,
+    &::after {
+      transition:
+        opacity 0.15s var(--_tip-delay),
+        translate 0.15s var(--_tip-delay);
+    }
+  }
 }
 
 .app__icon {
@@ -449,7 +527,8 @@ body::after {
   stroke-linejoin: round;
 }
 
-.app__icon--help {
+.app__icon--help,
+.app__icon--reset {
   --_icon-display: block;
 }
 

@@ -14,11 +14,11 @@
   --controls-min: 240px;
 
   grid-column: 1 / -1;
-}
 
-.group--page .group__switch {
-  display: flex;
-  align-items: center;
+  & .group__switch {
+    display: flex;
+    align-items: center;
+  }
 }
 
 /* ---------- The demo page ----------
@@ -29,6 +29,12 @@
   container: site / inline-size;
   display: grid;
   gap: var(--spacing-6);
+
+  /* "Show container outlines": a dashed line around each card's box (the container) */
+  &[data-outlines="true"] {
+    --_trip-outline: 1px dashed var(--accent);
+    --_state-display: inline-flex;
+  }
 }
 
 .site__area {
@@ -68,6 +74,10 @@
   display: grid;
   grid-template-columns: var(--_main-columns, minmax(0, 1fr));
   gap: var(--spacing-6);
+
+  @container site (width >= 720px) {
+    --_main-columns: minmax(0, 1fr) 280px;
+  }
 }
 
 @container site (width >= 720px) {
@@ -78,10 +88,6 @@
   .site__cards--three {
     --_site-columns: repeat(3, minmax(0, 1fr));
   }
-
-  .site__main {
-    --_main-columns: minmax(0, 1fr) 280px;
-  }
 }
 
 /* ---------- The card's look (its layout comes from the live CSS) ---------- */
@@ -91,12 +97,6 @@
   border-radius: 14px;
   outline: var(--_trip-outline, 0 solid transparent);
   outline-offset: var(--spacing-1);
-}
-
-/* "Show container outlines": a dashed line around each card's box (the container) */
-.site[data-outlines="true"] {
-  --_trip-outline: 1px dashed var(--accent);
-  --_state-display: inline-flex;
 }
 
 .trip__inner {
@@ -123,10 +123,10 @@
   font-family: var(--font-mono);
   font-size: 0.68rem;
   box-shadow: 0 2px 8px var(--shadow);
-}
 
-.trip__state::before {
-  content: var(--_state, "compact");
+  &::before {
+    content: var(--_state, "compact");
+  }
 }
 
 .trip__width {
@@ -209,22 +209,20 @@
   font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
+
+  &:hover {
+    --_button-border: var(--accent);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: border-color 0.2s;
+  }
 }
 
 .trip__button--primary {
   --_button-bg: var(--accent);
   --_button-border: var(--accent);
   --_button-color: var(--on-accent);
-}
-
-.trip__button:hover {
-  --_button-border: var(--accent);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .trip__button {
-    transition: border-color 0.2s;
-  }
 }
 
 .stage__heading .stage__hint {

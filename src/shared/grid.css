@@ -29,10 +29,10 @@
 .stage__summary {
   font-family: var(--font-mono);
   font-size: 0.8rem;
-}
 
-.stage__summary strong {
-  color: var(--accent);
+  & strong {
+    color: var(--accent);
+  }
 }
 
 .stage__hint {
@@ -62,26 +62,26 @@
 
   display: grid;
   grid-template-columns: var(
-      --_grid-template-columns,
-      repeat(
-        auto-fill,
-        minmax(
-          max(var(--_min-column-width), calc((100% - (var(--_grid-cols) - 1) * var(--_grid-gap)) / var(--_grid-cols))),
-          1fr
-        )
+    --_grid-template-columns,
+    repeat(
+      auto-fill,
+      minmax(
+        max(var(--_min-column-width), calc((100% - (var(--_grid-cols) - 1) * var(--_grid-gap)) / var(--_grid-cols))),
+        1fr
       )
-    );
+    )
+  );
   gap: var(--_grid-gap);
+
+  &[data-containers="false"] {
+    --_grid-container-type: normal;
+  }
 }
 
 .demo-grid__cell {
   max-width: 100%;
   container-type: var(--_grid-container-type, inline-size);
   container-name: grid-item;
-}
-
-.demo-grid[data-containers="false"] {
-  --_grid-container-type: normal;
 }
 
 /* ---------- Stage extras: heading, switches, explanation, live check ---------- */
@@ -104,10 +104,10 @@
   color: var(--text-muted);
   font-size: 0.85rem;
   line-height: 1.5;
-}
 
-.stage__explain strong {
-  color: var(--text);
+  & strong {
+    color: var(--text);
+  }
 }
 
 .stage__check {
@@ -117,10 +117,10 @@
   color: var(--_check-color);
   font-size: 0.8rem;
   font-weight: 600;
-}
 
-.stage__check[data-ok="true"] {
-  --_check-color: var(--min);
+  &[data-ok="true"] {
+    --_check-color: var(--min);
+  }
 }
 
 .frame--static {

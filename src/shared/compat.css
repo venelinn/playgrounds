@@ -58,14 +58,14 @@
   color: var(--_badge-color);
   font-size: 0.7rem;
   font-weight: 600;
-}
 
-.compat__badge[data-tone="widely"] {
-  --_badge-color: var(--min);
-}
+  &[data-tone="widely"] {
+    --_badge-color: var(--min);
+  }
 
-.compat__badge[data-tone="newly"] {
-  --_badge-color: var(--accent);
+  &[data-tone="newly"] {
+    --_badge-color: var(--accent);
+  }
 }
 
 .compat__note {
@@ -81,10 +81,10 @@
   color: var(--_you-color);
   font-weight: 600;
   white-space: nowrap;
-}
 
-.compat__you[data-ok="true"] {
-  --_you-color: var(--compat-ok, var(--min));
+  &[data-ok="true"] {
+    --_you-color: var(--compat-ok, var(--min));
+  }
 }
 
 .compat__browsers {
@@ -94,10 +94,8 @@
   margin: 0;
   padding: 0;
   list-style: none;
-}
 
-@container (min-width: 620px) {
-  .compat__browsers {
+  @container (min-width: 620px) {
     --_browser-cols: 6;
   }
 }
@@ -110,10 +108,10 @@
   padding: var(--spacing-1-5) var(--spacing-2);
   border-radius: 6px;
   background: color-mix(in srgb, var(--_browser-color) 10%, transparent);
-}
 
-.compat__browser[data-ok="true"] {
-  --_browser-color: var(--compat-ok, var(--min));
+  &[data-ok="true"] {
+    --_browser-color: var(--compat-ok, var(--min));
+  }
 }
 
 /* A project's requirement (e.g. WestJet) under the browser versions.
@@ -127,11 +125,11 @@
   border: 1px solid color-mix(in srgb, var(--_req-color, var(--line)) 45%, transparent);
   border-radius: 8px;
   background: color-mix(in srgb, var(--_req-color, transparent) 7%, transparent);
-}
 
-.compat__req[data-brand="westjet"] {
-  --_req-color: var(--westjet);
-  --_req-on: var(--on-westjet);
+  &[data-brand="westjet"] {
+    --_req-color: var(--westjet);
+    --_req-on: var(--on-westjet);
+  }
 }
 
 .compat__req-name {
@@ -165,19 +163,19 @@
   gap: var(--spacing-3);
   margin: 0;
   font-size: 0.75rem;
-}
 
-.compat__links a {
-  --_link-line: transparent;
+  & a {
+    --_link-line: transparent;
 
-  color: var(--accent);
-  text-decoration: underline;
-  text-decoration-color: var(--_link-line);
-  text-underline-offset: 3px;
-}
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: var(--_link-line);
+    text-underline-offset: 3px;
+  }
 
-.compat__links a:hover {
-  --_link-line: currentColor;
+  & a:hover {
+    --_link-line: currentColor;
+  }
 }
 
 .compat__source {
@@ -236,10 +234,10 @@
   text-decoration: underline;
   text-decoration-color: var(--_link-line);
   text-underline-offset: 3px;
-}
 
-.refs__link:hover {
-  --_link-line: currentColor;
+  &:hover {
+    --_link-line: currentColor;
+  }
 }
 
 .refs__source {

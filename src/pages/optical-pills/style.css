@@ -1,0 +1,196 @@
+/* Optical Pills playground. Tokens, panel, controls, groups and stage come from ../shared/.
+   The balanced pill's layout is the CSS the script writes (shown in the CSS card, classes .button*);
+   this file is the look both pills share, the plain pill's layout and the guides.
+
+   The script sets on .pills: --py, --px, --round (0–1) and --pill-size, the same values as the CSS card.
+   On each pill it sets --guide-start / --guide-end (striped width) and --cut-start / --cut-end
+   (the dashed line), measured from the page. */
+
+.pills-playground {
+  --app-width: 1200px;
+}
+
+/* ---------- Controls ---------- */
+
+.group--button {
+  --controls-min: 170px;
+
+  grid-column: 1 / -1;
+}
+
+.fixes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: var(--spacing-3) var(--spacing-5);
+}
+
+/* ---------- Stage ---------- */
+
+.pills {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: var(--spacing-4);
+}
+
+.pill-demo {
+  --_demo-line: var(--line);
+
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  gap: var(--spacing-3);
+  margin: 0;
+  padding: var(--spacing-5) var(--spacing-4);
+  border: 1px solid var(--_demo-line);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--card) 70%, transparent);
+}
+
+.pill-demo--balanced {
+  --_demo-line: color-mix(in srgb, var(--accent) 45%, var(--line));
+}
+
+.pill-demo__head {
+  display: grid;
+  justify-items: center;
+  gap: var(--spacing-1);
+  text-align: center;
+}
+
+.pill-demo__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.pill-demo__text {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* The pill sits in a dotted area with room for the ring around an off-centre icon */
+.pill-demo__stage {
+  display: grid;
+  place-items: center;
+  justify-self: stretch;
+  min-block-size: calc(var(--pill-size, 16px) * 5);
+  padding: var(--spacing-4);
+  border-radius: 8px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--text) 10%, transparent) 1px, transparent 1.5px) 0 0 /
+    14px 14px;
+}
+
+.pill-demo__checks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-1-5);
+  min-block-size: var(--spacing-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.check {
+  --_check-color: var(--max);
+
+  padding: var(--spacing-0-5) var(--spacing-2);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--_check-color) 14%, transparent);
+  color: var(--_check-color);
+  font-size: 0.72rem;
+  font-weight: 600;
+
+  &[data-ok="true"] {
+    --_check-color: var(--min);
+  }
+}
+
+.pill-demo__measures {
+  margin: 0;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+.pill-demo__number {
+  color: var(--text);
+}
+
+/* ---------- The pill: the look both share ---------- */
+
+.pill {
+  --_fill: color-mix(in srgb, var(--text) 9%, var(--card));
+  --_guides: linear-gradient(transparent, transparent);
+  --_hatch: color-mix(in srgb, var(--accent2) 75%, transparent);
+
+  position: relative;
+  border: 0;
+  /* the guides are background layers, so the round ends clip them */
+  background: var(--_guides), var(--_fill);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--text) 12%, transparent);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: var(--pill-size, 1rem);
+  font-weight: 500;
+  line-height: 1.5;
+  cursor: pointer;
+
+  &[data-guides="true"] {
+    --_ring-display: block;
+    --_guides:
+      repeating-linear-gradient(0deg, var(--_hatch) 0 1px, transparent 1px 4px) left top / var(--guide-start, 0px) 100%
+        no-repeat,
+      repeating-linear-gradient(0deg, var(--_hatch) 0 1px, transparent 1px 4px) right top / var(--guide-end, 0px) 100%
+        no-repeat,
+      repeating-linear-gradient(180deg, var(--accent2) 0 3px, transparent 3px 6px) left var(--cut-start, -9px) top 0 /
+        1px 100% no-repeat,
+      repeating-linear-gradient(180deg, var(--accent2) 0 3px, transparent 3px 6px) right var(--cut-end, -9px) top 0 /
+        1px 100% no-repeat;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+}
+
+.pill__icon {
+  position: relative;
+  display: grid;
+
+  /* The ring: a circle as tall as the pill, centred on the icon. It fills the round end when the icon is centred */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: calc(var(--py, 0.5em) * -1);
+    display: var(--_ring-display, none);
+    border-radius: 50%;
+    outline: 1px dashed var(--accent);
+    background: color-mix(in srgb, var(--accent) 22%, transparent);
+  }
+}
+
+.pill__glyph {
+  position: relative; /* above the ring */
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.pill__label {
+  white-space: nowrap;
+}
+
+/* ---------- The plain pill: the same padding everywhere ---------- */
+
+.pill--plain {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--py);
+  padding: var(--py) var(--px);
+  border-radius: calc((var(--py) + 0.5lh) * var(--round, 1));
+
+  & .pill__icon {
+    inline-size: 1lh;
+    block-size: 1lh;
+  }
+}

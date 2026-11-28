@@ -48,10 +48,10 @@
   border: 1px solid var(--_input-border);
   border-radius: 6px;
   background: var(--field);
-}
 
-.control__input:focus-within {
-  --_input-border: var(--accent);
+  &:focus-within {
+    --_input-border: var(--accent);
+  }
 }
 
 .control__number {
@@ -65,12 +65,12 @@
   text-align: right;
   outline: none;
   appearance: textfield;
-}
 
-.control__number::-webkit-inner-spin-button,
-.control__number::-webkit-outer-spin-button {
-  appearance: none;
-  margin: 0;
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+  }
 }
 
 .control__unit {
@@ -97,14 +97,14 @@
   color: var(--text);
   font: inherit;
   font-size: 0.8rem;
-}
 
-.control__field:focus-visible {
-  --_input-border: var(--accent);
-}
+  &:focus-visible {
+    --_input-border: var(--accent);
+  }
 
-.control__field[hidden] {
-  display: none;
+  &[hidden] {
+    display: none;
+  }
 }
 
 .warning {
@@ -147,11 +147,11 @@
   font: inherit;
   font-size: 0.75rem;
   cursor: pointer;
-}
 
-.card__button:hover {
-  --_button-bg: var(--accent);
-  --_button-color: var(--on-accent);
+  &:hover {
+    --_button-bg: var(--accent);
+    --_button-color: var(--on-accent);
+  }
 }
 
 .card__code {
@@ -171,11 +171,11 @@
   gap: var(--spacing-2);
   font-size: 0.8rem;
   cursor: var(--_switch-cursor, pointer);
-}
 
-.switch:has(:disabled) {
-  --_switch-cursor: not-allowed;
-  --_switch-label-opacity: 0.4;
+  &:has(:disabled) {
+    --_switch-cursor: not-allowed;
+    --_switch-label-opacity: 0.4;
+  }
 }
 
 .switch__input {
@@ -198,16 +198,16 @@
   padding-inline-start: var(--spacing-4-5);
   font-size: 0.8rem;
   line-height: 1.5;
-}
 
-.tips strong {
-  color: var(--text);
-}
+  & strong {
+    color: var(--text);
+  }
 
-.tips code {
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
+  & code {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
 }
 
 /* ---------- Values list: <dl class="stats"> ----------
@@ -234,10 +234,10 @@
   justify-content: var(--_row-justify, space-between);
   gap: var(--_row-gap, var(--spacing-3));
   padding-block: var(--_row-padding, var(--spacing-1));
-}
 
-.stats__row + .stats__row {
-  border-block-start: 1px solid var(--line);
+  & + .stats__row {
+    border-block-start: 1px solid var(--line);
+  }
 }
 
 .stats__label {
@@ -264,19 +264,19 @@
   font-size: 0.7rem;
   line-height: 1.4;
   overflow-wrap: anywhere;
-}
 
-.control__hint[data-tone="ok"] {
-  --_hint-color: var(--min);
-}
+  &[data-tone="ok"] {
+    --_hint-color: var(--min);
+  }
 
-.control__hint[data-tone="error"] {
-  --_hint-color: var(--max);
-}
+  &[data-tone="error"] {
+    --_hint-color: var(--max);
+  }
 
-.control__hint code {
-  color: var(--accent);
-  font-family: var(--font-mono);
+  & code {
+    color: var(--accent);
+    font-family: var(--font-mono);
+  }
 }
 
 /* ---------- Row of cards under a demo (code, values, tips) ---------- */

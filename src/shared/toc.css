@@ -4,10 +4,8 @@
 
 html:has(.toc) {
   scroll-padding-block-start: var(--spacing-6);
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  html:has(.toc) {
+  @media (prefers-reduced-motion: no-preference) {
     scroll-behavior: smooth;
   }
 }
@@ -23,17 +21,13 @@ html:has(.toc) {
   inset-inline-start: calc(100% + var(--spacing-7));
   display: var(--_toc-display);
   width: 160px;
-}
 
-/* Only where there's room beside the widest panels (1440px) */
-@media (width >= 1800px) {
-  .toc {
+  @media (width >= 1800px) {
+    /* Only where there's room beside the widest panels (1440px) */
     --_toc-display: block;
   }
-}
 
-@supports (scroll-target-group: auto) {
-  .toc {
+  @supports (scroll-target-group: auto) {
     --_note-on: inline;
     --_note-off: none;
   }
@@ -81,29 +75,27 @@ html:has(.toc) {
   font-size: 0.85rem;
   font-weight: var(--_link-weight);
   text-decoration: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .toc__link {
+  @media (prefers-reduced-motion: no-preference) {
     transition:
       color 0.2s,
       border-color 0.2s,
       background-color 0.2s;
   }
-}
 
-.toc__link:hover,
-.toc__link:focus-visible {
-  --_link-color: var(--text);
-  --_link-line: var(--text-muted);
-}
+  &:hover,
+  &:focus-visible {
+    --_link-color: var(--text);
+    --_link-line: var(--text-muted);
+  }
 
-/* The section on screen. Browsers without :target-current skip this rule. */
-.toc__link:target-current {
-  --_link-color: var(--accent);
-  --_link-line: var(--accent);
-  --_link-bg: color-mix(in srgb, var(--accent) 10%, transparent);
-  --_link-weight: 600;
+  /* The section on screen. Browsers without :target-current skip this rule. */
+  &:target-current {
+    --_link-color: var(--accent);
+    --_link-line: var(--accent);
+    --_link-bg: color-mix(in srgb, var(--accent) 10%, transparent);
+    --_link-weight: 600;
+  }
 }
 
 .toc__note {

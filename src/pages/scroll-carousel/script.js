@@ -387,9 +387,9 @@ const TOUR_STEPS = [
   {
     element: ".app__actions",
     popover: {
-      title: "Replay or switch theme",
+      title: "Reset, replay or switch theme",
       description:
-        "Use <strong>?</strong> to see this tour again, and the other button to switch between light and dark.",
+        "<strong>Reset</strong> (the round arrow) puts every control back where it started, <strong>?</strong> shows this tour again, and the last button switches between light and dark.",
     },
   },
 ];

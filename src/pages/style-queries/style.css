@@ -6,6 +6,13 @@
   --app-width: 1440px;
   --compare-card-min: 340px;
   --frame-min-height: 560px; /* room to see the page change, not just the cards */
+
+  @media (width < 600px) {
+    /* The option names here are words, not units: one option a row on narrow screens */
+    & .choices {
+      --_choices: 1;
+    }
+  }
 }
 
 /* ---------- Controls ---------- */
@@ -16,17 +23,10 @@
   --controls-min: 220px;
 
   grid-column: 1 / -1;
-}
 
-.group--page .group__switch {
-  display: flex;
-  align-items: center;
-}
-
-/* The option names here are words, not units: one option a row on narrow screens */
-@media (width < 600px) {
-  .sq-playground .choices {
-    --_choices: 1;
+  & .group__switch {
+    display: flex;
+    align-items: center;
   }
 }
 
@@ -42,16 +42,16 @@
   color: var(--text-muted);
   font-size: 0.85rem;
   line-height: 1.5;
-}
 
-.sq-count strong {
-  color: var(--text);
-}
+  & strong {
+    color: var(--text);
+  }
 
-.sq-count code {
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
+  & code {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
 }
 
 /* ---------- Demo page ---------- */
@@ -138,10 +138,10 @@
   gap: var(--spacing-1) var(--spacing-2);
   color: var(--text-muted);
   font-size: 0.8rem;
-}
 
-.deal__price strong {
-  color: var(--text);
+  & strong {
+    color: var(--text);
+  }
 }
 
 /* Badge: which look the card has, written by the same style queries (label and colour are variables) */
@@ -153,21 +153,17 @@
   color: var(--_state-color, var(--text-muted));
   font-family: var(--font-mono);
   font-size: 0.68rem;
-}
 
-.deal__state::before {
-  content: var(--_state-label, "default");
-}
+  &::before {
+    content: var(--_state-label, "default");
+  }
 
-@container style(--deal-layout: row) {
-  .deal__state {
+  @container style(--deal-layout: row) {
     --_state-color: var(--accent2);
     --_state-label: "row";
   }
-}
 
-@container style(--deal-density: compact) {
-  .deal__state {
+  @container style(--deal-density: compact) {
     --_state-color: var(--accent);
     --_state-label: "compact";
   }

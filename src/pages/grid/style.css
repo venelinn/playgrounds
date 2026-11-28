@@ -21,10 +21,8 @@
   border: 1px solid var(--line);
   border-radius: 12px;
   background: var(--field);
-}
 
-@container grid-item (min-width: 300px) {
-  .item {
+  @container grid-item (min-width: 300px) {
     --_item-columns: 88px minmax(0, 1fr);
     --_item-thumb-ratio: 1;
     --_stacked-display: none;
@@ -82,15 +80,15 @@
   color: var(--text-muted);
   font-size: 0.85rem;
   line-height: 1.5;
-}
 
-.grid-note a {
-  color: var(--accent);
-  font-weight: 600;
-}
+  & a {
+    color: var(--accent);
+    font-weight: 600;
+  }
 
-.grid-note code {
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
+  & code {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
 }

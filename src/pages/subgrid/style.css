@@ -35,11 +35,11 @@
   border: 1px solid var(--line);
   border-radius: 12px;
   background: var(--field);
-}
 
-.offer > * {
-  outline: var(--_part-outline, 0 solid transparent);
-  outline-offset: 2px;
+  & > * {
+    outline: var(--_part-outline, 0 solid transparent);
+    outline-offset: 2px;
+  }
 }
 
 .offer__thumb {
@@ -100,10 +100,10 @@
   padding-inline-start: var(--spacing-5);
   font-size: 0.85rem;
   line-height: 1.5;
-}
 
-.subgrid-info__steps strong {
-  color: var(--accent);
+  & strong {
+    color: var(--accent);
+  }
 }
 
 .subgrid-info__steps code,
@@ -150,10 +150,10 @@
   border: 1px dashed var(--accent);
   border-radius: 10px;
   background: color-mix(in srgb, var(--accent) 4%, transparent);
-}
 
-.form-demo[data-subgrid="true"] {
-  --_field-columns: subgrid;
+  &[data-subgrid="true"] {
+    --_field-columns: subgrid;
+  }
 }
 
 .form-demo__field {
@@ -180,10 +180,10 @@
   color: var(--text);
   font: inherit;
   font-size: 0.85rem;
-}
 
-.form-demo__input:focus-visible {
-  --_input-border: var(--accent);
+  &:focus-visible {
+    --_input-border: var(--accent);
+  }
 }
 
 .form-demo__hint {

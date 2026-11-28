@@ -24,22 +24,20 @@
   cursor: help;
   user-select: none;
   anchor-name: var(--info-anchor);
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .info {
+  @media (prefers-reduced-motion: no-preference) {
     transition:
       opacity 0.15s,
       color 0.15s,
       border-color 0.15s;
   }
-}
 
-.info:hover,
-.info[data-open="true"] {
-  --_info-color: var(--accent);
-  --_info-border: var(--accent);
-  --_info-opacity: 1;
+  &:hover,
+  &[data-open="true"] {
+    --_info-color: var(--accent);
+    --_info-border: var(--accent);
+    --_info-opacity: 1;
+  }
 }
 
 /* Corner variant: top-right of a card that has no heading */
@@ -73,34 +71,14 @@
   font-family: var(--font-ui);
   font-size: 0.8rem;
   line-height: 1.45;
-}
 
-.info-tip:popover-open {
-  --_tip-display: grid;
-}
+  &:popover-open {
+    --_tip-display: grid;
+  }
 
-.info-tip__title {
-  font-size: 0.8rem;
-}
-
-.info-tip__text {
-  color: var(--text-muted);
-}
-
-.info-tip__text strong {
-  color: var(--text);
-}
-
-.info-tip__text code {
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-}
-
-/* Next to its icon, above it by default, flipping when there's no room.
+  @supports (anchor-name: --a) {
+    /* Next to its icon, above it by default, flipping when there's no room.
    Without anchor positioning it opens centered (the browser default for popovers). */
-@supports (anchor-name: --a) {
-  .info-tip {
     position-anchor: var(--info-anchor);
     position-area: top;
     position-try-fallbacks:
@@ -110,5 +88,23 @@
       top span-right;
     inset: auto;
     --_tip-margin: var(--spacing-1-5);
+  }
+}
+
+.info-tip__title {
+  font-size: 0.8rem;
+}
+
+.info-tip__text {
+  color: var(--text-muted);
+
+  & strong {
+    color: var(--text);
+  }
+
+  & code {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
   }
 }

@@ -16,11 +16,11 @@
 :root {
   --swatch-l: 60%;
   --icon-l: 66%;
-}
 
-:root[data-theme="light"] {
-  --swatch-l: 55%;
-  --icon-l: 42%;
+  &[data-theme="light"] {
+    --swatch-l: 55%;
+    --icon-l: 42%;
+  }
 }
 
 .siblings {
@@ -64,11 +64,11 @@
   font: inherit;
   font-size: 0.8rem;
   cursor: pointer;
-}
 
-.replay:hover {
-  --_replay-bg: var(--accent);
-  --_replay-color: var(--on-accent);
+  &:hover {
+    --_replay-bg: var(--accent);
+    --_replay-color: var(--on-accent);
+  }
 }
 
 .replay__icon {
@@ -158,43 +158,57 @@
   counter-reset: product var(--i) total var(--n);
   translate: 0 var(--_lift);
   outline-offset: 4px;
-}
 
-.product:hover,
-.product:focus-visible {
-  --_border: hsl(var(--hue) var(--sat, 85%) var(--swatch-l) / 0.55);
-  --_shadow: 0 20px 40px -15px hsl(var(--hue) var(--sat, 85%) var(--swatch-l) / 0.2);
-  --_lift: -4px;
-  --_arrow-shift: 4px;
-  --_blob-opacity: 0.2;
-}
+  &:hover,
+  &:focus-visible {
+    --_border: hsl(var(--hue) var(--sat, 85%) var(--swatch-l) / 0.55);
+    --_shadow: 0 20px 40px -15px hsl(var(--hue) var(--sat, 85%) var(--swatch-l) / 0.2);
+    --_lift: -4px;
+    --_arrow-shift: 4px;
+    --_blob-opacity: 0.2;
+  }
 
-/* Colored circle in the top-right corner */
-.product::before {
-  content: "";
-  position: absolute;
-  inset-block-start: calc(var(--spacing-14) * -1);
-  inset-inline-end: calc(var(--spacing-10) * -1);
-  width: 160px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: var(--_color);
-  opacity: var(--_blob-opacity);
-  pointer-events: none;
-}
+  /* Colored circle in the top-right corner */
+  &::before {
+    content: "";
+    position: absolute;
+    inset-block-start: calc(var(--spacing-14) * -1);
+    inset-inline-end: calc(var(--spacing-10) * -1);
+    width: 160px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--_color);
+    opacity: var(--_blob-opacity);
+    pointer-events: none;
+  }
 
-/* Big faint number: 01, 02… straight from sibling-index() */
-.product::after {
-  content: counter(product, decimal-leading-zero);
-  position: absolute;
-  inset-block-end: var(--spacing-1-5);
-  inset-inline-end: var(--spacing-5-5);
-  color: color-mix(in srgb, var(--text) 8%, transparent);
-  font-size: 4.5rem;
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.03em;
-  pointer-events: none;
+  /* Big faint number: 01, 02… straight from sibling-index() */
+  &::after {
+    content: counter(product, decimal-leading-zero);
+    position: absolute;
+    inset-block-end: var(--spacing-1-5);
+    inset-inline-end: var(--spacing-5-5);
+    color: color-mix(in srgb, var(--text) 8%, transparent);
+    font-size: 4.5rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* The staggered entrance and the hover moves, only for people who don't ask for less motion */
+    transition:
+      border-color 0.25s,
+      box-shadow 0.25s,
+      translate 0.25s;
+    animation: var(--_reveal) 0.8s both;
+    animation-delay: calc((var(--i) - 1) * var(--stagger, 100ms));
+
+    &::before {
+      transition: opacity 0.25s;
+    }
+  }
 }
 
 .product__icon {
@@ -206,16 +220,16 @@
   border-radius: 14px;
   background: color-mix(in srgb, var(--text) 4%, transparent);
   color: hsl(var(--hue) var(--sat, 85%) var(--icon-l));
-}
 
-.product__icon svg {
-  width: 24px;
-  height: 24px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.75;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  & svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
 }
 
 .product__title {
@@ -236,6 +250,10 @@
   font-size: 1.2rem;
   font-weight: 700;
   translate: var(--_arrow-shift) 0;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: translate 0.25s;
+  }
 }
 
 /* "3 / 8" badge, written by CSS counters (no JS text) */
@@ -253,10 +271,10 @@
   color: var(--_color);
   font-family: var(--font-mono);
   font-size: 0.72rem;
-}
 
-.product__badge::before {
-  content: counter(product) " / " counter(total);
+  &::before {
+    content: counter(product) " / " counter(total);
+  }
 }
 
 .products[data-show-values="true"] .product__badge {
@@ -272,26 +290,6 @@
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
-  }
-}
-
-/* The staggered entrance and the hover moves, only for people who don't ask for less motion */
-@media (prefers-reduced-motion: no-preference) {
-  .product {
-    transition:
-      border-color 0.25s,
-      box-shadow 0.25s,
-      translate 0.25s;
-    animation: var(--_reveal) 0.8s both;
-    animation-delay: calc((var(--i) - 1) * var(--stagger, 100ms));
-  }
-
-  .product::before {
-    transition: opacity 0.25s;
-  }
-
-  .product__arrow {
-    transition: translate 0.25s;
   }
 }
 

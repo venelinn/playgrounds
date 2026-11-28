@@ -16,8 +16,7 @@
 
   function syncLabel() {
     const next = root.dataset.theme === "dark" ? "light" : "dark";
-    toggle.setAttribute("aria-label", `Switch to ${next} theme`);
-    toggle.title = `Switch to ${next} theme`;
+    toggle.setAttribute("aria-label", `Switch to ${next} theme`); // also the CSS tooltip's text
   }
 
   toggle.addEventListener("click", () => {
