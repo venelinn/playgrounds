@@ -2,7 +2,7 @@
 
 .info {
   --_info-color: var(--text-muted);
-  --_info-border: color-mix(in srgb, var(--text-muted) 55%, transparent);
+  --_info-border: --transparent(var(--text-muted), 55%);
   --_info-opacity: 0.7;
 
   display: inline-grid;

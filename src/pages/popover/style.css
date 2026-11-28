@@ -224,7 +224,7 @@
   height: 340px;
   border: 1px dashed var(--accent);
   border-radius: 10px;
-  background: color-mix(in srgb, var(--accent) 4%, transparent);
+  background: --transparent(var(--accent), 4%);
 }
 
 /* Positioned with left/top only: Firefox anchors to the box *before* transforms,

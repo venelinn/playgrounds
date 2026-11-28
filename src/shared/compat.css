@@ -105,7 +105,7 @@
   gap: var(--spacing-0-5);
   padding: var(--spacing-1-5) var(--spacing-2);
   border-radius: 6px;
-  background: color-mix(in srgb, var(--_browser-color) 10%, transparent);
+  background: --transparent(var(--_browser-color), 10%);
 
   &[data-ok="true"] {
     --_browser-color: var(--compat-ok, var(--min));
@@ -120,9 +120,9 @@
   display: grid;
   gap: var(--spacing-1-5);
   padding: var(--spacing-2-5);
-  border: 1px solid color-mix(in srgb, var(--_req-color, var(--line)) 45%, transparent);
+  border: 1px solid --transparent(var(--_req-color, var(--line)), 45%);
   border-radius: 8px;
-  background: color-mix(in srgb, var(--_req-color, transparent) 7%, transparent);
+  background: --transparent(var(--_req-color, transparent), 7%);
 
   &[data-brand="westjet"] {
     --_req-color: var(--westjet);

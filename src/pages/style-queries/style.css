@@ -75,7 +75,7 @@
   gap: var(--spacing-2-5);
   padding: var(--spacing-3);
   border-radius: 12px;
-  background: color-mix(in srgb, var(--text) 4%, transparent);
+  background: --transparent(var(--text), 4%);
 }
 
 .sidebar__title {
@@ -100,11 +100,7 @@
 .deal__img {
   min-height: 56px;
   border-radius: 10px;
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--accent) 55%, transparent),
-    color-mix(in srgb, var(--accent2) 55%, transparent)
-  );
+  background: linear-gradient(135deg, --transparent(var(--accent), 55%), --transparent(var(--accent2), 55%));
 }
 
 .deal__place {

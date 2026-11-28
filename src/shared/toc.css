@@ -13,8 +13,6 @@ html:has(.toc) {
 /* Hangs off the panel's right edge, full height, so the list can stick while the page scrolls */
 .toc {
   --_toc-display: none;
-  --_note-on: none;
-  --_note-off: inline;
 
   position: absolute;
   inset-block: 0;
@@ -25,11 +23,6 @@ html:has(.toc) {
   @media (width >= 1800px) {
     /* Only where there's room beside the widest panels (1440px) */
     --_toc-display: block;
-  }
-
-  @supports (scroll-target-group: auto) {
-    --_note-on: inline;
-    --_note-off: none;
   }
 }
 
@@ -93,23 +86,7 @@ html:has(.toc) {
   &:target-current {
     --_link-color: var(--accent);
     --_link-line: var(--accent);
-    --_link-bg: color-mix(in srgb, var(--accent) 10%, transparent);
+    --_link-bg: --transparent(var(--accent), 10%);
     --_link-weight: 600;
   }
-}
-
-.toc__note {
-  margin: 0;
-  padding-inline-start: var(--spacing-3);
-  color: var(--text-muted);
-  font-size: var(--text-2xs);
-  line-height: 1.4;
-}
-
-.toc__note-on {
-  display: var(--_note-on);
-}
-
-.toc__note-off {
-  display: var(--_note-off);
 }

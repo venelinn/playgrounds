@@ -14,17 +14,11 @@
   border-radius: 16px;
   /* layers: soft glow from the top, dot grid, card fill, gradient border */
   background:
-    radial-gradient(
-        ellipse 60% 70% at 50% 0%,
-        color-mix(in srgb, var(--_badge-color) 14%, transparent),
-        transparent 70%
-      )
-      padding-box,
-    radial-gradient(circle, color-mix(in srgb, var(--text) 9%, transparent) 1px, transparent 1.5px) 0 0 / 18px 18px
-      padding-box,
+    radial-gradient(ellipse 60% 70% at 50% 0%, --transparent(var(--_badge-color), 14%), transparent 70%) padding-box,
+    radial-gradient(circle, --transparent(var(--text), 9%) 1px, transparent 1.5px) 0 0 / 18px 18px padding-box,
     linear-gradient(var(--card), var(--card)) padding-box,
     linear-gradient(120deg, var(--accent), var(--accent2)) border-box;
-  box-shadow: 0 10px 40px -12px color-mix(in srgb, var(--_badge-color) 45%, transparent);
+  box-shadow: 0 10px 40px -12px --transparent(var(--_badge-color), 45%);
   /* Resizable: its width is the Viewport. The script sets --preview-width from the slider;
      dragging the corner sets an inline width, kept inside the panel by max-width. */
   width: min(var(--preview-width, 100%), 100%);

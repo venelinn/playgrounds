@@ -21,7 +21,7 @@
 .graph__zone {
   --_zone-color: var(--min);
 
-  fill: color-mix(in srgb, var(--_zone-color) 14%, transparent);
+  fill: --transparent(var(--_zone-color), 14%);
 }
 
 .graph__zone--max {

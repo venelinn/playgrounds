@@ -45,11 +45,7 @@
 .offer__thumb {
   aspect-ratio: 5 / 2;
   border-radius: 8px;
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--accent) 55%, transparent),
-    color-mix(in srgb, var(--accent2) 55%, transparent)
-  );
+  background: linear-gradient(135deg, --transparent(var(--accent), 55%), --transparent(var(--accent2), 55%));
 }
 
 .offer__title {
@@ -147,7 +143,7 @@
   padding: var(--spacing-4);
   border: 1px dashed var(--accent);
   border-radius: 10px;
-  background: color-mix(in srgb, var(--accent) 4%, transparent);
+  background: --transparent(var(--accent), 4%);
 
   &[data-subgrid="true"] {
     --_field-columns: subgrid;

@@ -187,7 +187,7 @@
     position: absolute;
     inset-block-end: var(--spacing-1-5);
     inset-inline-end: var(--spacing-5-5);
-    color: color-mix(in srgb, var(--text) 8%, transparent);
+    color: --transparent(var(--text), 8%);
     font-size: 4.5rem;
     font-weight: 800;
     line-height: 1;
@@ -217,7 +217,7 @@
   height: 52px;
   border: 1px solid var(--line);
   border-radius: 14px;
-  background: color-mix(in srgb, var(--text) 4%, transparent);
+  background: --transparent(var(--text), 4%);
   color: hsl(var(--hue) var(--sat, 85%) var(--icon-l));
 
   & svg {

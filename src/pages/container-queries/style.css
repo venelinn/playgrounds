@@ -136,7 +136,7 @@
   min-height: 0;
   border-radius: 10px;
   background:
-    radial-gradient(circle at 75% 25%, color-mix(in srgb, var(--accent) 45%, transparent), transparent 45%),
+    radial-gradient(circle at 75% 25%, --transparent(var(--accent), 45%), transparent 45%),
     linear-gradient(
       160deg,
       color-mix(in srgb, var(--accent) 40%, var(--field)),

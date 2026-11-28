@@ -33,11 +33,7 @@
 .item__thumb {
   aspect-ratio: var(--_item-thumb-ratio);
   border-radius: 8px;
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--accent) 55%, transparent),
-    color-mix(in srgb, var(--accent2) 55%, transparent)
-  );
+  background: linear-gradient(135deg, --transparent(var(--accent), 55%), --transparent(var(--accent2), 55%));
 }
 
 .item__body {

@@ -14,7 +14,7 @@
   border: 1px solid var(--line);
   border-radius: 16px;
   background:
-    radial-gradient(circle, color-mix(in srgb, var(--text) 8%, transparent) 1px, transparent 1.5px) 0 0 / 18px 18px,
+    radial-gradient(circle, --transparent(var(--text), 8%) 1px, transparent 1.5px) 0 0 / 18px 18px,
     var(--card);
 }
 
@@ -49,7 +49,7 @@
   padding: var(--spacing-3);
   border: 1px dashed var(--accent);
   border-radius: 10px;
-  background: color-mix(in srgb, var(--accent) 4%, transparent);
+  background: --transparent(var(--accent), 4%);
   overflow: auto;
   resize: var(--_frame-resize, horizontal);
 }

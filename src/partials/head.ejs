@@ -65,6 +65,10 @@
   </head>
 
   <body>
+    <p class="app__notice" role="note">
+      Your browser doesn't support CSS custom functions (<code>@function</code>) yet, so some tints and text styles look
+      simpler here. Chrome 139+ and Safari 27.3+ show everything.
+    </p>
     <main class="app<%= _appClass %>"<% if (typeof appId !== "undefined") { %> id="<%= appId %>"<% } %>>
 <% if (_nav.length) { -%>
       <nav class="toc" aria-label="On this page">
@@ -75,7 +79,6 @@
             <li><a class="toc__link" href="#<%= item.id %>"><%= item.label %></a></li>
 <% }) -%>
           </ul>
-          <p class="toc__note"><span class="toc__note-on">Follows your scroll</span><span class="toc__note-off">Chrome 140+ also shows where you are</span></p>
         </div>
       </nav>
 <% } -%>
@@ -103,3 +106,4 @@
       </div>
 
       <h1 class="app__title"><%= title %></h1>
+
